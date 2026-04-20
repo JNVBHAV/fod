@@ -14,24 +14,25 @@
 <meta name="twitter:card"       content="summary">
 <meta name="twitter:title"      content="🔒 Private Page">
 
-<!-- Harry Potter Fonts -->
-<link href="https://db.onlinewebfonts.com/c/181ef9a7aee45c119e68f294e8426a3a?family=Harry+P" rel="stylesheet">
+<!-- Harry Potter Fonts — stored locally in ./fonts/ folder -->
+<link href="https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-/* Crimes of Grindelwald — titles */
 @font-face {
-  font-family: 'Crimes of Grindelwald';
-  src: url('https://db.onlinewebfonts.com/t/e4b2e7ec0a58c30fd33a7c0aaf77b75e.woff2') format('woff2'),
-       url('https://db.onlinewebfonts.com/t/e4b2e7ec0a58c30fd33a7c0aaf77b75e.woff') format('woff');
+  font-family: 'Harry P';
+  src: url('./fonts/HarryP.ttf') format('truetype');
   font-weight: normal; font-style: normal;
 }
-/* HogwartsWizard — body / context */
+@font-face {
+  font-family: 'Crimes of Grindelwald';
+  src: url('./fonts/CrimesOfGrindelwald.otf') format('opentype');
+  font-weight: normal; font-style: normal;
+}
 @font-face {
   font-family: 'HogwartsWizard';
-  src: url('https://www.wfonts.com/download/data/2016/03/14/hogwartswizard/hogww.woff') format('woff');
+  src: url('./fonts/HogwartsWizard.ttf') format('truetype');
   font-weight: normal; font-style: normal;
 }
 </style>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:        #060810;
@@ -48,6 +49,7 @@
   --muted:     #64748b;
   --glass:     rgba(12,18,32,0.75);
   --mono:      'JetBrains Mono', monospace;
+  --fondamento: 'Fondamento', cursive;
   --display:   'Harry P', cursive;
   --titles:    'Crimes of Grindelwald', serif;
   --body:      'HogwartsWizard', cursive;
@@ -57,7 +59,7 @@
 html { scroll-behavior: smooth; }
 body {
   background: var(--bg); color: var(--text);
-  font-family: 'HogwartsWizard', cursive; min-height: 100vh; overflow-x: hidden;
+  font-family: 'Fondamento', cursive; min-height: 100vh; overflow-x: hidden;
 }
 body.locked { overflow: hidden; }
 body::before {
@@ -126,11 +128,11 @@ body::before {
   background: linear-gradient(90deg, var(--red), var(--yellow), var(--green), var(--blue));
 }
 .lock-fod-label {
-  font-family: var(--mono); font-size: 9px; letter-spacing: 4px;
-  color: var(--yellow); text-transform: uppercase; margin-bottom: 10px; opacity: 0.7;
+  font-family: 'Fondamento', cursive; font-size: 11px; letter-spacing: 2px;
+  color: var(--yellow); margin-bottom: 10px; opacity: 0.7;
 }
 .lock-quote {
-  font-family: 'HogwartsWizard', cursive; font-size: clamp(13px, 3.5vw, 16px);
+  font-family: 'Fondamento', cursive; font-size: clamp(13px, 3.5vw, 16px);
   color: var(--text); line-height: 1.75;
   margin-bottom: 6px; padding: 0 8px; position: relative;
 }
@@ -141,8 +143,8 @@ body::before {
 }
 .lock-quote em { color: var(--yellow); font-style: normal; font-weight: 700; }
 .lock-quote-attr {
-  font-family: var(--mono); font-size: 9px; letter-spacing: 2px;
-  color: var(--muted); text-transform: uppercase; margin-bottom: 28px;
+  font-family: 'Fondamento', cursive; font-size: 11px; letter-spacing: 1px;
+  color: var(--muted); font-style: italic; margin-bottom: 28px;
 }
 .lock-divider {
   height: 1px;
@@ -150,14 +152,14 @@ body::before {
   margin: 0 0 24px;
 }
 .lock-access-label {
-  font-family: var(--mono); font-size: 9px; letter-spacing: 3px;
-  color: var(--muted); text-transform: uppercase; margin-bottom: 12px;
+  font-family: 'Fondamento', cursive; font-size: 11px; letter-spacing: 2px;
+  color: var(--muted); margin-bottom: 12px;
 }
 .lock-input-wrap { position: relative; margin-bottom: 12px; }
 #lock-input {
   width: 100%; background: rgba(0,0,0,0.45);
   border: 1px solid rgba(255,215,0,0.18); color: var(--text);
-  font-family: var(--mono); font-size: 14px; letter-spacing: 3px;
+  font-family: 'Fondamento', cursive; font-size: 13px; letter-spacing: 2px;
   padding: 14px 48px 14px 18px; outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
   clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
@@ -175,8 +177,8 @@ body::before {
 #pw-toggle:hover { color: var(--yellow); }
 #lock-btn {
   width: 100%; background: transparent; border: 1px solid var(--yellow);
-  color: var(--yellow); font-family: var(--mono); font-size: 11px; font-weight: 700;
-  letter-spacing: 3px; padding: 14px; cursor: pointer; text-transform: uppercase;
+  color: var(--yellow); font-family: 'Fondamento', cursive; font-size: 13px; font-weight: 700;
+  letter-spacing: 2px; padding: 14px; cursor: pointer; text-transform: uppercase;
   transition: all 0.25s;
   clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
   position: relative; overflow: hidden;
@@ -188,8 +190,8 @@ body::before {
 #lock-btn:hover { color: #000; box-shadow: var(--glow-y); }
 #lock-btn:hover::after { transform: translateX(0); }
 #lock-error {
-  font-family: var(--mono); font-size: 11px; color: var(--red);
-  letter-spacing: 1px; min-height: 20px; margin-top: 10px;
+  font-family: 'Fondamento', cursive; font-size: 12px; color: var(--red);
+  letter-spacing: 0.5px; min-height: 20px; margin-top: 10px;
 }
 .lock-houses { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
 .house-dot { width: 8px; height: 8px; border-radius: 50%; }
@@ -218,8 +220,8 @@ nav::after {
 }
 .nav-links { display: flex; gap: 28px; list-style: none; }
 .nav-links a {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 2px;
-  text-transform: uppercase; color: var(--muted); text-decoration: none;
+  font-family: 'Fondamento', cursive; font-size: 13px; letter-spacing: 1px;
+  color: var(--muted); text-decoration: none;
   transition: color 0.2s; position: relative;
 }
 .nav-links a::after {
@@ -279,8 +281,8 @@ nav::after {
 .avatar-inner img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .hero-badge {
-  font-family: var(--mono); font-size: 10px; letter-spacing: 3px;
-  color: var(--yellow); text-transform: uppercase; margin-bottom: 8px; opacity: 0.85;
+  font-family: 'Fondamento', cursive; font-size: 12px; letter-spacing: 2px;
+  color: var(--yellow); margin-bottom: 8px; opacity: 0.85;
 }
 .hero-name {
   font-family: 'Harry P', cursive; font-size: clamp(58px, 12vw, 110px);
@@ -296,12 +298,12 @@ nav::after {
   font-weight: 400;
   text-shadow: 0 0 28px rgba(255,215,0,0.55), 0 2px 10px rgba(0,0,0,0.7);
 }
-.hero-tagline { font-family: 'HogwartsWizard', cursive; font-size: 13.5px; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 28px; line-height: 1.7; }
+.hero-tagline { font-family: 'Fondamento', cursive; font-size: 14px; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 28px; line-height: 1.7; }
 .hero-tagline span { color: var(--yellow); font-style: normal; font-weight: 500; }
 .hero-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 32px; }
 .chip {
   display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--mono); font-size: 11px; letter-spacing: 1px;
+  font-family: 'Fondamento', cursive; font-size: 12px; letter-spacing: 0.5px;
   color: var(--muted); background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,215,0,0.15); padding: 6px 14px; border-radius: 2px; transition: all 0.2s;
 }
@@ -312,15 +314,15 @@ nav::after {
   color: var(--yellow); box-shadow: var(--glow-y); font-weight: 700;
 }
 .hero-line { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,215,0,0.25), transparent); margin: 4px 0 24px; }
-.scroll-hint { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; animation: bounce 2s ease infinite; }
+.scroll-hint { font-family: 'Fondamento', cursive; font-size: 12px; letter-spacing: 1px; color: var(--muted); animation: bounce 2s ease infinite; }
 .scroll-hint span { color: var(--yellow); }
 @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
 
 /* ══════ SECTIONS ══════ */
 section { position: relative; z-index: 1; padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
 .section-label {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 4px;
-  color: var(--yellow); text-transform: uppercase; margin-bottom: 8px;
+  font-family: 'Fondamento', cursive; font-size: 13px; letter-spacing: 3px;
+  color: var(--yellow); margin-bottom: 8px;
   display: flex; align-items: center; gap: 12px;
 }
 .section-label::before { content: ''; width: 32px; height: 1px; background: var(--yellow); }
@@ -343,22 +345,22 @@ section { position: relative; z-index: 1; padding: 80px 24px; max-width: 1100px;
 .about-card:nth-child(5) { border-left: 2px solid var(--yellow); }
 .card-icon { font-size: 32px; margin-bottom: 14px; display: block; }
 .card-title { font-family: 'Crimes of Grindelwald', serif; font-size: 17px; letter-spacing: 2px; color: var(--yellow); margin-bottom: 10px; }
-.card-text { font-family: 'HogwartsWizard', cursive; font-size: 14px; line-height: 1.9; color: #94a3b8; }
+.card-text { font-family: 'Fondamento', cursive; font-size: 14.5px; line-height: 1.85; color: #94a3b8; }
 .card-text strong { color: var(--text); }
-.card-tag { display: inline-block; margin-top: 14px; font-family: var(--mono); font-size: 10px; letter-spacing: 1px; color: var(--yellow); background: var(--yellow-dim); border: 1px solid rgba(255,215,0,0.2); padding: 3px 10px; }
+.card-tag { display: inline-block; margin-top: 14px; font-family: 'Fondamento', cursive; font-size: 11px; letter-spacing: 0.5px; color: var(--yellow); background: var(--yellow-dim); border: 1px solid rgba(255,215,0,0.2); padding: 3px 10px; }
 
 /* QUOTE */
 .quote-section { padding: 80px 24px; position: relative; z-index: 1; background: linear-gradient(180deg, transparent, rgba(255,215,0,0.02), transparent); border-top: 1px solid rgba(255,215,0,0.1); border-bottom: 1px solid rgba(255,215,0,0.1); }
 .quote-inner { max-width: 800px; margin: 0 auto; text-align: center; position: relative; }
-.quote-mark { font-family: 'HogwartsWizard', cursive; font-size: 140px; line-height: 0.6; color: var(--yellow); opacity: 0.12; display: block; user-select: none; font-style: italic; }
+.quote-mark { font-family: 'Harry P', cursive; font-size: 140px; line-height: 0.6; color: var(--yellow); opacity: 0.12; display: block; user-select: none; font-style: italic; }
 .quote-text { font-family: 'HogwartsWizard', cursive; font-size: clamp(18px, 2.8vw, 26px); line-height: 1.75; color: var(--text); margin: -20px 0 20px; position: relative; }
 .quote-text em { color: var(--yellow); font-style: normal; font-weight: 700; }
-.quote-attr { font-family: var(--mono); font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; }
+.quote-attr { font-family: 'Fondamento', cursive; font-size: 13px; letter-spacing: 2px; color: var(--muted); font-style: italic; }
 .quote-line { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--yellow), transparent); margin: 16px auto; }
 
 /* BROTHERHOOD */
 #network { padding: 80px 24px; position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
-.brotherhood-tagline { font-family: var(--mono); font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 40px; display: flex; align-items: center; gap: 16px; }
+.brotherhood-tagline { font-family: 'Fondamento', cursive; font-size: 13px; letter-spacing: 1px; color: var(--muted); font-style: italic; margin-bottom: 40px; display: flex; align-items: center; gap: 16px; }
 .brotherhood-tagline::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(255,215,0,0.2), transparent); }
 .bro-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
 .bro-card { background: var(--glass); border: 1px solid rgba(255,215,0,0.1); backdrop-filter: blur(12px); padding: 28px 20px; text-align: center; position: relative; overflow: hidden; transition: all 0.3s; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%); }
@@ -368,7 +370,7 @@ section { position: relative; z-index: 1; padding: 80px 24px; max-width: 1100px;
 .bro-avatar { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--bg3), var(--bg2)); border: 2px solid rgba(255,215,0,0.2); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-family: 'Harry P', cursive; font-size: 26px; letter-spacing: 1px; transition: all 0.3s; color: var(--yellow); }
 .bro-card:hover .bro-avatar { border-color: var(--yellow); box-shadow: var(--glow-y); }
 .bro-name { font-family: 'Crimes of Grindelwald', serif; font-size: 18px; font-weight: 400; color: var(--text); letter-spacing: 1px; margin-bottom: 6px; }
-.bro-role { font-size: 12px; color: var(--yellow); font-style: italic; margin-bottom: 10px; }
+.bro-role { font-family: 'Fondamento', cursive; font-size: 13px; color: var(--yellow); font-style: italic; margin-bottom: 10px; }
 .bro-emoji { font-size: 18px; }
 
 /* GALLERY */
@@ -382,14 +384,14 @@ section { position: relative; z-index: 1; padding: 80px 24px; max-width: 1100px;
 .gallery-item:hover img { transform: scale(1.07); }
 .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,8,16,0.85) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 16px; }
 .gallery-item:hover .gallery-overlay { opacity: 1; }
-.gallery-overlay-text { font-family: var(--mono); font-size: 11px; letter-spacing: 1px; color: var(--yellow); }
+.gallery-overlay-text { font-family: 'Fondamento', cursive; font-size: 12px; letter-spacing: 0.5px; color: var(--yellow); }
 
 /* LIGHTBOX */
 #lightbox { position: fixed; inset: 0; z-index: 7000; background: rgba(6,8,16,0.97); backdrop-filter: blur(16px); display: none; align-items: center; justify-content: center; }
 #lightbox.open { display: flex; }
 .lightbox-content { max-width: 92vw; max-height: 92vh; position: relative; text-align: center; }
 .lightbox-content img { max-width: 100%; max-height: 85vh; border: 2px solid rgba(255,215,0,0.25); border-radius: 4px; box-shadow: 0 0 60px rgba(255,215,0,0.15); object-fit: contain; }
-.lightbox-caption { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; color: var(--yellow); text-transform: uppercase; margin-top: 12px; opacity: 0.8; }
+.lightbox-caption { font-family: 'Fondamento', cursive; font-size: 13px; letter-spacing: 1px; color: var(--yellow); margin-top: 12px; opacity: 0.8; }
 .lightbox-close { position: absolute; top: -16px; right: -16px; background: var(--bg2); border: 1px solid rgba(255,215,0,0.3); color: var(--yellow); cursor: pointer; width: 36px; height: 36px; font-size: 16px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.2s; z-index: 10; }
 .lightbox-close:hover { background: var(--yellow); color: #000; }
 
@@ -397,7 +399,7 @@ section { position: relative; z-index: 1; padding: 80px 24px; max-width: 1100px;
 footer { position: relative; z-index: 1; border-top: 1px solid rgba(255,215,0,0.1); padding: 40px 24px; text-align: center; }
 footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue) 0 25%, var(--green) 25% 50%, var(--yellow) 50% 75%, var(--red) 75% 100%); }
 .footer-logo { font-family: 'Harry P', cursive; font-size: 26px; letter-spacing: 1px; background: linear-gradient(90deg, var(--yellow), var(--yellow2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
-.footer-sub { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+.footer-sub { font-family: 'Fondamento', cursive; font-size: 13px; letter-spacing: 1px; color: var(--muted); }
 
 /* ANIMATIONS */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -549,7 +551,7 @@ footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; hei
     <span class="quote-mark">"</span>
     <div class="quote-text">JNV memories describe karvi e <em>'Speaking magic to Muggles'</em> jevu che —<br>badha ne khabar na pade, pan <em>jene khabar che emne badhu j khabar che!</em></div>
     <div class="quote-line"></div>
-    <div class="quote-attr">— Bhargav Siddhapura "Limbu" · Batch 2015 · JNV Bhavnagar</div>
+    <div class="quote-attr">— Bhargav "Limbu" Siddhapura · Batch 2015 · JNV Bhavnagar</div>
   </div>
 </div>
 
@@ -573,22 +575,22 @@ footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; hei
   <div class="gallery-grid">
     <div class="gallery-item" onclick="openLightbox('bs2.jpeg','Coastal Wanderer')">
       <img src="bs2.jpeg" alt="By the Sea" onerror="this.style.display='none';this.parentElement.querySelector('.img-placeholder').style.display='flex'">
-      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">🌊</span><span style="font-family:var(--mono);font-size:10px;letter-spacing:1px">By the Sea</span></div>
+      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">🌊</span><span style="font-family:'Fondamento',cursive;font-size:12px;letter-spacing:1px">By the Sea</span></div>
       <div class="gallery-overlay"><span class="gallery-overlay-text">🌊 By the Sea →</span></div>
     </div>
     <div class="gallery-item" onclick="openLightbox('bs3.jpeg','JNV Classroom · 2014')">
       <img src="bs3.jpeg" alt="" onerror="this.style.display='none';this.parentElement.querySelector('.img-placeholder').style.display='flex'">
-      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">📚</span><span style="font-family:var(--mono);font-size:10px;letter-spacing:1px">JNV Classroom</span></div>
+      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">📚</span><span style="font-family:'Fondamento',cursive;font-size:12px;letter-spacing:1px">JNV Classroom</span></div>
       <div class="gallery-overlay"><span class="gallery-overlay-text">📚 JNV Classroom →</span></div>
     </div>
     <div class="gallery-item" onclick="openLightbox('bs4.jpeg','Sports Ground')">
       <img src="bs4.jpeg" alt="" onerror="this.style.display='none';this.parentElement.querySelector('.img-placeholder').style.display='flex'">
-      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">🏟️</span><span style="font-family:var(--mono);font-size:10px;letter-spacing:1px">Sports Ground</span></div>
+      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">🏟️</span><span style="font-family:'Fondamento',cursive;font-size:12px;letter-spacing:1px">Sports Ground</span></div>
       <div class="gallery-overlay"><span class="gallery-overlay-text">🏟️ Sports Ground →</span></div>
     </div>
     <div class="gallery-item" onclick="openLightbox('bs5.jpeg','Suited Up')">
       <img src="bs5.jpeg" alt="" onerror="this.style.display='none';this.parentElement.querySelector('.img-placeholder').style.display='flex'">
-      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">👔</span><span style="font-family:var(--mono);font-size:10px;letter-spacing:1px">Suited Up</span></div>
+      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">👔</span><span style="font-family:'Fondamento',cursive;font-size:12px;letter-spacing:1px">Suited Up</span></div>
       <div class="gallery-overlay"><span class="gallery-overlay-text">👔 All Dressed Up →</span></div>
     </div>
   </div>
