@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 <!-- ░░ GENERIC META — nothing personal leaks in previews or tab ░░ -->
-<title>F.O.D. 🔒</title>
+<title>F.O.D. ⭐</title>
 <meta name="description"    content="Private. Access required.">
 <meta name="robots"         content="noindex, nofollow">
 <meta property="og:title"       content="🔒 Private Page">
@@ -61,7 +61,7 @@ body {
   background: var(--bg); color: var(--text);
   font-family: 'Fondamento', cursive; min-height: 100vh; overflow-x: hidden;
 }
-body.locked { overflow: hidden; }
+
 body::before {
   content: ''; position: fixed; inset: 0; z-index: 0;
   background-image:
@@ -78,128 +78,8 @@ body::before {
   transition: width 0.1s; box-shadow: var(--glow-y);
 }
 
-/* ══════ LOCK SCREEN ══════ */
-#lock-screen {
-  position: fixed; inset: 0; z-index: 8000;
-  background: var(--bg);
-  display: flex; align-items: center; justify-content: center;
-  transition: opacity 0.6s ease, transform 0.6s ease; overflow: hidden;
-}
-#lock-screen.unlock { opacity: 0; transform: scale(1.05); pointer-events: none; }
-#lock-screen::before {
-  content: ''; position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(255,215,0,0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,215,0,0.035) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-.lock-strips {
-  position: absolute; top: 0; left: 0; right: 0; height: 4px;
-  background: linear-gradient(90deg, var(--blue) 0%, var(--green) 33%, var(--yellow) 60%, var(--red) 100%);
-}
-.lock-strip-bottom {
-  position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
-  background: linear-gradient(90deg, var(--yellow) 0%, var(--red) 33%, var(--green) 66%, var(--blue) 100%);
-}
-.lock-glow {
-  position: absolute; width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(255,215,0,0.07) 0%, transparent 70%);
-  border-radius: 50%; top: 50%; left: 50%;
-  transform: translate(-50%, -50%); pointer-events: none;
-  animation: pulse-glow 4s ease-in-out infinite;
-}
-@keyframes pulse-glow {
-  0%,100% { transform: translate(-50%,-50%) scale(1); opacity:1; }
-  50%      { transform: translate(-50%,-50%) scale(1.15); opacity:0.6; }
-}
-.lock-box {
-  position: relative; z-index: 1; background: var(--glass);
-  border: 1px solid rgba(255,215,0,0.2); backdrop-filter: blur(24px);
-  padding: 48px 40px; width: calc(100% - 32px); max-width: 420px;
-  text-align: center;
-  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
-}
-.lock-box::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--blue), var(--green), var(--yellow), var(--red));
-}
-.lock-box::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--red), var(--yellow), var(--green), var(--blue));
-}
-.lock-fod-label {
-  font-family: 'Fondamento', cursive; font-size: 11px; letter-spacing: 2px;
-  color: var(--yellow); margin-bottom: 10px; opacity: 0.7;
-}
-.lock-quote {
-  font-family: 'Fondamento', cursive; font-size: clamp(13px, 3.5vw, 16px);
-  color: var(--text); line-height: 1.75;
-  margin-bottom: 6px; padding: 0 8px; position: relative;
-}
-.lock-quote::before {
-  content: '"'; font-family: 'Harry P', cursive; font-size: 60px;
-  color: var(--yellow); opacity: 0.15;
-  position: absolute; top: -18px; left: -4px; line-height: 1;
-}
-.lock-quote em { color: var(--yellow); font-style: normal; font-weight: 700; }
-.lock-quote-attr {
-  font-family: 'Fondamento', cursive; font-size: 11px; letter-spacing: 1px;
-  color: var(--muted); font-style: italic; margin-bottom: 28px;
-}
-.lock-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,215,0,0.2), transparent);
-  margin: 0 0 24px;
-}
-.lock-access-label {
-  font-family: 'Fondamento', cursive; font-size: 11px; letter-spacing: 2px;
-  color: var(--muted); margin-bottom: 12px;
-}
-.lock-input-wrap { position: relative; margin-bottom: 12px; }
-#lock-input {
-  width: 100%; background: rgba(0,0,0,0.45);
-  border: 1px solid rgba(255,215,0,0.18); color: var(--text);
-  font-family: 'Fondamento', cursive; font-size: 13px; letter-spacing: 2px;
-  padding: 14px 48px 14px 18px; outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
-}
-#lock-input:focus {
-  border-color: var(--yellow);
-  box-shadow: 0 0 0 1px rgba(255,215,0,0.25), inset 0 0 20px rgba(255,215,0,0.04);
-}
-#lock-input.shake { border-color: var(--red); animation: shake 0.35s ease; }
-#pw-toggle {
-  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-  background: none; border: none; color: var(--muted); cursor: pointer;
-  font-size: 16px; padding: 4px; transition: color 0.2s;
-}
-#pw-toggle:hover { color: var(--yellow); }
-#lock-btn {
-  width: 100%; background: transparent; border: 1px solid var(--yellow);
-  color: var(--yellow); font-family: 'Fondamento', cursive; font-size: 13px; font-weight: 700;
-  letter-spacing: 2px; padding: 14px; cursor: pointer; text-transform: uppercase;
-  transition: all 0.25s;
-  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
-  position: relative; overflow: hidden;
-}
-#lock-btn::after {
-  content: ''; position: absolute; inset: 0; background: var(--yellow);
-  transform: translateX(-101%); transition: transform 0.3s ease; z-index: -1;
-}
-#lock-btn:hover { color: #000; box-shadow: var(--glow-y); }
-#lock-btn:hover::after { transform: translateX(0); }
-#lock-error {
-  font-family: 'Fondamento', cursive; font-size: 12px; color: var(--red);
-  letter-spacing: 0.5px; min-height: 20px; margin-top: 10px;
-}
-.lock-houses { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
-.house-dot { width: 8px; height: 8px; border-radius: 50%; }
 
-@keyframes shake {
-  0%,100%{transform:translateX(0)} 20%{transform:translateX(-10px)}
-  40%{transform:translateX(10px)} 60%{transform:translateX(-6px)} 80%{transform:translateX(6px)}
-}
+
 
 /* ══════ NAVBAR ══════ */
 nav {
@@ -416,7 +296,6 @@ footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; hei
   .hero-card { padding: 32px 20px; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
   .gallery-item:first-child { grid-column: span 1; grid-row: span 1; }
-  .lock-box { padding: 36px 22px; }
   .quote-section { padding: 56px 20px; }
   .about-grid { grid-template-columns: 1fr; }
   .bro-grid { grid-template-columns: repeat(2, 1fr); }
@@ -430,39 +309,14 @@ footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; hei
 }
 </style>
 </head>
-<body class="locked">
+<body>
 
 <div id="scroll-bar"></div>
 
-<!-- LOCK SCREEN -->
-<div id="lock-screen">
-  <div class="lock-strips"></div>
-  <div class="lock-strip-bottom"></div>
-  <div class="lock-glow"></div>
-  <div class="lock-box">
-    <div class="lock-fod-label">⭐ Today's F.O.D.</div>
-    <div class="lock-quote" id="fod-quote"></div>
-    <div class="lock-quote-attr" id="fod-attr"></div>
-    <div class="lock-divider"></div>
-    <div class="lock-access-label">🔒 Private Access Required</div>
-    <div class="lock-input-wrap">
-      <input type="password" id="lock-input" placeholder="Enter Password"
-             autocomplete="off" onkeydown="if(event.key==='Enter')unlock()">
-      <button id="pw-toggle" onclick="togglePw()">👁</button>
-    </div>
-    <button id="lock-btn" onclick="unlock()">UNLOCK ACCESS →</button>
-    <div id="lock-error"></div>
-    <div class="lock-houses">
-      <div class="house-dot" style="background:var(--blue)"></div>
-      <div class="house-dot" style="background:var(--green)"></div>
-      <div class="house-dot" style="background:var(--yellow);transform:scale(1.6);box-shadow:0 0 8px rgba(255,215,0,0.6)"></div>
-      <div class="house-dot" style="background:var(--red)"></div>
-    </div>
-  </div>
-</div>
 
-<!-- MAIN CONTENT — hidden until unlocked via CSS, but also gated by JS -->
-<div id="main-content" style="display:none;">
+
+<!-- MAIN CONTENT -->
+<div id="main-content">
 
 <!-- NAVBAR -->
 <nav>
@@ -624,64 +478,6 @@ var _q=[
   ["Every great maker started somewhere unremarkable. He started here.","— 2015"],
   ["The roll call ends. The story never does.","— JNV Chronicles"]
 ];
-(function(){
-  var d=new Date(),i=(d.getFullYear()*366+d.getMonth()*31+d.getDate())%_q.length;
-  document.getElementById("fod-quote").textContent=_q[i][0];
-  document.getElementById("fod-attr").textContent=_q[i][1];
-})();
-
-/* ── Auth via SHA-256 — password never stored in plain form ── */
-async function _verify(v){
-  var enc=new TextEncoder(),buf=await crypto.subtle.digest("SHA-256",enc.encode(v));
-  var hex=Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0");}).join("");
-  return hex==="3d3f6b55c26e28651f04af83c1d820a9e515c9746561085a325f0a8cc4c88ebb";
-}
-
-function togglePw(){
-  var i=document.getElementById("lock-input");
-  i.type=i.type==="password"?"text":"password";
-}
-
-function unlock(){
-  var inp=document.getElementById("lock-input"),
-      err=document.getElementById("lock-error"),
-      val=inp.value;
-  if(!val){err.textContent="✗ Enter a password.";return;}
-  _verify(val).then(function(ok){
-    if(ok){
-      try{sessionStorage.setItem("_s","1");}catch(e){}
-      document.getElementById("lock-screen").classList.add("unlock");
-      document.body.classList.remove("locked");
-      document.getElementById("main-content").style.display="block";
-      document.title="F.O.D. — Unlocked ⭐";
-      setTimeout(function(){document.getElementById("lock-screen").style.display="none";},700);
-      err.textContent="";
-      _initScroll();
-      _initReveal();
-    } else {
-      inp.classList.remove("shake");
-      void inp.offsetWidth;
-      inp.classList.add("shake");
-      err.textContent="✗ Incorrect. Try again.";
-      inp.value="";
-      setTimeout(function(){inp.classList.remove("shake");},400);
-    }
-  });
-}
-
-/* ── Auto-unlock if session active ── */
-(function(){
-  try{
-    if(sessionStorage.getItem("_s")==="1"){
-      document.getElementById("lock-screen").style.display="none";
-      document.body.classList.remove("locked");
-      document.getElementById("main-content").style.display="block";
-      document.title="F.O.D. — Unlocked ⭐";
-      _initScroll();
-      _initReveal();
-    }
-  }catch(e){}
-})();
 
 function _initScroll(){
   window.addEventListener("scroll",function(){
@@ -701,6 +497,9 @@ function _initReveal(){
     el.style.opacity="0";obs.observe(el);
   });
 }
+
+_initScroll();
+_initReveal();
 
 function closeMobileNav(){document.querySelector(".nav-links").classList.remove("open");}
 
