@@ -14,7 +14,24 @@
 <meta name="twitter:card"       content="summary">
 <meta name="twitter:title"      content="🔒 Private Page">
 
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Harry Potter Fonts -->
+<link href="https://db.onlinewebfonts.com/c/181ef9a7aee45c119e68f294e8426a3a?family=Harry+P" rel="stylesheet">
+<style>
+/* Crimes of Grindelwald — titles */
+@font-face {
+  font-family: 'Crimes of Grindelwald';
+  src: url('https://db.onlinewebfonts.com/t/e4b2e7ec0a58c30fd33a7c0aaf77b75e.woff2') format('woff2'),
+       url('https://db.onlinewebfonts.com/t/e4b2e7ec0a58c30fd33a7c0aaf77b75e.woff') format('woff');
+  font-weight: normal; font-style: normal;
+}
+/* HogwartsWizard — body / context */
+@font-face {
+  font-family: 'HogwartsWizard';
+  src: url('https://www.wfonts.com/download/data/2016/03/14/hogwartswizard/hogww.woff') format('woff');
+  font-weight: normal; font-style: normal;
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:        #060810;
@@ -31,15 +48,16 @@
   --muted:     #64748b;
   --glass:     rgba(12,18,32,0.75);
   --mono:      'JetBrains Mono', monospace;
-  --display:   'Bebas Neue', cursive;
-  --body:      'DM Sans', sans-serif;
+  --display:   'Harry P', cursive;
+  --titles:    'Crimes of Grindelwald', serif;
+  --body:      'HogwartsWizard', cursive;
   --glow-y:    0 0 24px rgba(255,215,0,0.45);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
   background: var(--bg); color: var(--text);
-  font-family: var(--body); min-height: 100vh; overflow-x: hidden;
+  font-family: 'HogwartsWizard', cursive; min-height: 100vh; overflow-x: hidden;
 }
 body.locked { overflow: hidden; }
 body::before {
@@ -112,12 +130,12 @@ body::before {
   color: var(--yellow); text-transform: uppercase; margin-bottom: 10px; opacity: 0.7;
 }
 .lock-quote {
-  font-family: var(--body); font-size: clamp(13px, 3.5vw, 15px);
-  font-style: italic; color: var(--text); line-height: 1.65;
+  font-family: 'HogwartsWizard', cursive; font-size: clamp(13px, 3.5vw, 16px);
+  color: var(--text); line-height: 1.75;
   margin-bottom: 6px; padding: 0 8px; position: relative;
 }
 .lock-quote::before {
-  content: '"'; font-family: var(--display); font-size: 60px;
+  content: '"'; font-family: 'Harry P', cursive; font-size: 60px;
   color: var(--yellow); opacity: 0.15;
   position: absolute; top: -18px; left: -4px; line-height: 1;
 }
@@ -193,7 +211,7 @@ nav::after {
   background: linear-gradient(90deg, var(--blue) 0 25%, var(--green) 25% 50%, var(--yellow) 50% 75%, var(--red) 75% 100%);
 }
 .nav-logo {
-  font-family: var(--display); font-size: 16px; letter-spacing: 4px;
+  font-family: 'Harry P', cursive; font-size: 26px; letter-spacing: 3px; font-weight: 400;
   background: linear-gradient(90deg, var(--yellow), var(--yellow2));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text; flex: 1; white-space: nowrap;
@@ -265,14 +283,20 @@ nav::after {
   color: var(--yellow); text-transform: uppercase; margin-bottom: 8px; opacity: 0.85;
 }
 .hero-name {
-  font-family: var(--display); font-size: clamp(48px, 8vw, 80px);
-  letter-spacing: 6px; line-height: 0.95;
-  background: linear-gradient(135deg, var(--yellow) 0%, #fff 40%, var(--yellow2) 100%);
+  font-family: 'Harry P', cursive; font-size: clamp(58px, 12vw, 110px);
+  letter-spacing: 4px; line-height: 0.92; font-weight: 400;
+  background: linear-gradient(135deg, var(--yellow) 0%, #fff8dc 45%, var(--yellow2) 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text; margin-bottom: 6px;
+  background-clip: text; margin-bottom: 4px;
+  filter: drop-shadow(0 0 22px rgba(255,215,0,0.4));
 }
-.hero-nick { font-family: var(--mono); font-size: 16px; color: var(--yellow); letter-spacing: 2px; margin-bottom: 20px; }
-.hero-tagline { font-size: 14px; color: var(--muted); letter-spacing: 1px; font-style: italic; margin-bottom: 28px; line-height: 1.6; }
+.hero-nick {
+  font-family: 'Harry P', cursive; font-size: clamp(28px, 6vw, 52px);
+  color: var(--yellow); letter-spacing: 2px; margin-bottom: 18px;
+  font-weight: 400;
+  text-shadow: 0 0 28px rgba(255,215,0,0.55), 0 2px 10px rgba(0,0,0,0.7);
+}
+.hero-tagline { font-family: 'HogwartsWizard', cursive; font-size: 13.5px; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 28px; line-height: 1.7; }
 .hero-tagline span { color: var(--yellow); font-style: normal; font-weight: 500; }
 .hero-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 32px; }
 .chip {
@@ -300,7 +324,7 @@ section { position: relative; z-index: 1; padding: 80px 24px; max-width: 1100px;
   display: flex; align-items: center; gap: 12px;
 }
 .section-label::before { content: ''; width: 32px; height: 1px; background: var(--yellow); }
-.section-title { font-family: var(--display); font-size: clamp(36px, 5vw, 54px); letter-spacing: 4px; line-height: 1; margin-bottom: 40px; color: var(--text); }
+.section-title { font-family: 'Harry P', cursive; font-size: clamp(32px, 4.5vw, 48px); letter-spacing: 1px; line-height: 1; margin-bottom: 40px; color: var(--text); }
 .section-title span { color: var(--yellow); }
 
 /* ABOUT */
@@ -318,16 +342,16 @@ section { position: relative; z-index: 1; padding: 80px 24px; max-width: 1100px;
 .about-card:nth-child(4) { border-left: 2px solid var(--green); }
 .about-card:nth-child(5) { border-left: 2px solid var(--yellow); }
 .card-icon { font-size: 32px; margin-bottom: 14px; display: block; }
-.card-title { font-family: var(--mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--yellow); margin-bottom: 10px; }
-.card-text { font-size: 13.5px; line-height: 1.75; color: #94a3b8; }
+.card-title { font-family: 'Crimes of Grindelwald', serif; font-size: 17px; letter-spacing: 2px; color: var(--yellow); margin-bottom: 10px; }
+.card-text { font-family: 'HogwartsWizard', cursive; font-size: 14px; line-height: 1.9; color: #94a3b8; }
 .card-text strong { color: var(--text); }
 .card-tag { display: inline-block; margin-top: 14px; font-family: var(--mono); font-size: 10px; letter-spacing: 1px; color: var(--yellow); background: var(--yellow-dim); border: 1px solid rgba(255,215,0,0.2); padding: 3px 10px; }
 
 /* QUOTE */
 .quote-section { padding: 80px 24px; position: relative; z-index: 1; background: linear-gradient(180deg, transparent, rgba(255,215,0,0.02), transparent); border-top: 1px solid rgba(255,215,0,0.1); border-bottom: 1px solid rgba(255,215,0,0.1); }
 .quote-inner { max-width: 800px; margin: 0 auto; text-align: center; position: relative; }
-.quote-mark { font-family: var(--display); font-size: 120px; line-height: 0.6; color: var(--yellow); opacity: 0.1; display: block; user-select: none; }
-.quote-text { font-size: clamp(18px, 2.5vw, 26px); font-style: italic; line-height: 1.6; color: var(--text); margin: -20px 0 20px; position: relative; }
+.quote-mark { font-family: 'HogwartsWizard', cursive; font-size: 140px; line-height: 0.6; color: var(--yellow); opacity: 0.12; display: block; user-select: none; font-style: italic; }
+.quote-text { font-family: 'HogwartsWizard', cursive; font-size: clamp(18px, 2.8vw, 26px); line-height: 1.75; color: var(--text); margin: -20px 0 20px; position: relative; }
 .quote-text em { color: var(--yellow); font-style: normal; font-weight: 700; }
 .quote-attr { font-family: var(--mono); font-size: 11px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; }
 .quote-line { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--yellow), transparent); margin: 16px auto; }
@@ -341,19 +365,20 @@ section { position: relative; z-index: 1; padding: 80px 24px; max-width: 1100px;
 .bro-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 16px; height: 2px; background: linear-gradient(90deg, var(--yellow), var(--blue)); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
 .bro-card:hover { border-color: rgba(255,215,0,0.35); transform: translateY(-6px); box-shadow: 0 16px 48px rgba(255,215,0,0.08); }
 .bro-card:hover::after { transform: scaleX(1); }
-.bro-avatar { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--bg3), var(--bg2)); border: 2px solid rgba(255,215,0,0.2); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 26px; letter-spacing: 1px; transition: all 0.3s; color: var(--yellow); }
+.bro-avatar { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--bg3), var(--bg2)); border: 2px solid rgba(255,215,0,0.2); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-family: 'Harry P', cursive; font-size: 26px; letter-spacing: 1px; transition: all 0.3s; color: var(--yellow); }
 .bro-card:hover .bro-avatar { border-color: var(--yellow); box-shadow: var(--glow-y); }
-.bro-name { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--text); letter-spacing: 1px; margin-bottom: 6px; }
+.bro-name { font-family: 'Crimes of Grindelwald', serif; font-size: 18px; font-weight: 400; color: var(--text); letter-spacing: 1px; margin-bottom: 6px; }
 .bro-role { font-size: 12px; color: var(--yellow); font-style: italic; margin-bottom: 10px; }
 .bro-emoji { font-size: 18px; }
 
 /* GALLERY */
 #gallery { padding: 80px 24px; position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
-.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
 .gallery-item { border-radius: 4px; border: 1px solid rgba(255,215,0,0.12); position: relative; overflow: hidden; cursor: pointer; transition: all 0.35s; background: var(--bg3); aspect-ratio: 1; }
 .gallery-item:hover { border-color: var(--yellow); box-shadow: 0 0 28px rgba(255,215,0,0.2); transform: scale(1.03); z-index: 2; }
-.gallery-item:first-child { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+.gallery-item:first-child { grid-column: span 1; grid-row: span 1; }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.gallery-item img::after { content: "📷"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 40px; background: var(--bg3); color: var(--muted); }
 .gallery-item:hover img { transform: scale(1.07); }
 .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,8,16,0.85) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 16px; }
 .gallery-item:hover .gallery-overlay { opacity: 1; }
@@ -371,7 +396,7 @@ section { position: relative; z-index: 1; padding: 80px 24px; max-width: 1100px;
 /* FOOTER */
 footer { position: relative; z-index: 1; border-top: 1px solid rgba(255,215,0,0.1); padding: 40px 24px; text-align: center; }
 footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue) 0 25%, var(--green) 25% 50%, var(--yellow) 50% 75%, var(--red) 75% 100%); }
-.footer-logo { font-family: var(--display); font-size: 28px; letter-spacing: 4px; background: linear-gradient(90deg, var(--yellow), var(--yellow2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
+.footer-logo { font-family: 'Harry P', cursive; font-size: 26px; letter-spacing: 1px; background: linear-gradient(90deg, var(--yellow), var(--yellow2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
 .footer-sub { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
 
 /* ANIMATIONS */
@@ -388,7 +413,7 @@ footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; hei
   section, #gallery, #network { padding: 56px 16px; }
   .hero-card { padding: 32px 20px; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-  .gallery-item:first-child { grid-column: span 2; grid-row: span 1; }
+  .gallery-item:first-child { grid-column: span 1; grid-row: span 1; }
   .lock-box { padding: 36px 22px; }
   .quote-section { padding: 56px 20px; }
   .about-grid { grid-template-columns: 1fr; }
@@ -396,7 +421,7 @@ footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; hei
   .lightbox-close { top: 4px; right: 4px; }
 }
 @media (max-width: 480px) {
-  .gallery-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
   .gallery-item:first-child { grid-column: span 1; grid-row: span 1; }
   .bro-grid { grid-template-columns: 1fr; }
   .nav-logo { font-size: 11px; letter-spacing: 1px; }
@@ -462,16 +487,16 @@ footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; hei
           <img src="bs1.jpeg" alt="Profile">
         </div>
       </div>
-      <div class="hero-badge">// Profile · Batch 2015 · JNV Bhavnagar</div>
+      <div class="hero-badge">// Batch 2015 · JNV Bhavnagar · Udaygiri House</div>
       <div class="hero-name">Bhargav<br>Siddhapura</div>
-      <div class="hero-nick">🍋 &nbsp;Limbu&nbsp; 🍋</div>
-      <div class="hero-tagline">"<span>The Resilient Maker</span> — Turning Ideas into Reality"</div>
+      <div class="hero-nick">🍋 &nbsp; "Limbu" &nbsp; 🍋</div>
+      <div class="hero-tagline"><span>Die Manufacturer &amp; 3D Printing Entrepreneur</span><br><span style="color:var(--muted);font-size:13px;font-weight:400">Runs his own manufacturing unit in Bhavnagar — crafting industrial press-tool dies &amp; turning ideas into 3D-printed products</span></div>
       <div class="hero-line"></div>
       <div class="hero-chips">
         <div class="chip udaygiri"><span class="ci">⭐</span> House: Udaygiri</div>
         <div class="chip"><span class="ci">🌍</span> Bhavnagar, Gujarat</div>
-        <div class="chip"><span class="ci">⚙️</span> Die Manufacturing</div>
-        <div class="chip"><span class="ci">🖨️</span> 3D Printing</div>
+        <div class="chip"><span class="ci">⚙️</span> Profession: Die Manufacturer</div>
+        <div class="chip"><span class="ci">🖨️</span> Entrepreneur: 3D Printing</div>
         <div class="chip"><span class="ci">🎓</span> Batch 2015</div>
         <div class="chip"><span class="ci">🏸</span> Badminton · TT</div>
       </div>
@@ -488,32 +513,32 @@ footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; hei
     <div class="about-card">
       <span class="card-icon">🔭</span>
       <div class="card-title">The Quiet Observer</div>
-      <div class="card-text">In a hostel full of noise, Bhargav was the one watching, learning, and absorbing. <strong>Never the loudest in the room — always the sharpest.</strong> His stillness was never emptiness; it was strategy.</div>
+      <div class="card-text">Short-term memory loss hoy pan <strong>Bhargav bhai badhu 'observe' kare che!</strong> He remembers more than he shows — a silent strategist in the making. 🧐</div>
       <span class="card-tag"># Observe · Analyse · Execute</span>
     </div>
     <div class="about-card">
       <span class="card-icon">🍛</span>
       <div class="card-title">The Foodie Legend</div>
-      <div class="card-text">During IPL season, Bhargav ate at <strong>Kirpal Dhaba every single day for 30 days straight</strong>. Not by accident — by devotion. Dal, roti, and cricket scores.</div>
+      <div class="card-text">Amara Group no unbeatable record! <strong>April 2014 ma, thanks to IPL, continuous 30 divas sudhi Kirpal Dhaba nu jamvanu khadhu hatu.</strong> A true foodie achievement! 😋🏏</div>
       <span class="card-tag"># 30 Days · IPL · Kirpal Dhaba</span>
     </div>
     <div class="about-card">
       <span class="card-icon">🖨️</span>
       <div class="card-title">The Creator</div>
-      <div class="card-text">From the raw hum of a 3D printer to the precision of <strong>die manufacturing</strong> — Bhargav didn't just consume the industrial world, he joined it as a maker.</div>
+      <div class="card-text">Jya lokon ne ideas aave, tya <strong>Bhargav bhai 3D Printing thi e ideas ne 'Real Product' banavi de che.</strong> Designing is his passion and profession. 🖨️⚙️</div>
       <span class="card-tag"># 3D Printing · Die Manufacturing</span>
     </div>
     <div class="about-card">
       <span class="card-icon">🏫</span>
       <div class="card-title">JNV Training Ground</div>
-      <div class="card-text">Jawahar Navodaya Vidyalaya wasn't just school — it was a forge. <strong>Discipline, shared meals, midnight study sessions, power cuts, and a thousand small victories.</strong></div>
+      <div class="card-text">Emna mate <strong>JNV khali school nathi, pan life training ground hati.</strong> Discipline, struggle, ane confidence — badhu j tya thi shikhyu che.</div>
       <span class="card-tag"># JNV Bhavnagar · Discipline · Brotherhood</span>
     </div>
     <div class="about-card">
       <span class="card-icon">🏸</span>
       <div class="card-title">Sports Spirit</div>
-      <div class="card-text"><strong>Badminton and Table Tennis</strong> were never just games — they were battle arenas. House Udaygiri felt the weight of his footwork on every court.</div>
-      <span class="card-tag"># Badminton · Table Tennis · Udaygiri</span>
+      <div class="card-text">Always ready to defeat anyone in <strong>Badminton and Table Tennis.</strong> Pan life ni game ma toh e expert che j! 🏸🏓</div>
+      <span class="card-tag"># Badminton · Table Tennis</span>
     </div>
   </div>
 </section>
@@ -522,9 +547,9 @@ footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; hei
 <div class="quote-section">
   <div class="quote-inner">
     <span class="quote-mark">"</span>
-    <div class="quote-text">The boy who sat in the last bench at JNV wasn't hiding —<br>he was <em>watching everything</em>, waiting for his moment.</div>
+    <div class="quote-text">JNV memories describe karvi e <em>'Speaking magic to Muggles'</em> jevu che —<br>badha ne khabar na pade, pan <em>jene khabar che emne badhu j khabar che!</em></div>
     <div class="quote-line"></div>
-    <div class="quote-attr">— Batch 2015 · JNV Bhavnagar</div>
+    <div class="quote-attr">— Bhargav "Limbu" Siddhapura · Batch 2015 · JNV Bhavnagar</div>
   </div>
 </div>
 
@@ -534,8 +559,8 @@ footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; hei
   <div class="section-title">The <span>Brotherhood</span></div>
   <div class="brotherhood-tagline">The ones who made JNV what it was</div>
   <div class="bro-grid">
-    <div class="bro-card"><div class="bro-avatar">LM</div><div class="bro-name">Lalit Makwana</div><div class="bro-role">Brother</div><div class="bro-emoji">🔑</div></div>
-    <div class="bro-card"><div class="bro-avatar">ST</div><div class="bro-name">Santosh Thakur</div><div class="bro-role">Brother</div><div class="bro-emoji">💪</div></div>
+    <div class="bro-card"><div class="bro-avatar">LJ</div><div class="bro-name">Lalit Jani</div><div class="bro-role">Best Friend</div><div class="bro-emoji">🔑</div></div>
+    <div class="bro-card"><div class="bro-avatar">SS</div><div class="bro-name">Santosh Sangada</div><div class="bro-role">Darling</div><div class="bro-emoji">💪</div></div>
     <div class="bro-card"><div class="bro-avatar">JM</div><div class="bro-name">Jignesh Makwana</div><div class="bro-role">Brother</div><div class="bro-emoji">🔥</div></div>
     <div class="bro-card"><div class="bro-avatar">SC</div><div class="bro-name">Sachin Chawda</div><div class="bro-role">Brother</div><div class="bro-emoji">⚡</div></div>
   </div>
@@ -546,24 +571,24 @@ footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; hei
   <div class="section-label">Chapter 03</div>
   <div class="section-title">JNV <span>Memories</span></div>
   <div class="gallery-grid">
-    <div class="gallery-item" onclick="openLightbox('bs1.jpeg','Festival Vibes')">
-      <img src="bs1.jpeg" alt="">
-      <div class="gallery-overlay"><span class="gallery-overlay-text">🎉 Festival Vibes →</span></div>
-    </div>
     <div class="gallery-item" onclick="openLightbox('bs2.jpeg','Coastal Wanderer')">
-      <img src="bs2.jpeg" alt="">
+      <img src="bs2.jpeg" alt="By the Sea" onerror="this.style.display='none';this.parentElement.querySelector('.img-placeholder').style.display='flex'">
+      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">🌊</span><span style="font-family:var(--mono);font-size:10px;letter-spacing:1px">By the Sea</span></div>
       <div class="gallery-overlay"><span class="gallery-overlay-text">🌊 By the Sea →</span></div>
     </div>
     <div class="gallery-item" onclick="openLightbox('bs3.jpeg','JNV Classroom · 2014')">
-      <img src="bs3.jpeg" alt="">
+      <img src="bs3.jpeg" alt="" onerror="this.style.display='none';this.parentElement.querySelector('.img-placeholder').style.display='flex'">
+      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">📚</span><span style="font-family:var(--mono);font-size:10px;letter-spacing:1px">JNV Classroom</span></div>
       <div class="gallery-overlay"><span class="gallery-overlay-text">📚 JNV Classroom →</span></div>
     </div>
     <div class="gallery-item" onclick="openLightbox('bs4.jpeg','Sports Ground')">
-      <img src="bs4.jpeg" alt="">
+      <img src="bs4.jpeg" alt="" onerror="this.style.display='none';this.parentElement.querySelector('.img-placeholder').style.display='flex'">
+      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">🏟️</span><span style="font-family:var(--mono);font-size:10px;letter-spacing:1px">Sports Ground</span></div>
       <div class="gallery-overlay"><span class="gallery-overlay-text">🏟️ Sports Ground →</span></div>
     </div>
     <div class="gallery-item" onclick="openLightbox('bs5.jpeg','Suited Up')">
-      <img src="bs5.jpeg" alt="">
+      <img src="bs5.jpeg" alt="" onerror="this.style.display='none';this.parentElement.querySelector('.img-placeholder').style.display='flex'">
+      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">👔</span><span style="font-family:var(--mono);font-size:10px;letter-spacing:1px">Suited Up</span></div>
       <div class="gallery-overlay"><span class="gallery-overlay-text">👔 All Dressed Up →</span></div>
     </div>
   </div>
