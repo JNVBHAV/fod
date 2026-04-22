@@ -687,7 +687,7 @@
         <span class="rlb-icon">🎯</span>
         <div>
           <div class="rlb-title">FINAL REVEAL</div>
-          <div class="rlb-sub">Identity drops sharp at <strong>11:45 AM</strong></div>
+          <div class="rlb-sub">Identity drops sharp at <strong>11:45 PM</strong></div>
         </div>
       </div>
       <div class="reveal-timer-row" id="reveal-timer-row">
@@ -695,7 +695,7 @@
         <span class="rtimer-val" id="reveal-timer">--:--:--</span>
       </div>
       <button class="btn-reveal-final reveal-locked" id="btn-reveal-final" onclick="finalReveal()" disabled>
-        🔒 REVEAL UNLOCKS AT 11:45 AM
+        🔒 REVEAL UNLOCKS AT 11:45 PM
       </button>
     </div>
   </div>
@@ -718,226 +718,213 @@
 </div><!-- end .page#main-page -->
 
 <script>
-// ── CONFIG ──
-const GAME_START        = { h: 11, m: 0, s: 0 };
-const CLUE_INTERVAL_SEC = 150;
-const REVEAL_HOUR       = 11;
-const REVEAL_MIN        = 45;
-
-// ── OBFUSCATED CLUE DATA ──
-// Clue text is NOT stored in plain text.
-// Encoded so source inspection reveals nothing readable.
-// Decoded only at the exact moment of unlock.
-const _meta = [
-  { icon:"🌊", tag:"Clue 01 — The Forge",             _d:"bzQgO2EsLlJAX1RpKywvOGkrMzwhJGE7bEFTWGZpfCwqIyFuLTUoMGE7L0BdXFFpNyEzbD0mJjAsO2EtI2ESHkEsOz8pKWkgIDwqPGEtI0ESVVYoOjpnKSEa" },
-  { icon:"🎮", tag:"Clue 02 — The Double Arena",       _d:"YCU8MDItOGtGFURbaTc7KCosLGE8JDImaC5dRhBVJzstJik7bjJ+LDth3MvXEkNXJDs9ZyQ9IQN5Zz0kLTlWQRBXJz1paz86LzM+aTYvB2sbQVReLDsvIiA9OiA7aTw2HGsbQVRcKDppIiEoHQ==" },
-  { icon:"🏙️",tag:"Clue 03 — The War Station",        _d:"bzwiFVZeWyE3K2cpOycxNCxzJCA/FUtURz0haSg4aSszPCEnYTtsUFoQHj0xPCMjOz5hPCEnYTokUxJVQCw6PWc4JiBhKm42KWjftdAQQS48ICk+JiNhNyY6LSQiVxJREi03LiktIS1hKjs2NTwuWRJCRyY0aSI+LCY2eTAnKCtrUFpEEic7aTRrLAY=" },
-  { icon:"🗣️",tag:"Clue 04 — The One Word",           _d:"HFxeKHI9Lmw6NyAqaScgID8VVkJdPnIsKSNpKyktaSogO2tZXhdLLDodZ2IsIyA3aScyOiJTEkNbIXIwJj9pOmY3JiRhMS5dZhAcOjtpIiRpISkuaSAlJi5cQFYSOjshZyc6Dw==" },
-  { icon:"👑", tag:"Clue 05 — The Shadow Throne",      _d:"by0lWkBYRmk3ITNsLSAoMSwxYTw4QFgQVSc7LSktPT1hPCc8YS0jQRJJUGkmJS45K24kKyhzMi05XEJdV2kmPAVsZyA2NjswYS0jQRJEVy5yOiAiIAU=" },
-  { icon:"🌊", tag:"Clue 06 — The Birthground",        _d:"HCQ7IWcpLS8seT0yKTxrWVtfQWk3ITNsOmk1OCEnYdzL1xJXXCA5JSY4aT0xNj0gYTouQ1deEig3OmcpITphPScyYWQuWFtEEiczITNsOyslNSZzMjwuR1FVQWk2JSgkaT0kLygwYTwlUFtTXChyLDUpIRk=" },
-  { icon:"💰", tag:"Clue 07 — The Unwritten Blueprint",_d:"G1xfWz08LCpsJjphLSY0MyctFVlfXSsmMSI4aSspLWk2MyE7WFcQVyEmaSAiICAvOCUjYTEvVFdCXihyOmApIW5tKiw6LyYuRRJEXDw9Kmc/OyspLSZzJCQiXWUQHCQ3ITNsIi8kKytzNCcyFVdCXS83K2c/LCI0K2k2KTxrUVxRRjogLCMiPG4uLWk3JC0lFUdfS2k3OjItKisjeT0mI2hnWkYQXyA6aSMgJjphNCwnMjE4FVdYRmk3OjItKisjeT08L2jftdAQQT03IjUtJG4lNyhzMjouUlZVXmk0JmcpLi80PicyLWguXUYQVzo9ISRsLAY=" }
-];
-
-// ── DECODE — runs ONLY at unlock time ──
-// Key is split across variables so it is not visible as a plain string in source
-const _p1 = "NILGIR", _p2 = "I2025K", _p3 = "HASIYA";
-function _decode(enc) {
-  const K = (_p1 + _p2 + _p3).split("").map(c => c.charCodeAt(0));
-  const raw = atob(enc);
-  const bytes = new Uint8Array(raw.length);
-  for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
-  const unreversed = bytes.reverse();
-  const out = [];
-  for (let i = 0; i < unreversed.length; i++)
-    out.push(unreversed[i] ^ K[i % K.length]);
-  return new TextDecoder().decode(new Uint8Array(out));
-}
-
-const total = _meta.length;
-let revealed = 0;
-
-// ── SERVER TIME SYSTEM ──
-// Fetches real IST time from a public API on page load.
-// All comparisons use: Date.now() + _offset
-// Changing device clock has zero effect.
-let _offset = 0;
-let _timeReady = false;
-
-async function syncServerTime() {
-  document.getElementById("status-text").textContent = "SYNCING TIME...";
-  const apis = [
-    "https://worldtimeapi.org/api/timezone/Asia/Kolkata",
-    "https://timeapi.io/api/time/current/zone?timeZone=Asia/Kolkata"
-  ];
-  for (const url of apis) {
-    try {
-      const before = Date.now();
-      const res    = await fetch(url, { cache: "no-store" });
-      const after  = Date.now();
-      const data   = await res.json();
-      const serverMs = data.unixtime
-        ? data.unixtime * 1000
-        : new Date(data.dateTime).getTime();
-      // Subtract half the round-trip to estimate server time at midpoint
-      _offset = serverMs - Math.round((before + after) / 2);
-      _timeReady = true;
-      return;
-    } catch (_) { /* try next API */ }
-  }
-  // All APIs failed — fall back silently
-  _offset = 0;
-  _timeReady = true;
-}
-
-function realNow() { return Date.now() + _offset; }
-
-function getClueUnlockMs(index) {
-  const base = new Date(realNow());
-  base.setHours(GAME_START.h, GAME_START.m, GAME_START.s, 0);
-  return base.getTime() + index * CLUE_INTERVAL_SEC * 1000;
-}
-
-function getRevealUnlockMs() {
-  const t = new Date(realNow());
-  t.setHours(REVEAL_HOUR, REVEAL_MIN, 0, 0);
-  return t.getTime();
-}
-
-function getRevealedCountNow() {
-  const now = realNow();
-  let count = 0;
-  for (let i = 0; i < total; i++) {
-    if (now >= getClueUnlockMs(i)) count++;
-    else break;
-  }
-  return count;
-}
+// ── TIME SYSTEM ──
+// Clues: always visible
+// Reveal button: locked until 11:45 PM
+const REVEAL_HOUR = 23;
+const REVEAL_MIN  = 45;
 
 function getMsUntilReveal() {
-  return Math.max(0, getRevealUnlockMs() - realNow());
+  const now = new Date();
+  const target = new Date();
+  target.setHours(REVEAL_HOUR, REVEAL_MIN, 0, 0);
+  if (now >= target) return 0;
+  return target - now;
 }
 
-function pad(n) { return String(n).padStart(2, "0"); }
+function formatCountdown(ms) {
+  if (ms <= 0) return { h:'00', m:'00', s:'00' };
+  const total = Math.floor(ms / 1000);
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  return {
+    h: String(h).padStart(2,'0'),
+    m: String(m).padStart(2,'0'),
+    s: String(s).padStart(2,'0')
+  };
+}
 
-// ── BUILD CARDS (no clue text yet) ──
+function updateRevealBtn() {
+  const ms = getMsUntilReveal();
+  const btn = document.getElementById('btn-reveal-final');
+  const timerEl = document.getElementById('reveal-timer');
+  if (!btn) return;
+  if (ms <= 0) {
+    btn.disabled = false;
+    btn.classList.remove('reveal-locked');
+    btn.classList.add('reveal-ready');
+    btn.innerHTML = '🎯 REVEAL IDENTITY ⚡';
+    if (timerEl) timerEl.style.display = 'none';
+    return;
+  }
+  const t = formatCountdown(ms);
+  btn.disabled = true;
+  btn.classList.add('reveal-locked');
+  btn.innerHTML = `🔒 REVEAL UNLOCKS AT 11:45 PM`;
+  if (timerEl) timerEl.textContent = `${t.h}:${t.m}:${t.s}`;
+  setTimeout(updateRevealBtn, 1000);
+}
+// ── END TIME SYSTEM ──
+
+const clues = [
+  {
+    icon: "🌊",
+    tag: "Clue 01 — The Forge",
+    text: "The shade the ocean envies. The height the clouds call home. That's where they forged him.",
+  },
+  {
+    icon: "🎮",
+    tag: "Clue 02 — The Double Arena",
+    text: "Same hands. Two battlefields. One grass, one screen. Both times — he's reading the game before it's played.",
+  },
+  {
+    icon: "🏙️",
+    tag: "Clue 03 — The War Station",
+    text: "He's in the city where four letters changed a billion mornings — he's not there for the product, he's there to study the empire behind it.",
+  },
+  {
+    icon: "🗣️",
+    tag: "Clue 04 — The One Word",
+    text: "Ask his friends who he is. They won't say his first name. They'll say the one word that says it all.",
+  },
+  {
+    icon: "👑",
+    tag: "Clue 05 — The Shadow Throne",
+    text: "Kings get the crown. But empires are built by the one standing just behind the throne.",
+  },
+  {
+    icon: "🌊",
+    tag: "Clue 06 — The Birthground",
+    text: "Where ancient caves hold secrets older than time, and the sea never stops talking — that's the soil that made him.",
+  },
+  {
+    icon: "💰",
+    tag: "Clue 07 — The Unwritten Blueprint",
+    text: "He chose the language of ledgers and markets — not because the system told him to, but because you need to understand the rules before you break them. While others count pennies, he's already planning the empire the textbook forgot to mention.",
+  }
+];
+
+let revealed = 0;
+const total = clues.length;
+const CLUE_INTERVAL_MS = 3 * 60 * 1000; // 3 minutes
+let nextClueTimer = null;
+let nextClueAt = null; // timestamp when next clue drops
+
 function buildClues() {
-  const stack = document.getElementById("clues-stack");
-  stack.innerHTML = "";
-  _meta.forEach((c, i) => {
-    const div = document.createElement("div");
-    div.className = "clue-card locked";
-    div.id = "clue-" + i;
-    div.style.animationDelay = (i * 0.06) + "s";
-    div.innerHTML =
-      '<div class="clue-inner">' +
-        '<div class="clue-num">' + pad(i+1) + '</div>' +
-        '<div class="clue-icon">' + c.icon + '</div>' +
-        '<div class="clue-content">' +
-          '<div class="clue-tag">' + c.tag + '</div>' +
-          '<div class="clue-text" id="clue-text-' + i + '">???</div>' +
-        '</div>' +
-        '<div class="clue-lock" id="lock-' + i + '">🔒</div>' +
-      '</div>';
+  const stack = document.getElementById('clues-stack');
+  stack.innerHTML = '';
+  clues.forEach((c, i) => {
+    const div = document.createElement('div');
+    div.className = 'clue-card locked';
+    div.id = `clue-${i}`;
+    div.style.animationDelay = (i * 0.06) + 's';
+    div.innerHTML = `
+      <div class="clue-inner">
+        <div class="clue-num">${String(i+1).padStart(2,'0')}</div>
+        <div class="clue-icon">${c.icon}</div>
+        <div class="clue-content">
+          <div class="clue-tag">${c.tag}</div>
+          <div class="clue-text" id="clue-text-${i}">???</div>
+        </div>
+        <div class="clue-lock" id="lock-${i}">🔒</div>
+      </div>
+    `;
     stack.appendChild(div);
   });
+  updateProgress();
 }
 
-// ── REVEAL — decodes text only at this exact moment ──
-function revealClue(index, animate) {
+function revealClue(index) {
   if (index >= total) return;
-  const card = document.getElementById("clue-" + index);
-  if (!card || card.classList.contains("unlocked")) return;
-  const textEl = document.getElementById("clue-text-" + index);
-  const lockEl = document.getElementById("lock-" + index);
-  card.classList.remove("locked");
-  card.classList.add("unlocked");
-  if (animate) {
-    card.style.animation = "none";
-    card.offsetHeight;
-    card.style.animation = "clueReveal 0.6s cubic-bezier(0.175,0.885,0.32,1.275) both";
-  }
-  // Text only exists in DOM from this point — never before
-  textEl.textContent = _decode(_meta[index]._d);
-  lockEl.textContent = "✓";
-}
+  const card = document.getElementById(`clue-${index}`);
+  const textEl = document.getElementById(`clue-text-${index}`);
+  const lockEl = document.getElementById(`lock-${index}`);
+  card.classList.remove('locked');
+  card.classList.add('unlocked');
+  // animate in
+  card.style.animation = 'none';
+  card.offsetHeight; // reflow
+  card.style.animation = 'clueReveal 0.6s cubic-bezier(0.175,0.885,0.32,1.275) both';
+  textEl.textContent = clues[index].text;
+  lockEl.textContent = '✓';
+  revealed = index + 1;
+  updateProgress();
 
-function updateProgress(count) {
-  document.getElementById("progress-fill").style.width = (count / total * 100) + "%";
-  document.getElementById("progress-count").textContent = count + " / " + total;
-}
-
-// ── MAIN TICK (every second) ──
-function tick() {
-  if (!_timeReady) return;
-  const count = getRevealedCountNow();
-  if (count > revealed) {
-    for (let i = revealed; i < count; i++) revealClue(i, count === revealed + 1);
-    revealed = count;
-    updateProgress(revealed);
-  }
-  const bar      = document.getElementById("next-clue-bar");
-  const statusEl = document.getElementById("status-text");
   if (revealed >= total) {
-    bar.style.display = "none";
-    statusEl.textContent = "ALL CLUES OUT — WAIT FOR 11:45 AM REVEAL!";
+    // All clues out
+    document.getElementById('next-clue-bar').style.display = 'none';
+    document.getElementById('status-text').textContent = 'ALL CLUES OUT — WAIT FOR 11:45 PM REVEAL!';
+    clearInterval(nextClueTimer);
   } else {
-    const msLeft = Math.max(0, getClueUnlockMs(revealed) - realNow());
-    const secs   = Math.ceil(msLeft / 1000);
-    bar.style.display = "flex";
-    document.getElementById("ncb-timer").textContent = Math.floor(secs/60) + ":" + pad(secs%60);
-    statusEl.textContent = "CLUE " + revealed + " OF " + total + " REVEALED — KEEP GUESSING!";
+    // Schedule next clue
+    nextClueAt = Date.now() + CLUE_INTERVAL_MS;
+    document.getElementById('next-clue-bar').style.display = 'flex';
+    document.getElementById('status-text').textContent = `CLUE ${revealed} OF ${total} REVEALED — KEEP GUESSING!`;
+    tickNextClue();
   }
-  const msReveal = getMsUntilReveal();
-  const btn      = document.getElementById("btn-reveal-final");
-  const timerEl  = document.getElementById("reveal-timer");
-  if (msReveal <= 0) {
-    btn.disabled = false;
-    btn.classList.remove("reveal-locked");
-    btn.classList.add("reveal-ready");
-    btn.innerHTML = "🎯 REVEAL IDENTITY ⚡";
-    if (timerEl) timerEl.style.display = "none";
-  } else {
-    const t = Math.floor(msReveal / 1000);
-    btn.disabled = true;
-    btn.classList.add("reveal-locked");
-    btn.innerHTML = "🔒 REVEAL UNLOCKS AT 11:45 AM";
-    if (timerEl) timerEl.textContent = pad(Math.floor(t/3600)) + ":" + pad(Math.floor((t%3600)/60)) + ":" + pad(t%60);
+}
+
+function tickNextClue() {
+  const bar = document.getElementById('next-clue-bar');
+  const timerEl = document.getElementById('ncb-timer');
+  const msLeft = nextClueAt - Date.now();
+
+  if (msLeft <= 0) {
+    bar.style.display = 'none';
+    revealClue(revealed);
+    return;
   }
+
+  const totalSecs = Math.ceil(msLeft / 1000);
+  const m = Math.floor(totalSecs / 60);
+  const s = totalSecs % 60;
+  timerEl.textContent = `${m}:${String(s).padStart(2,'0')}`;
+  setTimeout(tickNextClue, 500);
+}
+
+function updateProgress() {
+  const pct = (revealed / total) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-count').textContent = `${revealed} / ${total}`;
 }
 
 function finalReveal() {
   if (getMsUntilReveal() > 0) return;
-  document.getElementById("reveal-panel").classList.add("show");
-  document.getElementById("silhouette").classList.add("revealed");
-  document.getElementById("btn-reveal-final").disabled = true;
-  document.getElementById("status-text").textContent = "🎉 IDENTITY REVEALED!";
+  document.getElementById('reveal-panel').classList.add('show');
+  document.getElementById('silhouette').classList.add('revealed');
+  document.getElementById('btn-reveal-final').disabled = true;
+  document.getElementById('status-text').textContent = '🎉 IDENTITY REVEALED!';
   spawnConfetti();
 }
 
 function spawnConfetti() {
-  const colors = ["#f5c842","#ff3c5f","#00e5ff","#ffffff","#e07b00"];
-  const burst = document.createElement("div");
-  burst.className = "confetti-burst";
+  const colors = ['#f5c842','#ff3c5f','#00e5ff','#ffffff','#e07b00'];
+  const burst = document.createElement('div');
+  burst.className = 'confetti-burst';
   document.body.appendChild(burst);
   for (let i = 0; i < 80; i++) {
-    const p = document.createElement("div");
-    p.className = "confetti-piece";
-    p.style.cssText = "left:" + (Math.random()*100) + "%;background:" + colors[Math.floor(Math.random()*colors.length)] + ";animation-duration:" + (1.5+Math.random()*2) + "s;animation-delay:" + (Math.random()*0.8) + "s;width:" + (6+Math.random()*8) + "px;height:" + (6+Math.random()*8) + "px;border-radius:" + (Math.random()>.5?"50%":"2px") + ";";
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.cssText = `
+      left: ${Math.random()*100}%;
+      background: ${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration: ${1.5 + Math.random()*2}s;
+      animation-delay: ${Math.random()*0.8}s;
+      width: ${6 + Math.random()*8}px;
+      height: ${6 + Math.random()*8}px;
+      border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+    `;
     burst.appendChild(p);
   }
   setTimeout(() => burst.remove(), 4000);
 }
 
-// ── BOOT ──
+// Init — build cards, reveal clue 1 immediately
 buildClues();
-syncServerTime().then(() => {
-  const initCount = getRevealedCountNow();
-  for (let i = 0; i < initCount; i++) revealClue(i, false);
-  revealed = initCount;
-  updateProgress(revealed);
-  tick();
-  setInterval(tick, 1000);
-});
+updateRevealBtn();
+setTimeout(() => revealClue(0), 400); // slight delay for visual effect
+
 </script>
 </body>
 </html>
