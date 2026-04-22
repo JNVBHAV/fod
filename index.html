@@ -2,518 +2,962 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-
-<!-- ░░ GENERIC META — nothing personal leaks in previews or tab ░░ -->
-<title>F.O.D. ⭐</title>
-<meta name="description"    content="Private. Access required.">
-<meta name="robots"         content="noindex, nofollow">
-<meta property="og:title"       content="🔒 Private Page">
-<meta property="og:description" content="This page is private. Access required.">
-<meta property="og:image"       content="">
-<meta name="twitter:card"       content="summary">
-<meta name="twitter:title"      content="🔒 Private Page">
-
-<!-- Harry Potter Fonts — stored locally in ./fonts/ folder -->
-<link href="https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ FOD — Who Am I?</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-@font-face {
-  font-family: 'Harry P';
-  src: url('./fonts/HarryP.ttf') format('truetype');
-  font-weight: normal; font-style: normal;
-}
-@font-face {
-  font-family: 'Crimes of Grindelwald';
-  src: url('./fonts/CrimesOfGrindelwald.otf') format('opentype');
-  font-weight: normal; font-style: normal;
-}
-@font-face {
-  font-family: 'HogwartsWizard';
-  src: url('./fonts/HogwartsWizard.ttf') format('truetype');
-  font-weight: normal; font-style: normal;
-}
-</style>
-<style>
-:root {
-  --bg:        #060810;
-  --bg2:       #0c1220;
-  --bg3:       #111926;
-  --border:    rgba(255,210,0,0.15);
-  --yellow:    #FFD700;
-  --yellow2:   #fbbf24;
-  --yellow-dim: rgba(255,215,0,0.13);
-  --blue:      #3b82f6;
-  --green:     #22c55e;
-  --red:       #ef4444;
-  --text:      #f1f5f9;
-  --muted:     #64748b;
-  --glass:     rgba(12,18,32,0.75);
-  --mono:      'JetBrains Mono', monospace;
-  --fondamento: 'Fondamento', cursive;
-  --display:   'Harry P', cursive;
-  --titles:    'Crimes of Grindelwald', serif;
-  --body:      'HogwartsWizard', cursive;
-  --glow-y:    0 0 24px rgba(255,215,0,0.45);
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg); color: var(--text);
-  font-family: 'Fondamento', cursive; min-height: 100vh; overflow-x: hidden;
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-body::before {
-  content: ''; position: fixed; inset: 0; z-index: 0;
-  background-image:
-    linear-gradient(rgba(255,215,0,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,215,0,0.03) 1px, transparent 1px);
-  background-size: 48px 48px; pointer-events: none;
-}
+  :root {
+    --bg: #07070e;
+    --surface: #0e0e1c;
+    --surface2: #141425;
+    --border: rgba(255,255,255,0.07);
+    --gold: #f5c842;
+    --gold2: #e07b00;
+    --red: #ff3c5f;
+    --cyan: #00e5ff;
+    --text: #dde0f0;
+    --muted: #555575;
+    --locked: #1a1a2e;
+  }
 
-/* SCROLL PROGRESS */
-#scroll-bar {
-  position: fixed; top: 0; left: 0; z-index: 9000;
-  height: 3px; width: 0%;
-  background: linear-gradient(90deg, var(--blue), var(--green), var(--yellow), var(--red));
-  transition: width 0.1s; box-shadow: var(--glow-y);
-}
+  html { scroll-behavior: smooth; }
 
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    padding: 30px 16px 60px;
+    position: relative;
+    overflow-x: hidden;
+  }
 
+  /* Animated bg grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245,200,66,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,200,66,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    z-index: 0;
+    pointer-events: none;
+  }
 
+  body::after {
+    content: '';
+    position: fixed;
+    top: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(245,200,66,0.07) 0%, transparent 70%);
+    z-index: 0;
+    pointer-events: none;
+    animation: breathe 6s ease-in-out infinite;
+  }
 
-/* ══════ NAVBAR ══════ */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 500; height: 60px;
-  background: rgba(6,8,16,0.9); backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255,215,0,0.1);
-  display: flex; align-items: center; padding: 0 40px;
-}
-nav::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--blue) 0 25%, var(--green) 25% 50%, var(--yellow) 50% 75%, var(--red) 75% 100%);
-}
-.nav-logo {
-  font-family: 'Harry P', cursive; font-size: 26px; letter-spacing: 3px; font-weight: 400;
-  background: linear-gradient(90deg, var(--yellow), var(--yellow2));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text; flex: 1; white-space: nowrap;
-}
-.nav-links { display: flex; gap: 28px; list-style: none; }
-.nav-links a {
-  font-family: 'Fondamento', cursive; font-size: 13px; letter-spacing: 1px;
-  color: var(--muted); text-decoration: none;
-  transition: color 0.2s; position: relative;
-}
-.nav-links a::after {
-  content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
-  height: 1px; background: var(--yellow); transform: scaleX(0); transition: transform 0.2s;
-}
-.nav-links a:hover { color: var(--yellow); }
-.nav-links a:hover::after { transform: scaleX(1); }
-#hamburger {
-  display: none; background: none; border: 1px solid rgba(255,215,0,0.2);
-  color: var(--yellow); width: 36px; height: 36px; cursor: pointer;
-  font-size: 16px; align-items: center; justify-content: center; border-radius: 2px;
-}
+  @keyframes breathe {
+    0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+  }
 
-/* ══════ HERO ══════ */
-#home {
-  position: relative; z-index: 1; min-height: 100vh;
-  display: flex; align-items: center; justify-content: center; padding: 80px 16px 60px;
-}
-.hero-glow-1 {
-  position: absolute; width: 700px; height: 700px;
-  background: radial-gradient(circle, rgba(255,215,0,0.07) 0%, transparent 65%);
-  top: -100px; left: -200px; pointer-events: none;
-}
-.hero-glow-2 {
-  position: absolute; width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 65%);
-  bottom: 0; right: -100px; pointer-events: none;
-}
-.hero-card {
-  position: relative; background: var(--glass);
-  border: 1px solid rgba(255,215,0,0.18); backdrop-filter: blur(20px);
-  padding: 52px 44px; max-width: 680px; width: 100%; text-align: center;
-  clip-path: polygon(24px 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%, 0 24px);
-  animation: fadeUp 0.8s ease both;
-}
-.hero-card::before {
-  content: ''; position: absolute; top: 0; left: 24px; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--blue), var(--green), var(--yellow), var(--red));
-}
-.hero-card::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 24px; height: 2px;
-  background: linear-gradient(90deg, var(--yellow), var(--green), var(--blue));
-}
-.avatar-wrap { position: relative; width: 130px; height: 130px; margin: 0 auto 28px; }
-.avatar-ring {
-  position: absolute; inset: -4px; border-radius: 50%;
-  background: conic-gradient(var(--blue) 0deg, var(--green) 90deg, var(--yellow) 200deg, var(--red) 310deg, var(--blue) 360deg);
-  animation: spin 6s linear infinite;
-}
-.avatar-ring-mask { position: absolute; inset: 2px; border-radius: 50%; background: var(--bg2); }
-.avatar-inner {
-  position: absolute; inset: 6px; border-radius: 50%;
-  border: 2px solid rgba(255,215,0,0.2); overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-}
-.avatar-inner img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.hero-badge {
-  font-family: 'Fondamento', cursive; font-size: 12px; letter-spacing: 2px;
-  color: var(--yellow); margin-bottom: 8px; opacity: 0.85;
-}
-.hero-name {
-  font-family: 'Harry P', cursive; font-size: clamp(58px, 12vw, 110px);
-  letter-spacing: 4px; line-height: 0.92; font-weight: 400;
-  background: linear-gradient(135deg, var(--yellow) 0%, #fff8dc 45%, var(--yellow2) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text; margin-bottom: 4px;
-  filter: drop-shadow(0 0 22px rgba(255,215,0,0.4));
-}
-.hero-nick {
-  font-family: 'Harry P', cursive; font-size: clamp(28px, 6vw, 52px);
-  color: var(--yellow); letter-spacing: 2px; margin-bottom: 18px;
-  font-weight: 400;
-  text-shadow: 0 0 28px rgba(255,215,0,0.55), 0 2px 10px rgba(0,0,0,0.7);
-}
-.hero-tagline { font-family: 'Fondamento', cursive; font-size: 14px; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 28px; line-height: 1.7; }
-.hero-tagline span { color: var(--yellow); font-style: normal; font-weight: 500; }
-.hero-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 32px; }
-.chip {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: 'Fondamento', cursive; font-size: 12px; letter-spacing: 0.5px;
-  color: var(--muted); background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,215,0,0.15); padding: 6px 14px; border-radius: 2px; transition: all 0.2s;
-}
-.chip:hover { color: var(--yellow); border-color: rgba(255,215,0,0.45); background: var(--yellow-dim); }
-.chip .ci { color: var(--yellow); }
-.chip.udaygiri {
-  background: rgba(255,215,0,0.1); border-color: var(--yellow);
-  color: var(--yellow); box-shadow: var(--glow-y); font-weight: 700;
-}
-.hero-line { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,215,0,0.25), transparent); margin: 4px 0 24px; }
-.scroll-hint { font-family: 'Fondamento', cursive; font-size: 12px; letter-spacing: 1px; color: var(--muted); animation: bounce 2s ease infinite; }
-.scroll-hint span { color: var(--yellow); }
-@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+  .page {
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
 
-/* ══════ SECTIONS ══════ */
-section { position: relative; z-index: 1; padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
-.section-label {
-  font-family: 'Fondamento', cursive; font-size: 13px; letter-spacing: 3px;
-  color: var(--yellow); margin-bottom: 8px;
-  display: flex; align-items: center; gap: 12px;
-}
-.section-label::before { content: ''; width: 32px; height: 1px; background: var(--yellow); }
-.section-title { font-family: 'Harry P', cursive; font-size: clamp(32px, 4.5vw, 48px); letter-spacing: 1px; line-height: 1; margin-bottom: 40px; color: var(--text); }
-.section-title span { color: var(--yellow); }
+  /* TOP HEADER */
+  .top-header {
+    text-align: center;
+    margin-bottom: 32px;
+    animation: fadeDown 0.7s ease both;
+  }
 
-/* ABOUT */
-.about-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-.about-card {
-  background: var(--glass); border: 1px solid rgba(255,215,0,0.1);
-  backdrop-filter: blur(12px); padding: 28px; position: relative; overflow: hidden;
-  transition: all 0.3s; clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
-  animation: fadeUp 0.6s ease both;
-}
-.about-card:hover { border-color: rgba(255,215,0,0.35); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(255,215,0,0.08); }
-.about-card:nth-child(1) { border-left: 2px solid var(--yellow); }
-.about-card:nth-child(2) { border-left: 2px solid var(--red); }
-.about-card:nth-child(3) { border-left: 2px solid var(--blue); }
-.about-card:nth-child(4) { border-left: 2px solid var(--green); }
-.about-card:nth-child(5) { border-left: 2px solid var(--yellow); }
-.card-icon { font-size: 32px; margin-bottom: 14px; display: block; }
-.card-title { font-family: 'Crimes of Grindelwald', serif; font-size: 17px; letter-spacing: 2px; color: var(--yellow); margin-bottom: 10px; }
-.card-text { font-family: 'Fondamento', cursive; font-size: 14.5px; line-height: 1.85; color: #94a3b8; }
-.card-text strong { color: var(--text); }
-.card-tag { display: inline-block; margin-top: 14px; font-family: 'Fondamento', cursive; font-size: 11px; letter-spacing: 0.5px; color: var(--yellow); background: var(--yellow-dim); border: 1px solid rgba(255,215,0,0.2); padding: 3px 10px; }
+  .fod-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
 
-/* QUOTE */
-.quote-section { padding: 80px 24px; position: relative; z-index: 1; background: linear-gradient(180deg, transparent, rgba(255,215,0,0.02), transparent); border-top: 1px solid rgba(255,215,0,0.1); border-bottom: 1px solid rgba(255,215,0,0.1); }
-.quote-inner { max-width: 800px; margin: 0 auto; text-align: center; position: relative; }
-.quote-mark { font-family: 'Harry P', cursive; font-size: 140px; line-height: 0.6; color: var(--yellow); opacity: 0.12; display: block; user-select: none; font-style: italic; }
-.quote-text { font-family: 'HogwartsWizard', cursive; font-size: clamp(18px, 2.8vw, 26px); line-height: 1.75; color: var(--text); margin: -20px 0 20px; position: relative; }
-.quote-text em { color: var(--yellow); font-style: normal; font-weight: 700; }
-.quote-attr { font-family: 'Fondamento', cursive; font-size: 13px; letter-spacing: 2px; color: var(--muted); font-style: italic; }
-.quote-line { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--yellow), transparent); margin: 16px auto; }
+  .fod-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 52px;
+    letter-spacing: 6px;
+    line-height: 1;
+    background: linear-gradient(180deg, #fff 0%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-/* BROTHERHOOD */
-#network { padding: 80px 24px; position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
-.brotherhood-tagline { font-family: 'Fondamento', cursive; font-size: 13px; letter-spacing: 1px; color: var(--muted); font-style: italic; margin-bottom: 40px; display: flex; align-items: center; gap: 16px; }
-.brotherhood-tagline::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(255,215,0,0.2), transparent); }
-.bro-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-.bro-card { background: var(--glass); border: 1px solid rgba(255,215,0,0.1); backdrop-filter: blur(12px); padding: 28px 20px; text-align: center; position: relative; overflow: hidden; transition: all 0.3s; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%); }
-.bro-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 16px; height: 2px; background: linear-gradient(90deg, var(--yellow), var(--blue)); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
-.bro-card:hover { border-color: rgba(255,215,0,0.35); transform: translateY(-6px); box-shadow: 0 16px 48px rgba(255,215,0,0.08); }
-.bro-card:hover::after { transform: scaleX(1); }
-.bro-avatar { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--bg3), var(--bg2)); border: 2px solid rgba(255,215,0,0.2); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-family: 'Harry P', cursive; font-size: 26px; letter-spacing: 1px; transition: all 0.3s; color: var(--yellow); }
-.bro-card:hover .bro-avatar { border-color: var(--yellow); box-shadow: var(--glow-y); }
-.bro-name { font-family: 'Crimes of Grindelwald', serif; font-size: 18px; font-weight: 400; color: var(--text); letter-spacing: 1px; margin-bottom: 6px; }
-.bro-role { font-family: 'Fondamento', cursive; font-size: 13px; color: var(--yellow); font-style: italic; margin-bottom: 10px; }
-.bro-emoji { font-size: 18px; }
+  .fod-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-family: 'Space Mono', monospace;
+  }
 
-/* GALLERY */
-#gallery { padding: 80px 24px; position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
-.gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-.gallery-item { border-radius: 4px; border: 1px solid rgba(255,215,0,0.12); position: relative; overflow: hidden; cursor: pointer; transition: all 0.35s; background: var(--bg3); aspect-ratio: 1; }
-.gallery-item:hover { border-color: var(--yellow); box-shadow: 0 0 28px rgba(255,215,0,0.2); transform: scale(1.03); z-index: 2; }
-.gallery-item:first-child { grid-column: span 1; grid-row: span 1; }
-.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
-.gallery-item img::after { content: "📷"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 40px; background: var(--bg3); color: var(--muted); }
-.gallery-item:hover img { transform: scale(1.07); }
-.gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,8,16,0.85) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 16px; }
-.gallery-item:hover .gallery-overlay { opacity: 1; }
-.gallery-overlay-text { font-family: 'Fondamento', cursive; font-size: 12px; letter-spacing: 0.5px; color: var(--yellow); }
+  .fod-sub span {
+    color: var(--gold);
+  }
 
-/* LIGHTBOX */
-#lightbox { position: fixed; inset: 0; z-index: 7000; background: rgba(6,8,16,0.97); backdrop-filter: blur(16px); display: none; align-items: center; justify-content: center; }
-#lightbox.open { display: flex; }
-.lightbox-content { max-width: 92vw; max-height: 92vh; position: relative; text-align: center; }
-.lightbox-content img { max-width: 100%; max-height: 85vh; border: 2px solid rgba(255,215,0,0.25); border-radius: 4px; box-shadow: 0 0 60px rgba(255,215,0,0.15); object-fit: contain; }
-.lightbox-caption { font-family: 'Fondamento', cursive; font-size: 13px; letter-spacing: 1px; color: var(--yellow); margin-top: 12px; opacity: 0.8; }
-.lightbox-close { position: absolute; top: -16px; right: -16px; background: var(--bg2); border: 1px solid rgba(255,215,0,0.3); color: var(--yellow); cursor: pointer; width: 36px; height: 36px; font-size: 16px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.2s; z-index: 10; }
-.lightbox-close:hover { background: var(--yellow); color: #000; }
+  /* Mystery silhouette */
+  .mystery-figure {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 28px;
+    animation: fadeUp 0.7s ease 0.1s both;
+  }
 
-/* FOOTER */
-footer { position: relative; z-index: 1; border-top: 1px solid rgba(255,215,0,0.1); padding: 40px 24px; text-align: center; }
-footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue) 0 25%, var(--green) 25% 50%, var(--yellow) 50% 75%, var(--red) 75% 100%); }
-.footer-logo { font-family: 'Harry P', cursive; font-size: 26px; letter-spacing: 1px; background: linear-gradient(90deg, var(--yellow), var(--yellow2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
-.footer-sub { font-family: 'Fondamento', cursive; font-size: 13px; letter-spacing: 1px; color: var(--muted); }
+  .silhouette-wrap {
+    position: relative;
+    width: 100px;
+    height: 100px;
+  }
 
-/* ANIMATIONS */
-@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  .silhouette {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a1a30, #0e0e1c);
+    border: 2px solid rgba(245,200,66,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 44px;
+    filter: grayscale(1) brightness(0.3);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.8s ease;
+  }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  nav { padding: 0 16px; }
-  .nav-logo { font-size: 13px; letter-spacing: 2px; }
-  .nav-links { display: none; position: fixed; top: 60px; left: 0; right: 0; background: rgba(6,8,16,0.98); border-bottom: 1px solid rgba(255,215,0,0.1); flex-direction: column; gap: 0; padding: 12px 0; }
-  .nav-links.open { display: flex; }
-  .nav-links a { padding: 14px 24px; border-bottom: 1px solid rgba(255,215,0,0.07); }
-  #hamburger { display: flex; }
-  section, #gallery, #network { padding: 56px 16px; }
-  .hero-card { padding: 32px 20px; }
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-  .gallery-item:first-child { grid-column: span 1; grid-row: span 1; }
-  .quote-section { padding: 56px 20px; }
-  .about-grid { grid-template-columns: 1fr; }
-  .bro-grid { grid-template-columns: repeat(2, 1fr); }
-  .lightbox-close { top: 4px; right: 4px; }
-}
-@media (max-width: 480px) {
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-  .gallery-item:first-child { grid-column: span 1; grid-row: span 1; }
-  .bro-grid { grid-template-columns: 1fr; }
-  .nav-logo { font-size: 11px; letter-spacing: 1px; }
-}
+  .silhouette.revealed {
+    filter: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 50px rgba(245,200,66,0.4);
+  }
+
+  .silhouette::before {
+    content: '?';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 56px;
+    color: rgba(245,200,66,0.15);
+    transition: opacity 0.5s ease;
+  }
+
+  .silhouette.revealed::before { opacity: 0; }
+
+  .pulse-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid rgba(245,200,66,0.15);
+    animation: pulse-out 2.5s ease-in-out infinite;
+  }
+
+  .pulse-ring:nth-child(2) { inset: -18px; animation-delay: 0.5s; opacity: 0.6; }
+  .pulse-ring:nth-child(3) { inset: -28px; animation-delay: 1s; opacity: 0.3; }
+
+  @keyframes pulse-out {
+    0% { transform: scale(0.95); opacity: 0.6; }
+    50% { transform: scale(1); opacity: 0.2; }
+    100% { transform: scale(0.95); opacity: 0.6; }
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .progress-label .count { color: var(--gold); }
+
+  .progress-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold2), var(--gold));
+    border-radius: 3px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  /* Clue cards */
+  .clues-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .clue-card {
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    overflow: hidden;
+    transition: all 0.4s ease;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .clue-card.locked {
+    background: var(--locked);
+    border-color: rgba(255,255,255,0.04);
+  }
+
+  .clue-card.unlocked {
+    border-color: rgba(245,200,66,0.2);
+    background: linear-gradient(135deg, #111122, #0e0e1c);
+  }
+
+  .clue-card.unlocked:hover {
+    border-color: rgba(245,200,66,0.35);
+    transform: translateX(4px);
+  }
+
+  .clue-inner {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+  }
+
+  .clue-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 22px;
+    color: rgba(245,200,66,0.15);
+    min-width: 28px;
+    text-align: center;
+    transition: color 0.4s;
+  }
+
+  .clue-card.unlocked .clue-num { color: var(--gold); }
+
+  .clue-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    background: rgba(255,255,255,0.04);
+    flex-shrink: 0;
+    transition: background 0.4s;
+    filter: grayscale(1);
+  }
+
+  .clue-card.unlocked .clue-icon {
+    background: rgba(245,200,66,0.1);
+    filter: none;
+  }
+
+  .clue-content { flex: 1; }
+
+  .clue-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    transition: color 0.4s;
+  }
+
+  .clue-card.unlocked .clue-tag { color: rgba(245,200,66,0.5); }
+
+  .clue-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--muted);
+    transition: color 0.4s;
+    line-height: 1.4;
+  }
+
+  .clue-card.unlocked .clue-text { color: var(--text); }
+
+  .clue-lock {
+    font-size: 16px;
+    opacity: 0.2;
+    flex-shrink: 0;
+    transition: opacity 0.4s;
+  }
+
+  .clue-card.unlocked .clue-lock { opacity: 0; width: 0; overflow: hidden; }
+
+  /* Reveal button */
+  .btn-wrap {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .btn-reveal {
+    background: linear-gradient(135deg, var(--gold2), var(--gold));
+    border: none;
+    border-radius: 100px;
+    padding: 14px 40px;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 20px;
+    letter-spacing: 3px;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(245,200,66,0.25);
+  }
+
+  .btn-reveal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .btn-reveal:hover::before { opacity: 1; }
+  .btn-reveal:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(245,200,66,0.4); }
+  .btn-reveal:active { transform: translateY(0); }
+
+  .btn-reveal:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-hint {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 10px 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-left: 10px;
+  }
+
+  .btn-hint:hover { border-color: rgba(245,200,66,0.3); color: var(--gold); }
+
+  /* Final reveal panel */
+  .reveal-panel {
+    background: linear-gradient(135deg, rgba(245,200,66,0.08), rgba(0,229,255,0.03));
+    border: 1px solid rgba(245,200,66,0.25);
+    border-radius: 18px;
+    padding: 28px;
+    text-align: center;
+    display: none;
+    animation: revealBoom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    margin-top: 10px;
+  }
+
+  .reveal-panel.show { display: block; }
+
+  @keyframes revealBoom {
+    0% { opacity: 0; transform: scale(0.7); }
+    60% { transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  .reveal-panel .crown { font-size: 40px; display: block; margin-bottom: 12px; }
+
+  .reveal-name {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 54px;
+    letter-spacing: 6px;
+    background: linear-gradient(135deg, #fff 20%, var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .reveal-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+
+  .reveal-details {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .detail-pill {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .reveal-quote {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    font-style: italic;
+    line-height: 1.7;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 16px;
+  }
+
+  /* Status bar */
+  .status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    animation: blink 1.2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  /* Animations */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── END TIME LOCK ── */
+
+  .confetti-burst {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    overflow: hidden;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    animation: confettiFall linear both;
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* Reveal lock section */
+  .reveal-lock-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .reveal-lock-box {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid rgba(245,200,66,0.15);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .rlb-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .rlb-icon { font-size: 26px; }
+
+  .rlb-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .rlb-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+  }
+
+  .rlb-sub strong { color: var(--text); }
+
+  .reveal-timer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 10px 16px;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .rtimer-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+
+  .rtimer-val {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 24px;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-shadow: 0 0 20px rgba(255,60,95,0.4);
+  }
+
+  .btn-reveal-final {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 18px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+  }
+
+  .btn-reveal-final.reveal-locked {
+    background: rgba(255,255,255,0.04);
+    color: var(--muted);
+    border: 1px dashed rgba(255,255,255,0.1);
+    cursor: not-allowed;
+  }
+
+  .btn-reveal-final.reveal-ready {
+    background: linear-gradient(135deg, var(--gold2), var(--gold));
+    color: #000;
+    box-shadow: 0 8px 30px rgba(245,200,66,0.3);
+    animation: readyPulse 2s ease-in-out infinite;
+  }
+
+  .btn-reveal-final.reveal-ready:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(245,200,66,0.5);
+  }
+
+  /* Next clue countdown bar */
+  .next-clue-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(245,200,66,0.06);
+    border: 1px solid rgba(245,200,66,0.2);
+    border-radius: 12px;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .ncb-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+
+  .ncb-timer {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 26px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-shadow: 0 0 16px rgba(245,200,66,0.4);
+  }
+
+  @keyframes clueReveal {
+    0% { opacity: 0; transform: translateX(-16px) scale(0.97); }
+    60% { transform: translateX(4px) scale(1.01); }
+    100% { opacity: 1; transform: translateX(0) scale(1); }
+  }
+
+  @keyframes readyPulse {
+    0%, 100% { box-shadow: 0 8px 30px rgba(245,200,66,0.3); }
+    50% { box-shadow: 0 8px 50px rgba(245,200,66,0.6); }
+  }
 </style>
 </head>
 <body>
+<div class="page" id="main-page">
 
-<div id="scroll-bar"></div>
+  <div class="top-header">
+    <div class="fod-eyebrow">DAILY CHALLENGE • CORE TEAM</div>
+    <div class="fod-title">WHO AM I?</div>
+    <div class="fod-sub">⚡ <span>Face of the Day</span> — Guess before the final reveal</div>
+  </div>
 
+  <div class="mystery-figure">
+    <div class="silhouette-wrap">
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring"></div>
+      <div class="silhouette" id="silhouette">🦁</div>
+    </div>
+  </div>
 
+  <div class="status-bar">
+    <div class="status-dot"></div>
+    <span id="status-text">IDENTITY LOCKED — UNLOCK CLUES TO GUESS</span>
+  </div>
 
-<!-- MAIN CONTENT -->
-<div id="main-content">
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>CLUES REVEALED</span>
+      <span class="count" id="progress-count">0 / 7</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
 
-<!-- NAVBAR -->
-<nav>
-  <div class="nav-logo">BHARGAV SIDDHAPURA</div>
-  <button id="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
-  <ul class="nav-links">
-    <li><a href="#home" onclick="closeMobileNav()">Home</a></li>
-    <li><a href="#about" onclick="closeMobileNav()">About</a></li>
-    <li><a href="#gallery" onclick="closeMobileNav()">Gallery</a></li>
-    <li><a href="#network" onclick="closeMobileNav()">Network</a></li>
-  </ul>
-</nav>
+  <div class="clues-stack" id="clues-stack"></div>
 
-<!-- HERO -->
-<section id="home" style="max-width:100%;padding-top:80px;">
-  <div class="hero-glow-1"></div>
-  <div class="hero-glow-2"></div>
-  <div style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 80px);">
-    <div class="hero-card">
-      <div class="avatar-wrap">
-        <div class="avatar-ring"></div>
-        <div class="avatar-ring-mask"></div>
-        <div class="avatar-inner">
-          <img src="bs1.jpeg" alt="Profile">
+  <div class="next-clue-bar" id="next-clue-bar" style="display:none;">
+    <span class="ncb-label">NEXT CLUE DROPS IN</span>
+    <span class="ncb-timer" id="ncb-timer">3:00</span>
+  </div>
+
+  <!-- TIME-LOCKED REVEAL SECTION -->
+  <div class="reveal-lock-wrap" id="reveal-lock-wrap">
+    <div class="reveal-lock-box">
+      <div class="rlb-top">
+        <span class="rlb-icon">🎯</span>
+        <div>
+          <div class="rlb-title">FINAL REVEAL</div>
+          <div class="rlb-sub">Identity drops sharp at <strong>11:45 AM</strong></div>
         </div>
       </div>
-      <div class="hero-badge">// Batch 2015 · JNV Bhavnagar · Udaygiri House</div>
-      <div class="hero-name">Bhargav<br>Siddhapura</div>
-      <div class="hero-nick">🍋 &nbsp; "Limbu" &nbsp; 🍋</div>
-      <div class="hero-tagline"><span>Die Manufacturer &amp; 3D Printing Entrepreneur</span><br><span style="color:var(--muted);font-size:13px;font-weight:400">Runs his own manufacturing unit in Bhavnagar — crafting industrial press-tool dies &amp; turning ideas into 3D-printed products</span></div>
-      <div class="hero-line"></div>
-      <div class="hero-chips">
-        <div class="chip udaygiri"><span class="ci">⭐</span> House: Udaygiri</div>
-        <div class="chip"><span class="ci">🌍</span> Bhavnagar, Gujarat</div>
-        <div class="chip"><span class="ci">⚙️</span> Profession: Die Manufacturer</div>
-        <div class="chip"><span class="ci">🖨️</span> Entrepreneur: 3D Printing</div>
-        <div class="chip"><span class="ci">🎓</span> Batch 2015</div>
-        <div class="chip"><span class="ci">🏸</span> Badminton · TT</div>
+      <div class="reveal-timer-row" id="reveal-timer-row">
+        <span class="rtimer-label">UNLOCKS IN</span>
+        <span class="rtimer-val" id="reveal-timer">--:--:--</span>
       </div>
-      <div class="scroll-hint">Scroll to explore <span>↓</span></div>
+      <button class="btn-reveal-final reveal-locked" id="btn-reveal-final" onclick="finalReveal()" disabled>
+        🔒 REVEAL UNLOCKS AT 11:45 AM
+      </button>
     </div>
   </div>
-</section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-label">Chapter 01</div>
-  <div class="section-title">The <span>Story</span></div>
-  <div class="about-grid">
-    <div class="about-card">
-      <span class="card-icon">🔭</span>
-      <div class="card-title">The Quiet Observer</div>
-      <div class="card-text">Short-term memory loss hoy pan <strong>Bhargav bhai badhu 'observe' kare che!</strong> He remembers more than he shows — a silent strategist in the making. 🧐</div>
-      <span class="card-tag"># Observe · Analyse · Execute</span>
+  <div class="reveal-panel" id="reveal-panel">
+    <span class="crown">👑</span>
+    <div class="reveal-name">ASMIT KHASIYA</div>
+    <div class="reveal-sub">// THE SILENT OPERATOR — BATCH 2025</div>
+    <div class="reveal-details">
+      <div class="detail-pill">🏠 Nilgiri House</div>
+      <div class="detail-pill">🎓 BBA(G), Anand</div>
+      <div class="detail-pill">📍 Talaja</div>
+      <div class="detail-pill">🎮 eSports + Cricket</div>
     </div>
-    <div class="about-card">
-      <span class="card-icon">🍛</span>
-      <div class="card-title">The Foodie Legend</div>
-      <div class="card-text">Amara Group no unbeatable record! <strong>April 2014 ma, thanks to IPL, continuous 30 divas sudhi Kirpal Dhaba nu jamvanu khadhu hatu.</strong> A true foodie achievement! 😋🏏</div>
-      <span class="card-tag"># 30 Days · IPL · Kirpal Dhaba</span>
-    </div>
-    <div class="about-card">
-      <span class="card-icon">🖨️</span>
-      <div class="card-title">The Creator</div>
-      <div class="card-text">Jya lokon ne ideas aave, tya <strong>Bhargav bhai 3D Printing thi e ideas ne 'Real Product' banavi de che.</strong> Designing is his passion and profession. 🖨️⚙️</div>
-      <span class="card-tag"># 3D Printing · Die Manufacturing</span>
-    </div>
-    <div class="about-card">
-      <span class="card-icon">🏫</span>
-      <div class="card-title">JNV Training Ground</div>
-      <div class="card-text">Emna mate <strong>JNV khali school nathi, pan life training ground hati.</strong> Discipline, struggle, ane confidence — badhu j tya thi shikhyu che.</div>
-      <span class="card-tag"># JNV Bhavnagar · Discipline · Brotherhood</span>
-    </div>
-    <div class="about-card">
-      <span class="card-icon">🏸</span>
-      <div class="card-title">Sports Spirit</div>
-      <div class="card-text">Always ready to defeat anyone in <strong>Badminton and Table Tennis.</strong> Pan life ni game ma toh e expert che j! 🏸🏓</div>
-      <span class="card-tag"># Badminton · Table Tennis</span>
+    <div class="reveal-quote">
+      "You don't always need to be the captain to be the most important player on the field."
     </div>
   </div>
-</section>
 
-<!-- QUOTE -->
-<div class="quote-section">
-  <div class="quote-inner">
-    <span class="quote-mark">"</span>
-    <div class="quote-text">JNV memories describe karvi e <em>'Speaking magic to Muggles'</em> jevu che —<br>badha ne khabar na pade, pan <em>jene khabar che emne badhu j khabar che!</em></div>
-    <div class="quote-line"></div>
-    <div class="quote-attr">— Bhargav "Limbu" Siddhapura · Batch 2015 · JNV Bhavnagar</div>
-  </div>
-</div>
-
-<!-- BROTHERHOOD -->
-<section id="network">
-  <div class="section-label">Chapter 02</div>
-  <div class="section-title">The <span>Brotherhood</span></div>
-  <div class="brotherhood-tagline">The ones who made JNV what it was</div>
-  <div class="bro-grid">
-    <div class="bro-card"><div class="bro-avatar">LJ</div><div class="bro-name">Lalit Jani</div><div class="bro-role">Best Friend</div><div class="bro-emoji">🔑</div></div>
-    <div class="bro-card"><div class="bro-avatar">SS</div><div class="bro-name">Santosh Sangada</div><div class="bro-role">Darling</div><div class="bro-emoji">💪</div></div>
-    <div class="bro-card"><div class="bro-avatar">JM</div><div class="bro-name">Jignesh Makwana</div><div class="bro-role">Brother</div><div class="bro-emoji">🔥</div></div>
-    <div class="bro-card"><div class="bro-avatar">SC</div><div class="bro-name">Sachin Chawda</div><div class="bro-role">Brother</div><div class="bro-emoji">⚡</div></div>
-  </div>
-</section>
-
-<!-- GALLERY -->
-<section id="gallery">
-  <div class="section-label">Chapter 03</div>
-  <div class="section-title">JNV <span>Memories</span></div>
-  <div class="gallery-grid">
-    <div class="gallery-item" onclick="openLightbox('bs2.jpeg','Coastal Wanderer')">
-      <img src="bs2.jpeg" alt="By the Sea" onerror="this.style.display='none';this.parentElement.querySelector('.img-placeholder').style.display='flex'">
-      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">🌊</span><span style="font-family:'Fondamento',cursive;font-size:12px;letter-spacing:1px">By the Sea</span></div>
-      <div class="gallery-overlay"><span class="gallery-overlay-text">🌊 By the Sea →</span></div>
-    </div>
-    <div class="gallery-item" onclick="openLightbox('bs3.jpeg','JNV Classroom · 2014')">
-      <img src="bs3.jpeg" alt="" onerror="this.style.display='none';this.parentElement.querySelector('.img-placeholder').style.display='flex'">
-      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">📚</span><span style="font-family:'Fondamento',cursive;font-size:12px;letter-spacing:1px">JNV Classroom</span></div>
-      <div class="gallery-overlay"><span class="gallery-overlay-text">📚 JNV Classroom →</span></div>
-    </div>
-    <div class="gallery-item" onclick="openLightbox('bs4.jpeg','Sports Ground')">
-      <img src="bs4.jpeg" alt="" onerror="this.style.display='none';this.parentElement.querySelector('.img-placeholder').style.display='flex'">
-      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">🏟️</span><span style="font-family:'Fondamento',cursive;font-size:12px;letter-spacing:1px">Sports Ground</span></div>
-      <div class="gallery-overlay"><span class="gallery-overlay-text">🏟️ Sports Ground →</span></div>
-    </div>
-    <div class="gallery-item" onclick="openLightbox('bs5.jpeg','Suited Up')">
-      <img src="bs5.jpeg" alt="" onerror="this.style.display='none';this.parentElement.querySelector('.img-placeholder').style.display='flex'">
-      <div class="img-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--bg3);color:var(--muted)"><span style="font-size:36px">👔</span><span style="font-family:'Fondamento',cursive;font-size:12px;letter-spacing:1px">Suited Up</span></div>
-      <div class="gallery-overlay"><span class="gallery-overlay-text">👔 All Dressed Up →</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- LIGHTBOX -->
-<div id="lightbox" onclick="if(event.target===this)closeLightbox()">
-  <div class="lightbox-content">
-    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-    <img id="lb-img" src="" alt="">
-    <div class="lightbox-caption" id="lb-cap"></div>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">BHARGAV SIDDHAPURA</div>
-  <div class="footer-sub">🍋 Limbu · Batch 2015 · JNV Bhavnagar · The Resilient Maker</div>
-</footer>
-
-</div><!-- end #main-content -->
+</div><!-- end .page#main-page -->
 
 <script>
-/* ── FOD daily quotes ── */
-var _q=[
-  ["Some people leave JNV. JNV never leaves them.","— The Hostel Walls"],
-  ["He didn't just survive the system — he quietly outpaced it.","— Udaygiri House"],
-  ["The strongest bond isn't blood. It's shared mess food at 7 AM.","— Batch 2015"],
-  ["Discipline is what happens after the dreams. He had both.","— JNV Bhavnagar"],
-  ["You don't know a person until you've lived in a room of 20.","— Hostel Block B"],
-  ["Every great maker started somewhere unremarkable. He started here.","— 2015"],
-  ["The roll call ends. The story never does.","— JNV Chronicles"]
+// ── ABSOLUTE TIME SYSTEM ──
+// Clue 1 → 23:00:00 (already visible at game start)
+// Clue 2 → 23:02:30
+// Clue 3 → 23:05:00 ... and so on every 2m30s
+// Final Reveal button → unlocks at 23:45:00
+
+const GAME_START   = { h: 11, m: 0,  s: 0  }; // 11:00 AM
+const CLUE_INTERVAL_SEC = 150;                  // 2 min 30 sec
+const REVEAL_HOUR  = 11;
+const REVEAL_MIN   = 45;
+
+const clues = [
+  {
+    icon: "🌊",
+    tag: "Clue 01 — The Forge",
+    text: "The shade the ocean envies. The height the clouds call home. That's where they forged him.",
+  },
+  {
+    icon: "🎮",
+    tag: "Clue 02 — The Double Arena",
+    text: "Same hands. Two battlefields. One grass, one screen. Both times — he's reading the game before it's played.",
+  },
+  {
+    icon: "🏙️",
+    tag: "Clue 03 — The War Station",
+    text: "He's in the city where four letters changed a billion mornings — he's not there for the product, he's there to study the empire behind it.",
+  },
+  {
+    icon: "🗣️",
+    tag: "Clue 04 — The One Word",
+    text: "Ask his friends who he is. They won't say his first name. They'll say the one word that says it all.",
+  },
+  {
+    icon: "👑",
+    tag: "Clue 05 — The Shadow Throne",
+    text: "Kings get the crown. But empires are built by the one standing just behind the throne.",
+  },
+  {
+    icon: "🌊",
+    tag: "Clue 06 — The Birthground",
+    text: "Where ancient caves hold secrets older than time, and the sea never stops talking — that's the soil that made him.",
+  },
+  {
+    icon: "💰",
+    tag: "Clue 07 — The Unwritten Blueprint",
+    text: "He chose the language of ledgers and markets — not because the system told him to, but because you need to understand the rules before you break them. While others count pennies, he's already planning the empire the textbook forgot to mention.",
+  }
 ];
 
-function _initScroll(){
-  window.addEventListener("scroll",function(){
-    var d=document.documentElement;
-    document.getElementById("scroll-bar").style.width=
-      (d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+"%";
-  },{passive:true});
+const total = clues.length;
+let revealed = 0;
+
+// Returns the exact Date object when clue[index] should unlock
+function getClueUnlockTime(index) {
+  const t = new Date();
+  t.setHours(GAME_START.h, GAME_START.m, GAME_START.s, 0);
+  t.setSeconds(t.getSeconds() + index * CLUE_INTERVAL_SEC);
+  return t;
 }
 
-function _initReveal(){
-  var obs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){e.target.style.opacity="1";e.target.style.animation="fadeUp 0.7s ease both";}
-    });
-  },{threshold:0.08});
-  document.querySelectorAll(".about-card,.bro-card,.gallery-item").forEach(function(el){
-    el.style.opacity="0";obs.observe(el);
+// Returns Date when final reveal unlocks
+function getRevealUnlockTime() {
+  const t = new Date();
+  t.setHours(REVEAL_HOUR, REVEAL_MIN, 0, 0);
+  return t;
+}
+
+// How many clues should be visible RIGHT NOW based on wall clock
+function getRevealedCountNow() {
+  const now = new Date();
+  let count = 0;
+  for (let i = 0; i < total; i++) {
+    if (now >= getClueUnlockTime(i)) count++;
+    else break;
+  }
+  return count;
+}
+
+function getMsUntilReveal() {
+  const now = new Date();
+  const target = getRevealUnlockTime();
+  return Math.max(0, target - now);
+}
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function formatMs(ms) {
+  if (ms <= 0) return { h:'00', m:'00', s:'00' };
+  const t = Math.floor(ms / 1000);
+  return {
+    h: pad(Math.floor(t / 3600)),
+    m: pad(Math.floor((t % 3600) / 60)),
+    s: pad(t % 60)
+  };
+}
+
+// ── BUILD CLUE CARDS ──
+function buildClues() {
+  const stack = document.getElementById('clues-stack');
+  stack.innerHTML = '';
+  clues.forEach((c, i) => {
+    const div = document.createElement('div');
+    div.className = 'clue-card locked';
+    div.id = `clue-${i}`;
+    div.style.animationDelay = (i * 0.06) + 's';
+    div.innerHTML = `
+      <div class="clue-inner">
+        <div class="clue-num">${pad(i + 1)}</div>
+        <div class="clue-icon">${c.icon}</div>
+        <div class="clue-content">
+          <div class="clue-tag">${c.tag}</div>
+          <div class="clue-text" id="clue-text-${i}">???</div>
+        </div>
+        <div class="clue-lock" id="lock-${i}">🔒</div>
+      </div>
+    `;
+    stack.appendChild(div);
   });
 }
 
-_initScroll();
-_initReveal();
-
-function closeMobileNav(){document.querySelector(".nav-links").classList.remove("open");}
-
-function openLightbox(src,cap){
-  document.getElementById("lb-img").src=src;
-  document.getElementById("lb-cap").textContent=cap;
-  document.getElementById("lightbox").classList.add("open");
-  document.body.style.overflow="hidden";
+// ── REVEAL A SINGLE CLUE (no animation if silent) ──
+function revealClue(index, animate) {
+  if (index >= total) return;
+  const card   = document.getElementById(`clue-${index}`);
+  const textEl = document.getElementById(`clue-text-${index}`);
+  const lockEl = document.getElementById(`lock-${index}`);
+  if (card.classList.contains('unlocked')) return; // already done
+  card.classList.remove('locked');
+  card.classList.add('unlocked');
+  if (animate) {
+    card.style.animation = 'none';
+    card.offsetHeight;
+    card.style.animation = 'clueReveal 0.6s cubic-bezier(0.175,0.885,0.32,1.275) both';
+  }
+  textEl.textContent = clues[index].text;
+  lockEl.textContent = '✓';
 }
-function closeLightbox(){
-  document.getElementById("lightbox").classList.remove("open");
-  document.body.style.overflow="";
+
+function updateProgress(count) {
+  const pct = (count / total) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-count').textContent = `${count} / ${total}`;
 }
-document.addEventListener("keydown",function(e){if(e.key==="Escape")closeLightbox();});
+
+// ── MAIN TICK — runs every second ──
+function tick() {
+  const now    = new Date();
+  const count  = getRevealedCountNow();
+  const isNew  = count > revealed;
+
+  // Reveal any newly due clues
+  if (isNew) {
+    for (let i = revealed; i < count; i++) {
+      revealClue(i, true);
+    }
+    revealed = count;
+    updateProgress(revealed);
+  }
+
+  // Status + next-clue bar
+  const bar     = document.getElementById('next-clue-bar');
+  const statusEl = document.getElementById('status-text');
+
+  if (revealed >= total) {
+    bar.style.display = 'none';
+    statusEl.textContent = 'ALL CLUES OUT — WAIT FOR 11:45 PM REVEAL!';
+  } else {
+    const nextTime = getClueUnlockTime(revealed);
+    const msLeft   = Math.max(0, nextTime - now);
+    const secsLeft = Math.ceil(msLeft / 1000);
+    const m = Math.floor(secsLeft / 60);
+    const s = secsLeft % 60;
+    bar.style.display = 'flex';
+    document.getElementById('ncb-timer').textContent = `${m}:${pad(s)}`;
+    statusEl.textContent = `CLUE ${revealed} OF ${total} REVEALED — KEEP GUESSING!`;
+  }
+
+  // Reveal button countdown
+  const msReveal = getMsUntilReveal();
+  const btn      = document.getElementById('btn-reveal-final');
+  const timerEl  = document.getElementById('reveal-timer');
+  if (msReveal <= 0) {
+    btn.disabled = false;
+    btn.classList.remove('reveal-locked');
+    btn.classList.add('reveal-ready');
+    btn.innerHTML = '🎯 REVEAL IDENTITY ⚡';
+    if (timerEl) timerEl.style.display = 'none';
+  } else {
+    const t = formatMs(msReveal);
+    btn.disabled = true;
+    btn.classList.add('reveal-locked');
+    btn.innerHTML = `🔒 REVEAL UNLOCKS AT 11:45 AM`;
+    if (timerEl) timerEl.textContent = `${t.h}:${t.m}:${t.s}`;
+  }
+}
+
+function finalReveal() {
+  if (getMsUntilReveal() > 0) return;
+  document.getElementById('reveal-panel').classList.add('show');
+  document.getElementById('silhouette').classList.add('revealed');
+  document.getElementById('btn-reveal-final').disabled = true;
+  document.getElementById('status-text').textContent = '🎉 IDENTITY REVEALED!';
+  spawnConfetti();
+}
+
+function spawnConfetti() {
+  const colors = ['#f5c842','#ff3c5f','#00e5ff','#ffffff','#e07b00'];
+  const burst = document.createElement('div');
+  burst.className = 'confetti-burst';
+  document.body.appendChild(burst);
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.cssText = `
+      left: ${Math.random()*100}%;
+      background: ${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration: ${1.5 + Math.random()*2}s;
+      animation-delay: ${Math.random()*0.8}s;
+      width: ${6 + Math.random()*8}px;
+      height: ${6 + Math.random()*8}px;
+      border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+    `;
+    burst.appendChild(p);
+  }
+  setTimeout(() => burst.remove(), 4000);
+}
+
+// ── INIT ──
+buildClues();
+
+// Reveal all clues already due silently (no animation — they were already "out")
+const initCount = getRevealedCountNow();
+for (let i = 0; i < initCount; i++) revealClue(i, false);
+revealed = initCount;
+updateProgress(revealed);
+
+// Start the clock
+tick();
+setInterval(tick, 1000);
+
 </script>
 </body>
 </html>
