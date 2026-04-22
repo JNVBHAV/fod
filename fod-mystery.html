@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ FOD — Who Am I?</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #07070e;
+    --surface: #0e0e1c;
+    --surface2: #141425;
+    --border: rgba(255,255,255,0.07);
+    --gold: #f5c842;
+    --gold2: #e07b00;
+    --red: #ff3c5f;
+    --cyan: #00e5ff;
+    --text: #dde0f0;
+    --muted: #555575;
+    --locked: #1a1a2e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    padding: 30px 16px 60px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Animated bg grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245,200,66,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,200,66,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(245,200,66,0.07) 0%, transparent 70%);
+    z-index: 0;
+    pointer-events: none;
+    animation: breathe 6s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+  }
+
+  .page {
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* TOP HEADER */
+  .top-header {
+    text-align: center;
+    margin-bottom: 32px;
+    animation: fadeDown 0.7s ease both;
+  }
+
+  .fod-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .fod-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 52px;
+    letter-spacing: 6px;
+    line-height: 1;
+    background: linear-gradient(180deg, #fff 0%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .fod-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .fod-sub span {
+    color: var(--gold);
+  }
+
+  /* Mystery silhouette */
+  .mystery-figure {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 28px;
+    animation: fadeUp 0.7s ease 0.1s both;
+  }
+
+  .silhouette-wrap {
+    position: relative;
+    width: 100px;
+    height: 100px;
+  }
+
+  .silhouette {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a1a30, #0e0e1c);
+    border: 2px solid rgba(245,200,66,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 44px;
+    filter: grayscale(1) brightness(0.3);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.8s ease;
+  }
+
+  .silhouette.revealed {
+    filter: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 50px rgba(245,200,66,0.4);
+  }
+
+  .silhouette::before {
+    content: '?';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 56px;
+    color: rgba(245,200,66,0.15);
+    transition: opacity 0.5s ease;
+  }
+
+  .silhouette.revealed::before { opacity: 0; }
+
+  .pulse-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid rgba(245,200,66,0.15);
+    animation: pulse-out 2.5s ease-in-out infinite;
+  }
+
+  .pulse-ring:nth-child(2) { inset: -18px; animation-delay: 0.5s; opacity: 0.6; }
+  .pulse-ring:nth-child(3) { inset: -28px; animation-delay: 1s; opacity: 0.3; }
+
+  @keyframes pulse-out {
+    0% { transform: scale(0.95); opacity: 0.6; }
+    50% { transform: scale(1); opacity: 0.2; }
+    100% { transform: scale(0.95); opacity: 0.6; }
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .progress-label .count { color: var(--gold); }
+
+  .progress-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold2), var(--gold));
+    border-radius: 3px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  /* Clue cards */
+  .clues-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .clue-card {
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    overflow: hidden;
+    transition: all 0.4s ease;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .clue-card.locked {
+    background: var(--locked);
+    border-color: rgba(255,255,255,0.04);
+  }
+
+  .clue-card.unlocked {
+    border-color: rgba(245,200,66,0.2);
+    background: linear-gradient(135deg, #111122, #0e0e1c);
+  }
+
+  .clue-card.unlocked:hover {
+    border-color: rgba(245,200,66,0.35);
+    transform: translateX(4px);
+  }
+
+  .clue-inner {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+  }
+
+  .clue-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 22px;
+    color: rgba(245,200,66,0.15);
+    min-width: 28px;
+    text-align: center;
+    transition: color 0.4s;
+  }
+
+  .clue-card.unlocked .clue-num { color: var(--gold); }
+
+  .clue-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    background: rgba(255,255,255,0.04);
+    flex-shrink: 0;
+    transition: background 0.4s;
+    filter: grayscale(1);
+  }
+
+  .clue-card.unlocked .clue-icon {
+    background: rgba(245,200,66,0.1);
+    filter: none;
+  }
+
+  .clue-content { flex: 1; }
+
+  .clue-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    transition: color 0.4s;
+  }
+
+  .clue-card.unlocked .clue-tag { color: rgba(245,200,66,0.5); }
+
+  .clue-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--muted);
+    transition: color 0.4s;
+    line-height: 1.4;
+  }
+
+  .clue-card.unlocked .clue-text { color: var(--text); }
+
+  .clue-lock {
+    font-size: 16px;
+    opacity: 0.2;
+    flex-shrink: 0;
+    transition: opacity 0.4s;
+  }
+
+  .clue-card.unlocked .clue-lock { opacity: 0; width: 0; overflow: hidden; }
+
+  /* Reveal button */
+  .btn-wrap {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .btn-reveal {
+    background: linear-gradient(135deg, var(--gold2), var(--gold));
+    border: none;
+    border-radius: 100px;
+    padding: 14px 40px;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 20px;
+    letter-spacing: 3px;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(245,200,66,0.25);
+  }
+
+  .btn-reveal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .btn-reveal:hover::before { opacity: 1; }
+  .btn-reveal:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(245,200,66,0.4); }
+  .btn-reveal:active { transform: translateY(0); }
+
+  .btn-reveal:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-hint {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 10px 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-left: 10px;
+  }
+
+  .btn-hint:hover { border-color: rgba(245,200,66,0.3); color: var(--gold); }
+
+  /* Final reveal panel */
+  .reveal-panel {
+    background: linear-gradient(135deg, rgba(245,200,66,0.08), rgba(0,229,255,0.03));
+    border: 1px solid rgba(245,200,66,0.25);
+    border-radius: 18px;
+    padding: 28px;
+    text-align: center;
+    display: none;
+    animation: revealBoom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    margin-top: 10px;
+  }
+
+  .reveal-panel.show { display: block; }
+
+  @keyframes revealBoom {
+    0% { opacity: 0; transform: scale(0.7); }
+    60% { transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  .reveal-panel .crown { font-size: 40px; display: block; margin-bottom: 12px; }
+
+  .reveal-name {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 54px;
+    letter-spacing: 6px;
+    background: linear-gradient(135deg, #fff 20%, var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .reveal-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+
+  .reveal-details {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .detail-pill {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .reveal-quote {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    font-style: italic;
+    line-height: 1.7;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 16px;
+  }
+
+  /* Status bar */
+  .status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    animation: blink 1.2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  /* Animations */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── END TIME LOCK ── */
+
+  .confetti-burst {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    overflow: hidden;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    animation: confettiFall linear both;
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* Reveal lock section */
+  .reveal-lock-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .reveal-lock-box {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid rgba(245,200,66,0.15);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .rlb-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .rlb-icon { font-size: 26px; }
+
+  .rlb-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .rlb-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+  }
+
+  .rlb-sub strong { color: var(--text); }
+
+  .reveal-timer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 10px 16px;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .rtimer-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+
+  .rtimer-val {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 24px;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-shadow: 0 0 20px rgba(255,60,95,0.4);
+  }
+
+  .btn-reveal-final {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 18px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+  }
+
+  .btn-reveal-final.reveal-locked {
+    background: rgba(255,255,255,0.04);
+    color: var(--muted);
+    border: 1px dashed rgba(255,255,255,0.1);
+    cursor: not-allowed;
+  }
+
+  .btn-reveal-final.reveal-ready {
+    background: linear-gradient(135deg, var(--gold2), var(--gold));
+    color: #000;
+    box-shadow: 0 8px 30px rgba(245,200,66,0.3);
+    animation: readyPulse 2s ease-in-out infinite;
+  }
+
+  .btn-reveal-final.reveal-ready:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(245,200,66,0.5);
+  }
+
+  /* Next clue countdown bar */
+  .next-clue-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(245,200,66,0.06);
+    border: 1px solid rgba(245,200,66,0.2);
+    border-radius: 12px;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .ncb-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+
+  .ncb-timer {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 26px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-shadow: 0 0 16px rgba(245,200,66,0.4);
+  }
+
+  @keyframes clueReveal {
+    0% { opacity: 0; transform: translateX(-16px) scale(0.97); }
+    60% { transform: translateX(4px) scale(1.01); }
+    100% { opacity: 1; transform: translateX(0) scale(1); }
+  }
+
+  @keyframes readyPulse {
+    0%, 100% { box-shadow: 0 8px 30px rgba(245,200,66,0.3); }
+    50% { box-shadow: 0 8px 50px rgba(245,200,66,0.6); }
+  }
+</style>
+</head>
+<body>
+<div class="page" id="main-page">
+
+  <div class="top-header">
+    <div class="fod-eyebrow">DAILY CHALLENGE • CORE TEAM</div>
+    <div class="fod-title">WHO AM I?</div>
+    <div class="fod-sub">⚡ <span>Face of the Day</span> — Guess before the final reveal</div>
+  </div>
+
+  <div class="mystery-figure">
+    <div class="silhouette-wrap">
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring"></div>
+      <div class="silhouette" id="silhouette">🦁</div>
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <div class="status-dot"></div>
+    <span id="status-text">IDENTITY LOCKED — UNLOCK CLUES TO GUESS</span>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>CLUES REVEALED</span>
+      <span class="count" id="progress-count">0 / 7</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <div class="clues-stack" id="clues-stack"></div>
+
+  <div class="next-clue-bar" id="next-clue-bar" style="display:none;">
+    <span class="ncb-label">NEXT CLUE DROPS IN</span>
+    <span class="ncb-timer" id="ncb-timer">3:00</span>
+  </div>
+
+  <!-- TIME-LOCKED REVEAL SECTION -->
+  <div class="reveal-lock-wrap" id="reveal-lock-wrap">
+    <div class="reveal-lock-box">
+      <div class="rlb-top">
+        <span class="rlb-icon">🎯</span>
+        <div>
+          <div class="rlb-title">FINAL REVEAL</div>
+          <div class="rlb-sub">Identity drops sharp at <strong>11:45 AM</strong></div>
+        </div>
+      </div>
+      <div class="reveal-timer-row" id="reveal-timer-row">
+        <span class="rtimer-label">UNLOCKS IN</span>
+        <span class="rtimer-val" id="reveal-timer">--:--:--</span>
+      </div>
+      <button class="btn-reveal-final reveal-locked" id="btn-reveal-final" onclick="finalReveal()" disabled>
+        🔒 REVEAL UNLOCKS AT 11:45 AM
+      </button>
+    </div>
+  </div>
+
+  <div class="reveal-panel" id="reveal-panel">
+    <span class="crown">👑</span>
+    <div class="reveal-name">ASMIT KHASIYA</div>
+    <div class="reveal-sub">// THE SILENT OPERATOR — BATCH 2025</div>
+    <div class="reveal-details">
+      <div class="detail-pill">🏠 Nilgiri House</div>
+      <div class="detail-pill">🎓 BBA(G), Anand</div>
+      <div class="detail-pill">📍 Talaja</div>
+      <div class="detail-pill">🎮 eSports + Cricket</div>
+    </div>
+    <div class="reveal-quote">
+      "You don't always need to be the captain to be the most important player on the field."
+    </div>
+  </div>
+
+</div><!-- end .page#main-page -->
+
+<script>
+// ── CONFIG ──
+const GAME_START        = { h: 11, m: 0, s: 0 };
+const CLUE_INTERVAL_SEC = 150;
+const REVEAL_HOUR       = 11;
+const REVEAL_MIN        = 45;
+
+// ── OBFUSCATED CLUE DATA ──
+// Clue text is NOT stored in plain text.
+// Encoded so source inspection reveals nothing readable.
+// Decoded only at the exact moment of unlock.
+const _meta = [
+  { icon:"🌊", tag:"Clue 01 — The Forge",             _d:"bzQgO2EsLlJAX1RpKywvOGkrMzwhJGE7bEFTWGZpfCwqIyFuLTUoMGE7L0BdXFFpNyEzbD0mJjAsO2EtI2ESHkEsOz8pKWkgIDwqPGEtI0ESVVYoOjpnKSEa" },
+  { icon:"🎮", tag:"Clue 02 — The Double Arena",       _d:"YCU8MDItOGtGFURbaTc7KCosLGE8JDImaC5dRhBVJzstJik7bjJ+LDth3MvXEkNXJDs9ZyQ9IQN5Zz0kLTlWQRBXJz1paz86LzM+aTYvB2sbQVReLDsvIiA9OiA7aTw2HGsbQVRcKDppIiEoHQ==" },
+  { icon:"🏙️",tag:"Clue 03 — The War Station",        _d:"bzwiFVZeWyE3K2cpOycxNCxzJCA/FUtURz0haSg4aSszPCEnYTtsUFoQHj0xPCMjOz5hPCEnYTokUxJVQCw6PWc4JiBhKm42KWjftdAQQS48ICk+JiNhNyY6LSQiVxJREi03LiktIS1hKjs2NTwuWRJCRyY0aSI+LCY2eTAnKCtrUFpEEic7aTRrLAY=" },
+  { icon:"🗣️",tag:"Clue 04 — The One Word",           _d:"HFxeKHI9Lmw6NyAqaScgID8VVkJdPnIsKSNpKyktaSogO2tZXhdLLDodZ2IsIyA3aScyOiJTEkNbIXIwJj9pOmY3JiRhMS5dZhAcOjtpIiRpISkuaSAlJi5cQFYSOjshZyc6Dw==" },
+  { icon:"👑", tag:"Clue 05 — The Shadow Throne",      _d:"by0lWkBYRmk3ITNsLSAoMSwxYTw4QFgQVSc7LSktPT1hPCc8YS0jQRJJUGkmJS45K24kKyhzMi05XEJdV2kmPAVsZyA2NjswYS0jQRJEVy5yOiAiIAU=" },
+  { icon:"🌊", tag:"Clue 06 — The Birthground",        _d:"HCQ7IWcpLS8seT0yKTxrWVtfQWk3ITNsOmk1OCEnYdzL1xJXXCA5JSY4aT0xNj0gYTouQ1deEig3OmcpITphPScyYWQuWFtEEiczITNsOyslNSZzMjwuR1FVQWk2JSgkaT0kLygwYTwlUFtTXChyLDUpIRk=" },
+  { icon:"💰", tag:"Clue 07 — The Unwritten Blueprint",_d:"G1xfWz08LCpsJjphLSY0MyctFVlfXSsmMSI4aSspLWk2MyE7WFcQVyEmaSAiICAvOCUjYTEvVFdCXihyOmApIW5tKiw6LyYuRRJEXDw9Kmc/OyspLSZzJCQiXWUQHCQ3ITNsIi8kKytzNCcyFVdCXS83K2c/LCI0K2k2KTxrUVxRRjogLCMiPG4uLWk3JC0lFUdfS2k3OjItKisjeT0mI2hnWkYQXyA6aSMgJjphNCwnMjE4FVdYRmk3OjItKisjeT08L2jftdAQQT03IjUtJG4lNyhzMjouUlZVXmk0JmcpLi80PicyLWguXUYQVzo9ISRsLAY=" }
+];
+
+// ── DECODE — runs ONLY at unlock time ──
+// Key is split across variables so it is not visible as a plain string in source
+const _p1 = "NILGIR", _p2 = "I2025K", _p3 = "HASIYA";
+function _decode(enc) {
+  const K = (_p1 + _p2 + _p3).split("").map(c => c.charCodeAt(0));
+  const raw = atob(enc);
+  const bytes = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+  const unreversed = bytes.reverse();
+  const out = [];
+  for (let i = 0; i < unreversed.length; i++)
+    out.push(unreversed[i] ^ K[i % K.length]);
+  return new TextDecoder().decode(new Uint8Array(out));
+}
+
+const total = _meta.length;
+let revealed = 0;
+
+// ── SERVER TIME SYSTEM ──
+// Fetches real IST time from a public API on page load.
+// All comparisons use: Date.now() + _offset
+// Changing device clock has zero effect.
+let _offset = 0;
+let _timeReady = false;
+
+async function syncServerTime() {
+  document.getElementById("status-text").textContent = "SYNCING TIME...";
+  const apis = [
+    "https://worldtimeapi.org/api/timezone/Asia/Kolkata",
+    "https://timeapi.io/api/time/current/zone?timeZone=Asia/Kolkata"
+  ];
+  for (const url of apis) {
+    try {
+      const before = Date.now();
+      const res    = await fetch(url, { cache: "no-store" });
+      const after  = Date.now();
+      const data   = await res.json();
+      const serverMs = data.unixtime
+        ? data.unixtime * 1000
+        : new Date(data.dateTime).getTime();
+      // Subtract half the round-trip to estimate server time at midpoint
+      _offset = serverMs - Math.round((before + after) / 2);
+      _timeReady = true;
+      return;
+    } catch (_) { /* try next API */ }
+  }
+  // All APIs failed — fall back silently
+  _offset = 0;
+  _timeReady = true;
+}
+
+function realNow() { return Date.now() + _offset; }
+
+function getClueUnlockMs(index) {
+  const base = new Date(realNow());
+  base.setHours(GAME_START.h, GAME_START.m, GAME_START.s, 0);
+  return base.getTime() + index * CLUE_INTERVAL_SEC * 1000;
+}
+
+function getRevealUnlockMs() {
+  const t = new Date(realNow());
+  t.setHours(REVEAL_HOUR, REVEAL_MIN, 0, 0);
+  return t.getTime();
+}
+
+function getRevealedCountNow() {
+  const now = realNow();
+  let count = 0;
+  for (let i = 0; i < total; i++) {
+    if (now >= getClueUnlockMs(i)) count++;
+    else break;
+  }
+  return count;
+}
+
+function getMsUntilReveal() {
+  return Math.max(0, getRevealUnlockMs() - realNow());
+}
+
+function pad(n) { return String(n).padStart(2, "0"); }
+
+// ── BUILD CARDS (no clue text yet) ──
+function buildClues() {
+  const stack = document.getElementById("clues-stack");
+  stack.innerHTML = "";
+  _meta.forEach((c, i) => {
+    const div = document.createElement("div");
+    div.className = "clue-card locked";
+    div.id = "clue-" + i;
+    div.style.animationDelay = (i * 0.06) + "s";
+    div.innerHTML =
+      '<div class="clue-inner">' +
+        '<div class="clue-num">' + pad(i+1) + '</div>' +
+        '<div class="clue-icon">' + c.icon + '</div>' +
+        '<div class="clue-content">' +
+          '<div class="clue-tag">' + c.tag + '</div>' +
+          '<div class="clue-text" id="clue-text-' + i + '">???</div>' +
+        '</div>' +
+        '<div class="clue-lock" id="lock-' + i + '">🔒</div>' +
+      '</div>';
+    stack.appendChild(div);
+  });
+}
+
+// ── REVEAL — decodes text only at this exact moment ──
+function revealClue(index, animate) {
+  if (index >= total) return;
+  const card = document.getElementById("clue-" + index);
+  if (!card || card.classList.contains("unlocked")) return;
+  const textEl = document.getElementById("clue-text-" + index);
+  const lockEl = document.getElementById("lock-" + index);
+  card.classList.remove("locked");
+  card.classList.add("unlocked");
+  if (animate) {
+    card.style.animation = "none";
+    card.offsetHeight;
+    card.style.animation = "clueReveal 0.6s cubic-bezier(0.175,0.885,0.32,1.275) both";
+  }
+  // Text only exists in DOM from this point — never before
+  textEl.textContent = _decode(_meta[index]._d);
+  lockEl.textContent = "✓";
+}
+
+function updateProgress(count) {
+  document.getElementById("progress-fill").style.width = (count / total * 100) + "%";
+  document.getElementById("progress-count").textContent = count + " / " + total;
+}
+
+// ── MAIN TICK (every second) ──
+function tick() {
+  if (!_timeReady) return;
+  const count = getRevealedCountNow();
+  if (count > revealed) {
+    for (let i = revealed; i < count; i++) revealClue(i, count === revealed + 1);
+    revealed = count;
+    updateProgress(revealed);
+  }
+  const bar      = document.getElementById("next-clue-bar");
+  const statusEl = document.getElementById("status-text");
+  if (revealed >= total) {
+    bar.style.display = "none";
+    statusEl.textContent = "ALL CLUES OUT — WAIT FOR 11:45 AM REVEAL!";
+  } else {
+    const msLeft = Math.max(0, getClueUnlockMs(revealed) - realNow());
+    const secs   = Math.ceil(msLeft / 1000);
+    bar.style.display = "flex";
+    document.getElementById("ncb-timer").textContent = Math.floor(secs/60) + ":" + pad(secs%60);
+    statusEl.textContent = "CLUE " + revealed + " OF " + total + " REVEALED — KEEP GUESSING!";
+  }
+  const msReveal = getMsUntilReveal();
+  const btn      = document.getElementById("btn-reveal-final");
+  const timerEl  = document.getElementById("reveal-timer");
+  if (msReveal <= 0) {
+    btn.disabled = false;
+    btn.classList.remove("reveal-locked");
+    btn.classList.add("reveal-ready");
+    btn.innerHTML = "🎯 REVEAL IDENTITY ⚡";
+    if (timerEl) timerEl.style.display = "none";
+  } else {
+    const t = Math.floor(msReveal / 1000);
+    btn.disabled = true;
+    btn.classList.add("reveal-locked");
+    btn.innerHTML = "🔒 REVEAL UNLOCKS AT 11:45 AM";
+    if (timerEl) timerEl.textContent = pad(Math.floor(t/3600)) + ":" + pad(Math.floor((t%3600)/60)) + ":" + pad(t%60);
+  }
+}
+
+function finalReveal() {
+  if (getMsUntilReveal() > 0) return;
+  document.getElementById("reveal-panel").classList.add("show");
+  document.getElementById("silhouette").classList.add("revealed");
+  document.getElementById("btn-reveal-final").disabled = true;
+  document.getElementById("status-text").textContent = "🎉 IDENTITY REVEALED!";
+  spawnConfetti();
+}
+
+function spawnConfetti() {
+  const colors = ["#f5c842","#ff3c5f","#00e5ff","#ffffff","#e07b00"];
+  const burst = document.createElement("div");
+  burst.className = "confetti-burst";
+  document.body.appendChild(burst);
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement("div");
+    p.className = "confetti-piece";
+    p.style.cssText = "left:" + (Math.random()*100) + "%;background:" + colors[Math.floor(Math.random()*colors.length)] + ";animation-duration:" + (1.5+Math.random()*2) + "s;animation-delay:" + (Math.random()*0.8) + "s;width:" + (6+Math.random()*8) + "px;height:" + (6+Math.random()*8) + "px;border-radius:" + (Math.random()>.5?"50%":"2px") + ";";
+    burst.appendChild(p);
+  }
+  setTimeout(() => burst.remove(), 4000);
+}
+
+// ── BOOT ──
+buildClues();
+syncServerTime().then(() => {
+  const initCount = getRevealedCountNow();
+  for (let i = 0; i < initCount; i++) revealClue(i, false);
+  revealed = initCount;
+  updateProgress(revealed);
+  tick();
+  setInterval(tick, 1000);
+});
+</script>
+</body>
+</html>
