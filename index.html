@@ -3,1002 +3,1087 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⚡ FOD — Who Am I?</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<title>The Blueprint · FOD Game</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #07070e;
-    --surface: #0e0e1c;
-    --surface2: #141425;
-    --border: rgba(255,255,255,0.07);
-    --gold: #f5c842;
-    --gold2: #e07b00;
-    --red: #ff3c5f;
-    --cyan: #00e5ff;
-    --text: #dde0f0;
-    --muted: #555575;
-    --locked: #1a1a2e;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
-    min-height: 100vh;
-    padding: 30px 16px 60px;
-    position: relative;
-    overflow-x: hidden;
-  }
-
-  /* Animated bg grid */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(245,200,66,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(245,200,66,0.03) 1px, transparent 1px);
-    background-size: 48px 48px;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    top: -30%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 700px;
-    height: 400px;
-    background: radial-gradient(ellipse, rgba(245,200,66,0.07) 0%, transparent 70%);
-    z-index: 0;
-    pointer-events: none;
-    animation: breathe 6s ease-in-out infinite;
-  }
-
-  @keyframes breathe {
-    0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
-    50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
-  }
-
-  .page {
-    max-width: 480px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* TOP HEADER */
-  .top-header {
-    text-align: center;
-    margin-bottom: 32px;
-    animation: fadeDown 0.7s ease both;
-  }
-
-  .fod-eyebrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 5px;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
-
-  .fod-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 52px;
-    letter-spacing: 6px;
-    line-height: 1;
-    background: linear-gradient(180deg, #fff 0%, var(--gold) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .fod-sub {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 6px;
-    font-family: 'Space Mono', monospace;
-  }
-
-  .fod-sub span {
-    color: var(--gold);
-  }
-
-  /* Mystery silhouette */
-  .mystery-figure {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 28px;
-    animation: fadeUp 0.7s ease 0.1s both;
-  }
-
-  .silhouette-wrap {
-    position: relative;
-    width: 100px;
-    height: 100px;
-  }
-
-  .silhouette {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #1a1a30, #0e0e1c);
-    border: 2px solid rgba(245,200,66,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 44px;
-    filter: grayscale(1) brightness(0.3);
-    position: relative;
-    overflow: hidden;
-    transition: all 0.8s ease;
-  }
-
-  .silhouette.revealed {
-    filter: none;
-    border-color: var(--gold);
-    box-shadow: 0 0 50px rgba(245,200,66,0.4);
-  }
-
-  .silhouette::before {
-    content: '?';
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Bebas Neue', cursive;
-    font-size: 56px;
-    color: rgba(245,200,66,0.15);
-    transition: opacity 0.5s ease;
-  }
-
-  .silhouette.revealed::before { opacity: 0; }
-
-  .pulse-ring {
-    position: absolute;
-    inset: -8px;
-    border-radius: 50%;
-    border: 1px solid rgba(245,200,66,0.15);
-    animation: pulse-out 2.5s ease-in-out infinite;
-  }
-
-  .pulse-ring:nth-child(2) { inset: -18px; animation-delay: 0.5s; opacity: 0.6; }
-  .pulse-ring:nth-child(3) { inset: -28px; animation-delay: 1s; opacity: 0.3; }
-
-  @keyframes pulse-out {
-    0% { transform: scale(0.95); opacity: 0.6; }
-    50% { transform: scale(1); opacity: 0.2; }
-    100% { transform: scale(0.95); opacity: 0.6; }
-  }
-
-  /* Progress bar */
-  .progress-wrap {
-    margin-bottom: 24px;
-    animation: fadeUp 0.6s ease 0.2s both;
-  }
-
-  .progress-label {
-    display: flex;
-    justify-content: space-between;
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    margin-bottom: 8px;
-    letter-spacing: 1px;
-  }
-
-  .progress-label .count { color: var(--gold); }
-
-  .progress-bar {
-    height: 3px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--gold2), var(--gold));
-    border-radius: 3px;
-    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    width: 0%;
-  }
-
-  /* Clue cards */
-  .clues-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 24px;
-  }
-
-  .clue-card {
-    border-radius: 14px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    overflow: hidden;
-    transition: all 0.4s ease;
-    animation: fadeUp 0.5s ease both;
-  }
-
-  .clue-card.locked {
-    background: var(--locked);
-    border-color: rgba(255,255,255,0.04);
-  }
-
-  .clue-card.unlocked {
-    border-color: rgba(245,200,66,0.2);
-    background: linear-gradient(135deg, #111122, #0e0e1c);
-  }
-
-  .clue-card.unlocked:hover {
-    border-color: rgba(245,200,66,0.35);
-    transform: translateX(4px);
-  }
-
-  .clue-inner {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 16px 18px;
-  }
-
-  .clue-num {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 22px;
-    color: rgba(245,200,66,0.15);
-    min-width: 28px;
-    text-align: center;
-    transition: color 0.4s;
-  }
-
-  .clue-card.unlocked .clue-num { color: var(--gold); }
-
-  .clue-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    background: rgba(255,255,255,0.04);
-    flex-shrink: 0;
-    transition: background 0.4s;
-    filter: grayscale(1);
-  }
-
-  .clue-card.unlocked .clue-icon {
-    background: rgba(245,200,66,0.1);
-    filter: none;
-  }
-
-  .clue-content { flex: 1; }
-
-  .clue-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-bottom: 4px;
-    transition: color 0.4s;
-  }
-
-  .clue-card.unlocked .clue-tag { color: rgba(245,200,66,0.5); }
-
-  .clue-text {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--muted);
-    transition: color 0.4s;
-    line-height: 1.4;
-  }
-
-  .clue-card.unlocked .clue-text { color: var(--text); }
-
-  .clue-lock {
-    font-size: 16px;
-    opacity: 0.2;
-    flex-shrink: 0;
-    transition: opacity 0.4s;
-  }
-
-  .clue-card.unlocked .clue-lock { opacity: 0; width: 0; overflow: hidden; }
-
-  /* Reveal button */
-  .btn-wrap {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .btn-reveal {
-    background: linear-gradient(135deg, var(--gold2), var(--gold));
-    border: none;
-    border-radius: 100px;
-    padding: 14px 40px;
-    font-family: 'Bebas Neue', cursive;
-    font-size: 20px;
-    letter-spacing: 3px;
-    color: #000;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 8px 30px rgba(245,200,66,0.25);
-  }
-
-  .btn-reveal::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .btn-reveal:hover::before { opacity: 1; }
-  .btn-reveal:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(245,200,66,0.4); }
-  .btn-reveal:active { transform: translateY(0); }
-
-  .btn-reveal:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    transform: none;
-  }
-
-  .btn-hint {
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    padding: 10px 24px;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 1px;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.3s;
-    margin-left: 10px;
-  }
-
-  .btn-hint:hover { border-color: rgba(245,200,66,0.3); color: var(--gold); }
-
-  /* Final reveal panel */
-  .reveal-panel {
-    background: linear-gradient(135deg, rgba(245,200,66,0.08), rgba(0,229,255,0.03));
-    border: 1px solid rgba(245,200,66,0.25);
-    border-radius: 18px;
-    padding: 28px;
-    text-align: center;
-    display: none;
-    animation: revealBoom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-    margin-top: 10px;
-  }
-
-  .reveal-panel.show { display: block; }
-
-  @keyframes revealBoom {
-    0% { opacity: 0; transform: scale(0.7); }
-    60% { transform: scale(1.05); }
-    100% { opacity: 1; transform: scale(1); }
-  }
-
-  .reveal-panel .crown { font-size: 40px; display: block; margin-bottom: 12px; }
-
-  .reveal-name {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 54px;
-    letter-spacing: 6px;
-    background: linear-gradient(135deg, #fff 20%, var(--gold));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-
-  .reveal-sub {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-  }
-
-  .reveal-details {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-  }
-
-  .detail-pill {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 100px;
-    padding: 6px 14px;
-    font-size: 12px;
-    color: var(--muted);
-    display: flex;
-    gap: 5px;
-    align-items: center;
-  }
-
-  .reveal-quote {
-    font-size: 13px;
-    color: rgba(255,255,255,0.6);
-    font-style: italic;
-    line-height: 1.7;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    padding-top: 16px;
-  }
-
-  .btn-view-profile {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 20px;
-    padding: 12px 28px;
-    background: transparent;
-    border: 1px solid rgba(245,200,66,0.4);
-    border-radius: 100px;
-    color: var(--gold);
-    font-family: 'Bebas Neue', cursive;
-    font-size: 16px;
-    letter-spacing: 2px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn-view-profile::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(245,200,66,0.1), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .btn-view-profile:hover {
-    border-color: var(--gold);
-    color: #000;
-    background: var(--gold);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(245,200,66,0.3);
-  }
-
-  .btn-view-profile:hover svg { stroke: #000; }
-
-  /* Status bar */
-  .status-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 24px;
-  }
-
-  .status-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--red);
-    animation: blink 1.2s ease-in-out infinite;
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.2; }
-  }
-
-  /* Animations */
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── END TIME LOCK ── */
-
-  .confetti-burst {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 999;
-    overflow: hidden;
-  }
-
-  .confetti-piece {
-    position: absolute;
-    width: 8px; height: 8px;
-    border-radius: 2px;
-    animation: confettiFall linear both;
-  }
-
-  @keyframes confettiFall {
-    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-  }
-
-  /* Reveal lock section */
-  .reveal-lock-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-  }
-
-  .reveal-lock-box {
-    width: 100%;
-    background: var(--surface);
-    border: 1px solid rgba(245,200,66,0.15);
-    border-radius: 16px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .rlb-top {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .rlb-icon { font-size: 26px; }
-
-  .rlb-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 20px;
-    letter-spacing: 2px;
-    color: var(--gold);
-    line-height: 1;
-  }
-
-  .rlb-sub {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    margin-top: 3px;
-    letter-spacing: 0.5px;
-  }
-
-  .rlb-sub strong { color: var(--text); }
-
-  .reveal-timer-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(0,0,0,0.3);
-    border-radius: 10px;
-    padding: 10px 16px;
-    border: 1px solid rgba(255,255,255,0.05);
-  }
-
-  .rtimer-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
-    color: var(--muted);
-  }
-
-  .rtimer-val {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 24px;
-    letter-spacing: 3px;
-    color: var(--red);
-    text-shadow: 0 0 20px rgba(255,60,95,0.4);
-  }
-
-  .btn-reveal-final {
-    width: 100%;
-    border: none;
-    border-radius: 12px;
-    padding: 16px;
-    font-family: 'Bebas Neue', cursive;
-    font-size: 18px;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.4s ease;
-  }
-
-  .btn-reveal-final.reveal-locked {
-    background: rgba(255,255,255,0.04);
-    color: var(--muted);
-    border: 1px dashed rgba(255,255,255,0.1);
-    cursor: not-allowed;
-  }
-
-  .btn-reveal-final.reveal-ready {
-    background: linear-gradient(135deg, var(--gold2), var(--gold));
-    color: #000;
-    box-shadow: 0 8px 30px rgba(245,200,66,0.3);
-    animation: readyPulse 2s ease-in-out infinite;
-  }
-
-  .btn-reveal-final.reveal-ready:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(245,200,66,0.5);
-  }
-
-  /* Next clue countdown bar */
-  .next-clue-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(245,200,66,0.06);
-    border: 1px solid rgba(245,200,66,0.2);
-    border-radius: 12px;
-    padding: 12px 20px;
-    margin-bottom: 20px;
-    animation: fadeUp 0.4s ease both;
-  }
-
-  .ncb-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--muted);
-  }
-
-  .ncb-timer {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 26px;
-    letter-spacing: 3px;
-    color: var(--gold);
-    text-shadow: 0 0 16px rgba(245,200,66,0.4);
-  }
-
-  @keyframes clueReveal {
-    0% { opacity: 0; transform: translateX(-16px) scale(0.97); }
-    60% { transform: translateX(4px) scale(1.01); }
-    100% { opacity: 1; transform: translateX(0) scale(1); }
-  }
-
-  @keyframes readyPulse {
-    0%, 100% { box-shadow: 0 8px 30px rgba(245,200,66,0.3); }
-    50% { box-shadow: 0 8px 50px rgba(245,200,66,0.6); }
-  }
+/* ═══════════════════════════════════════════════
+   ROOT VARIABLES & RESET
+═══════════════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:           #060912;
+  --bg2:          #0c1020;
+  --steel:        #111827;
+  --steel-mid:    #1a2438;
+  --steel-light:  #222d42;
+  --yellow:       #FFD600;
+  --yellow-dim:   rgba(255, 214, 0, 0.15);
+  --yellow-glow:  rgba(255, 214, 0, 0.35);
+  --blue:         #2563EB;
+  --blue-dim:     rgba(37, 99, 235, 0.12);
+  --blue-glow:    rgba(37, 99, 235, 0.3);
+  --teal:         #00B4D8;
+  --green:        #22C55E;
+  --green-dim:    rgba(34, 197, 94, 0.13);
+  --green-glow:   rgba(34, 197, 94, 0.35);
+  --green-border: rgba(34, 197, 94, 0.4);
+  --text:         #E2E8F0;
+  --text-muted:   #64748B;
+  --text-dim:     #334155;
+  --border:       rgba(255,255,255,0.06);
+  --border-blue:  rgba(37, 99, 235, 0.4);
+  --locked-bg:    #0a0e1a;
+  --grid-line:    rgba(37, 99, 235, 0.07);
+  --radius:       6px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Courier New', Courier, monospace;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ═══════════════════════════════════════════════
+   BLUEPRINT GRID BACKGROUND
+═══════════════════════════════════════════════ */
+.bp-grid {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(rgba(37,99,235,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37,99,235,0.03) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+}
+
+.bp-crosshair {
+  position: fixed; z-index: 0; pointer-events: none;
+  width: 40px; height: 40px; opacity: 0.15;
+}
+.bp-crosshair::before, .bp-crosshair::after {
+  content: ''; position: absolute; background: var(--blue);
+}
+.bp-crosshair::before { width: 1px; height: 100%; left: 50%; top: 0; }
+.bp-crosshair::after  { width: 100%; height: 1px; top: 50%; left: 0; }
+.bp-c1 { top: 15%; left: 8%; }
+.bp-c2 { bottom: 20%; right: 10%; }
+.bp-c3 { top: 60%; left: 5%; }
+
+/* ═══════════════════════════════════════════════
+   CRANE SVG (top-right corner)
+═══════════════════════════════════════════════ */
+.crane-wrap {
+  position: fixed; top: 0; right: 0;
+  width: 220px; height: 380px;
+  z-index: 1; pointer-events: none;
+  opacity: 0.18;
+}
+.crane-wrap svg { width: 100%; height: 100%; }
+
+@keyframes hookSway {
+  0%,100% { transform: rotate(-4deg) translateX(0); }
+  50%      { transform: rotate(4deg) translateX(4px); }
+}
+@keyframes ropeStretch {
+  0%,100% { stroke-dashoffset: 0; }
+  50%      { stroke-dashoffset: 6; }
+}
+.crane-load      { transform-origin: 150px 72px; animation: hookSway 4s ease-in-out infinite; }
+.crane-rope-anim { stroke-dasharray: 4 3; animation: ropeStretch 2s linear infinite; }
+
+/* ═══════════════════════════════════════════════
+   NOTIFICATION TOAST
+═══════════════════════════════════════════════ */
+#toast {
+  position: fixed; top: 18px; left: 50%; z-index: 9999;
+  transform: translateX(-50%) translateY(-90px);
+  background: var(--yellow); color: #000;
+  font-size: 11px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; padding: 11px 28px;
+  border-radius: 3px; white-space: nowrap;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 8px 32px rgba(255,214,0,0.4);
+}
+#toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ═══════════════════════════════════════════════
+   CONFETTI CANVAS
+═══════════════════════════════════════════════ */
+#confetti { position:fixed;inset:0;z-index:9998;pointer-events:none; }
+
+/* ═══════════════════════════════════════════════
+   MAIN LAYOUT
+═══════════════════════════════════════════════ */
+.container {
+  position: relative; z-index: 2;
+  max-width: 680px; margin: 0 auto;
+  padding: 28px 18px 80px;
+}
+
+/* ═══════════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════════ */
+.header {
+  text-align: center;
+  margin-bottom: 36px;
+  padding-top: 12px;
+}
+
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--blue-dim); border: 1px solid var(--border-blue);
+  color: var(--teal); font-size: 10px; letter-spacing: 3px;
+  text-transform: uppercase; padding: 5px 14px; border-radius: 2px;
+  margin-bottom: 18px;
+}
+
+.title {
+  font-size: clamp(36px, 8vw, 64px);
+  font-weight: 900; letter-spacing: 10px;
+  text-transform: uppercase;
+  color: var(--yellow);
+  text-shadow: 0 0 60px var(--yellow-glow), 0 0 20px rgba(255,214,0,0.2);
+  line-height: 1;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.title-sub {
+  font-size: 11px; letter-spacing: 6px;
+  color: var(--text-muted); text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* Blueprint stamp decoration */
+.stamp {
+  display: inline-block;
+  border: 2px solid rgba(37,99,235,0.3);
+  color: rgba(37,99,235,0.5);
+  font-size: 9px; letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 3px 12px; border-radius: 2px;
+  margin-top: 10px; transform: rotate(-1.5deg);
+}
+
+/* ═══════════════════════════════════════════════
+   TIMER PANEL
+═══════════════════════════════════════════════ */
+.timer-panel {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: center; gap: 16px;
+  background: var(--steel); border: 1px solid var(--border-blue);
+  border-radius: var(--radius); padding: 14px 20px;
+  margin-bottom: 28px;
+  position: relative; overflow: hidden;
+}
+.timer-panel::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--blue), transparent);
+}
+
+.timer-block { }
+.timer-label {
+  font-size: 9px; letter-spacing: 2.5px; color: var(--text-muted);
+  text-transform: uppercase; margin-bottom: 4px;
+}
+.timer-val {
+  font-size: 22px; font-weight: 700; letter-spacing: 3px;
+  color: var(--yellow);
+  font-variant-numeric: tabular-nums;
+}
+.timer-divider {
+  width: 1px; height: 36px; background: var(--border);
+  justify-self: center;
+}
+.timer-block:last-child { text-align: right; }
+.next-val {
+  font-size: 13px; font-weight: 700; color: var(--green);
+  letter-spacing: 1px;
+}
+
+/* ═══════════════════════════════════════════════
+   BUILDING PROGRESS
+═══════════════════════════════════════════════ */
+.progress-section {
+  margin-bottom: 32px;
+}
+.progress-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 10px;
+}
+.progress-label {
+  font-size: 9px; letter-spacing: 3px; color: var(--text-muted);
+  text-transform: uppercase;
+}
+.progress-count {
+  font-size: 11px; letter-spacing: 1px; color: var(--green);
+  font-weight: 700;
+}
+
+/* Building silhouette bar */
+.building-bar {
+  display: flex; gap: 3px; align-items: flex-end; height: 28px;
+}
+.b-floor {
+  flex: 1; border-radius: 2px 2px 0 0;
+  background: var(--steel-mid);
+  border: 1px solid rgba(255,255,255,0.04);
+  position: relative; overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  height: 14px;
+}
+.b-floor.lit {
+  background: var(--green);
+  height: 28px;
+  box-shadow: 0 0 12px var(--green-glow), 0 -4px 12px rgba(34,197,94,0.2);
+  border-color: rgba(34,197,94,0.5);
+}
+/* Window pattern on lit floors */
+.b-floor.lit::after {
+  content: ''; position: absolute;
+  inset: 4px 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(0,0,0,0.4) 0px, rgba(0,0,0,0.4) 3px,
+    transparent 3px, transparent 8px
+  );
+}
+
+/* ═══════════════════════════════════════════════
+   FLOOR CARDS
+═══════════════════════════════════════════════ */
+.floors { display: flex; flex-direction: column; gap: 8px; }
+
+.floor-card {
+  background: var(--locked-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.4s, box-shadow 0.4s, background 0.4s;
+}
+
+/* Left accent bar */
+.floor-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--text-dim);
+  transition: background 0.4s, box-shadow 0.4s;
+}
+
+.floor-card.unlocked {
+  background: var(--steel);
+  border-color: var(--green-border);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(34,197,94,0.08);
+}
+.floor-card.unlocked::before {
+  background: var(--green);
+  box-shadow: 2px 0 12px var(--green-glow);
+}
+
+/* First card always special - foundation */
+.floor-card:first-child.unlocked::before {
+  background: var(--green);
+  box-shadow: 2px 0 20px var(--green-glow);
+}
+
+/* Just-unlocked glow flash */
+.floor-card.flash {
+  border-color: var(--green);
+  box-shadow: 0 0 40px var(--green-glow), 0 4px 24px rgba(0,0,0,0.4);
+}
+.floor-card.flash::before {
+  background: var(--green);
+  box-shadow: 2px 0 20px var(--green-glow);
+}
+
+/* Slab-drop animation */
+@keyframes slabDrop {
+  0%   { transform: translateY(-24px) scaleY(0.9); opacity: 0; }
+  60%  { transform: translateY(4px) scaleY(1.02); opacity: 1; }
+  80%  { transform: translateY(-2px) scaleY(0.99); }
+  100% { transform: translateY(0) scaleY(1); opacity: 1; }
+}
+.floor-card.dropping { animation: slabDrop 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+/* Floor header */
+.floor-head {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 16px 11px 19px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,0.25);
+}
+
+.floor-num {
+  font-size: 9px; font-weight: 700; letter-spacing: 2px;
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 3px 9px; border-radius: 2px;
+  white-space: nowrap;
+  transition: color 0.4s, border-color 0.4s, background 0.4s;
+}
+.floor-card.unlocked .floor-num {
+  color: var(--green);
+  background: var(--green-dim);
+  border-color: rgba(34,197,94,0.3);
+}
+
+.floor-lbl {
+  font-size: 11px; letter-spacing: 2.5px; color: var(--text-muted);
+  text-transform: uppercase; flex: 1;
+  transition: color 0.4s;
+}
+.floor-card.unlocked .floor-lbl { color: var(--text); }
+
+.floor-icon { font-size: 15px; opacity: 0.5; transition: opacity 0.4s; }
+.floor-card.unlocked .floor-icon { opacity: 1; }
+
+/* Floor body */
+.floor-body {
+  padding: 14px 19px;
+  font-size: 13.5px; line-height: 1.75;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+  min-height: 48px;
+  transition: color 0.4s;
+}
+.floor-body.locked-placeholder {
+  font-size: 18px; letter-spacing: 12px;
+  color: var(--text-dim); opacity: 0.4;
+  font-weight: 700;
+}
+.floor-card.unlocked .floor-body {
+  color: var(--text);
+}
+
+/* Unlock time label */
+.floor-unlock-time {
+  font-size: 9px; letter-spacing: 1.5px; color: var(--text-dim);
+  padding: 0 19px 10px; opacity: 0.5;
+  display: none;
+}
+.floor-card.unlocked .floor-unlock-time { display: block; }
+
+/* ═══════════════════════════════════════════════
+   SECTION DIVIDER
+═══════════════════════════════════════════════ */
+.divider {
+  display: flex; align-items: center; gap: 16px;
+  margin: 32px 0;
+  color: var(--text-dim); font-size: 9px; letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+/* ═══════════════════════════════════════════════
+   REVEAL SECTION
+═══════════════════════════════════════════════ */
+.reveal-wrap { text-align: center; }
+
+.reveal-lockinfo {
+  font-size: 10px; letter-spacing: 2px; color: var(--text-dim);
+  text-transform: uppercase; margin-bottom: 14px;
+}
+
+.reveal-btn {
+  display: inline-flex; flex-direction: column; align-items: center;
+  gap: 6px; padding: 16px 44px;
+  background: var(--steel-mid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-dim); font-family: 'Courier New', monospace;
+  font-size: 12px; font-weight: 700; letter-spacing: 4px;
+  text-transform: uppercase; cursor: not-allowed;
+  transition: all 0.4s; position: relative; overflow: hidden;
+}
+.reveal-btn .btn-sub {
+  font-size: 9px; letter-spacing: 2px; font-weight: 400;
+  color: var(--text-dim); opacity: 0.6;
+}
+
+.reveal-btn.active {
+  background: var(--green); color: #000; cursor: pointer;
+  border-color: transparent;
+  box-shadow: 0 0 40px var(--green-glow), 0 8px 32px rgba(0,0,0,0.5);
+  animation: btnPulse 2s ease-in-out infinite;
+}
+.reveal-btn.active .btn-sub { color: rgba(0,0,0,0.6); }
+
+@keyframes btnPulse {
+  0%,100% { box-shadow: 0 0 40px var(--green-glow), 0 8px 32px rgba(0,0,0,0.5); }
+  50%      { box-shadow: 0 0 70px rgba(34,197,94,0.55), 0 8px 40px rgba(0,0,0,0.5); }
+}
+.reveal-btn.active:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 60px rgba(34,197,94,0.6), 0 16px 40px rgba(0,0,0,0.5);
+}
+.reveal-btn.active:active { transform: translateY(0); }
+
+/* Shimmer on active button */
+.reveal-btn.active::after {
+  content: ''; position: absolute;
+  top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%   { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* ═══════════════════════════════════════════════
+   REVEAL PANEL
+═══════════════════════════════════════════════ */
+.reveal-panel {
+  display: none; margin-top: 28px;
+  background: var(--steel);
+  border: 2px solid var(--yellow);
+  border-radius: 10px;
+  padding: 40px 28px;
+  position: relative; overflow: hidden;
+  box-shadow: 0 0 80px var(--yellow-glow), inset 0 1px 0 rgba(255,214,0,0.2);
+}
+.reveal-panel::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255,214,0,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+@keyframes panelReveal {
+  0%   { opacity: 0; transform: scale(0.88) translateY(20px); }
+  70%  { transform: scale(1.02) translateY(-4px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.reveal-panel.open {
+  display: block;
+  animation: panelReveal 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.fod-eyebrow {
+  font-size: 9px; letter-spacing: 5px; color: var(--green);
+  text-transform: uppercase; margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.fod-eyebrow::before,.fod-eyebrow::after {
+  content:''; flex:1; height:1px;
+  background: linear-gradient(90deg, transparent, rgba(34,197,94,0.3), transparent);
+}
+
+.fod-name {
+  font-size: clamp(28px, 7vw, 52px);
+  font-weight: 900; letter-spacing: 6px;
+  text-transform: uppercase; color: var(--yellow);
+  text-shadow: 0 0 40px var(--yellow-glow), 0 2px 0 rgba(0,0,0,0.5);
+  margin-bottom: 8px; line-height: 1.1;
+}
+
+.fod-nickname {
+  font-size: 14px; letter-spacing: 4px; color: var(--text-muted);
+  margin-bottom: 28px;
+}
+
+.fod-tagline {
+  font-size: 14px; line-height: 1.8; color: var(--text);
+  font-style: italic;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 24px;
+  max-width: 480px; margin: 0 auto;
+}
+
+/* Corner decorations on reveal panel */
+.corner {
+  position: absolute; width: 20px; height: 20px;
+  border-color: var(--yellow); border-style: solid; opacity: 0.5;
+}
+.corner-tl { top: 12px; left: 12px; border-width: 2px 0 0 2px; }
+.corner-tr { top: 12px; right: 12px; border-width: 2px 2px 0 0; }
+.corner-bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
+.corner-br { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; }
+
+/* ═══════════════════════════════════════════════
+   FOOTER NOTE
+═══════════════════════════════════════════════ */
+.footer-note {
+  text-align: center; margin-top: 48px;
+  font-size: 9px; letter-spacing: 2px;
+  color: var(--text-dim); opacity: 0.5;
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media (max-width: 520px) {
+  .timer-panel { grid-template-columns: 1fr; text-align: center; }
+  .timer-block:last-child { text-align: center; }
+  .timer-divider { width: 60%; height: 1px; justify-self: center; }
+  .floor-lbl { font-size: 9px; letter-spacing: 1.5px; }
+  .reveal-btn { padding: 14px 28px; }
+  .crane-wrap { width: 130px; height: 220px; opacity: 0.12; }
+}
 </style>
 </head>
 <body>
-<div class="page" id="main-page">
 
-  <div class="top-header">
-    <div class="fod-eyebrow">DAILY CHALLENGE • CORE TEAM</div>
-    <div class="fod-title">WHO AM I?</div>
-    <div class="fod-sub">⚡ <span>Face of the Day</span> — Guess before the final reveal</div>
-  </div>
+<!-- Blueprint grid -->
+<div class="bp-grid"></div>
+<div class="bp-crosshair bp-c1"></div>
+<div class="bp-crosshair bp-c2"></div>
+<div class="bp-crosshair bp-c3"></div>
 
-  <div class="mystery-figure">
-    <div class="silhouette-wrap">
-      <div class="pulse-ring"></div>
-      <div class="pulse-ring"></div>
-      <div class="pulse-ring"></div>
-      <div class="silhouette" id="silhouette">🦁</div>
+<!-- Construction crane (top-right) -->
+<div class="crane-wrap" aria-hidden="true">
+  <svg viewBox="0 0 220 380" xmlns="http://www.w3.org/2000/svg" fill="none">
+    <!-- Mast -->
+    <rect x="100" y="60" width="14" height="310" fill="#0c1a2e" stroke="#2563EB" stroke-width="1.5"/>
+    <!-- Mast ladder rungs -->
+    <line x1="100" y1="100" x2="114" y2="100" stroke="#1d4ed8" stroke-width="1"/>
+    <line x1="100" y1="130" x2="114" y2="130" stroke="#1d4ed8" stroke-width="1"/>
+    <line x1="100" y1="160" x2="114" y2="160" stroke="#1d4ed8" stroke-width="1"/>
+    <line x1="100" y1="190" x2="114" y2="190" stroke="#1d4ed8" stroke-width="1"/>
+    <line x1="100" y1="220" x2="114" y2="220" stroke="#1d4ed8" stroke-width="1"/>
+    <line x1="100" y1="250" x2="114" y2="250" stroke="#1d4ed8" stroke-width="1"/>
+    <line x1="100" y1="280" x2="114" y2="280" stroke="#1d4ed8" stroke-width="1"/>
+    <line x1="100" y1="310" x2="114" y2="310" stroke="#1d4ed8" stroke-width="1"/>
+    <!-- Counter-jib (left) -->
+    <line x1="107" y1="60" x2="30" y2="72" stroke="#2563EB" stroke-width="2"/>
+    <line x1="107" y1="55" x2="30" y2="72" stroke="#2563EB" stroke-width="1.5"/>
+    <!-- Main jib (right) -->
+    <line x1="107" y1="60" x2="210" y2="72" stroke="#2563EB" stroke-width="2"/>
+    <line x1="107" y1="55" x2="210" y2="72" stroke="#2563EB" stroke-width="1.5"/>
+    <!-- Apex -->
+    <polygon points="107,42 98,60 116,60" fill="#0c1a2e" stroke="#2563EB" stroke-width="1.5"/>
+    <!-- Counter weight -->
+    <rect x="20" y="70" width="28" height="14" rx="2" fill="#0c1a2e" stroke="#2563EB" stroke-width="1.5"/>
+    <!-- Trolley -->
+    <rect x="152" y="68" width="14" height="8" rx="1" fill="#1d4ed8"/>
+    <!-- Animated load group (rope + hook + load) -->
+    <g class="crane-load">
+      <!-- Rope -->
+      <line x1="159" y1="76" x2="159" y2="160" stroke="#2563EB" stroke-width="1.5" class="crane-rope-anim"/>
+      <!-- Hook frame -->
+      <rect x="149" y="160" width="20" height="12" rx="2" fill="#0c1a2e" stroke="#FFD600" stroke-width="1.5"/>
+      <!-- Load block -->
+      <rect x="144" y="172" width="30" height="18" rx="2" fill="#0c1a2e" stroke="#FFD600" stroke-width="1.5"/>
+      <line x1="149" y1="177" x2="149" y2="185" stroke="#FFD600" stroke-width="0.8" opacity="0.5"/>
+      <line x1="155" y1="177" x2="155" y2="185" stroke="#FFD600" stroke-width="0.8" opacity="0.5"/>
+      <line x1="161" y1="177" x2="161" y2="185" stroke="#FFD600" stroke-width="0.8" opacity="0.5"/>
+      <line x1="167" y1="177" x2="167" y2="185" stroke="#FFD600" stroke-width="0.8" opacity="0.5"/>
+    </g>
+    <!-- Base/footing -->
+    <rect x="88" y="366" width="38" height="14" rx="2" fill="#0c1a2e" stroke="#2563EB" stroke-width="1.5"/>
+    <rect x="80" y="358" width="54" height="10" rx="2" fill="#0c1a2e" stroke="#2563EB" stroke-width="1.5"/>
+    <!-- Jib support cables -->
+    <line x1="107" y1="50" x2="190" y2="72" stroke="#1e40af" stroke-width="0.8" stroke-dasharray="4 2"/>
+    <line x1="107" y1="50" x2="40" y2="72" stroke="#1e40af" stroke-width="0.8" stroke-dasharray="4 2"/>
+    <!-- Lights on jib tip -->
+    <circle cx="208" cy="72" r="3" fill="#FFD600" opacity="0.8"/>
+    <circle cx="208" cy="72" r="6" fill="none" stroke="#FFD600" stroke-width="1" opacity="0.3"/>
+  </svg>
+</div>
+
+<!-- Toast notification -->
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- Confetti canvas -->
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="badge">🏗️ &nbsp; Daily Construction &nbsp;·&nbsp; FOD Edition</div>
+    <h1 class="title">THE BLUEPRINT</h1>
+    <p class="title-sub">Face of the Day</p>
+    <div class="stamp">CLASSIFIED · FOR SITE PERSONNEL ONLY</div>
+  </header>
+
+  <!-- TIMER PANEL -->
+  <div class="timer-panel" id="timerPanel">
+    <div class="timer-block">
+      <div class="timer-label">⏱ Site Time (IST)</div>
+      <div class="timer-val" id="clockDisplay">--:--:--</div>
+    </div>
+    <div class="timer-divider"></div>
+    <div class="timer-block">
+      <div class="timer-label">Next Unlock</div>
+      <div class="next-val" id="nextUnlock">Calculating…</div>
     </div>
   </div>
 
-  <div class="status-bar">
-    <div class="status-dot"></div>
-    <span id="status-text">IDENTITY LOCKED — UNLOCK CLUES TO GUESS</span>
-  </div>
-
-  <div class="progress-wrap">
-    <div class="progress-label">
-      <span>CLUES REVEALED</span>
-      <span class="count" id="progress-count">0 / 7</span>
+  <!-- BUILDING PROGRESS -->
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-label">🏢 Construction Progress</span>
+      <span class="progress-count" id="progressCount">0 / 7 Floors</span>
     </div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progress-fill"></div>
-    </div>
+    <div class="building-bar" id="buildingBar"></div>
   </div>
 
-  <div class="clues-stack" id="clues-stack"></div>
+  <!-- FLOOR CARDS -->
+  <div class="floors" id="floorsContainer"></div>
 
-  <div class="next-clue-bar" id="next-clue-bar" style="display:none;">
-    <span class="ncb-label">NEXT CLUE DROPS IN</span>
-    <span class="ncb-timer" id="ncb-timer">3:00</span>
-  </div>
+  <!-- DIVIDER -->
+  <div class="divider">🔑 &nbsp; Final Reveal &nbsp; 🔑</div>
 
-  <!-- TIME-LOCKED REVEAL SECTION -->
-  <div class="reveal-lock-wrap" id="reveal-lock-wrap">
-    <div class="reveal-lock-box">
-      <div class="rlb-top">
-        <span class="rlb-icon">🎯</span>
-        <div>
-          <div class="rlb-title">FINAL REVEAL</div>
-          <div class="rlb-sub">Identity drops sharp at <strong>11:45 AM</strong></div>
-        </div>
-      </div>
-      <div class="reveal-timer-row" id="reveal-timer-row">
-        <span class="rtimer-label">UNLOCKS IN</span>
-        <span class="rtimer-val" id="reveal-timer">--:--:--</span>
-      </div>
-      <button class="btn-reveal-final reveal-locked" id="btn-reveal-final" onclick="finalReveal()" disabled>
-        🔒 REVEAL UNLOCKS AT 11:45 AM
-      </button>
+  <!-- REVEAL SECTION -->
+  <div class="reveal-wrap">
+    <p class="reveal-lockinfo" id="revealLockInfo">🔒 Building inauguration unlocks at 5:45 PM IST</p>
+    <button class="reveal-btn" id="revealBtn" disabled aria-label="Reveal the Face of the Day">
+      🏛️ &nbsp;INAUGURATE THE BUILDING
+      <span class="btn-sub" id="revealBtnSub">All 7 floors must be assessed first</span>
+    </button>
+
+    <div class="reveal-panel" id="revealPanel" role="region" aria-label="Face of the Day Reveal">
+      <div class="corner corner-tl"></div>
+      <div class="corner corner-tr"></div>
+      <div class="corner corner-bl"></div>
+      <div class="corner corner-br"></div>
+      <div class="fod-eyebrow">🎖️ &nbsp; Face of the Day &nbsp; 🎖️</div>
+      <div class="fod-name" id="fodName">—</div>
+      <div class="fod-nickname" id="fodNickname">—</div>
+      <div class="fod-tagline" id="fodTagline">—</div>
     </div>
   </div>
 
-  <div class="reveal-panel" id="reveal-panel">
-    <span class="crown">👑</span>
-    <div class="reveal-name" id="reveal-name"></div>
-    <div class="reveal-sub" id="reveal-sub"></div>
-    <div class="reveal-details" id="reveal-details"></div>
-    <div class="reveal-quote" id="reveal-quote"></div>
-    <a href="ak.html" class="btn-view-profile" id="btn-view-profile">
-      ⚡ VIEW FULL PROFILE
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-    </a>
-  </div>
+  <div class="footer-note">THE BLUEPRINT · FOD GAME · POWERED BY SITE INTELLIGENCE™</div>
 
-</div><!-- end .page#main-page -->
+</div><!-- /container -->
 
 <script>
-// ── CONFIG ──
-const GAME_START        = { h: 11, m: 0, s: 0 };
-const CLUE_INTERVAL_SEC = 150;
-const REVEAL_HOUR       = 11;
-const REVEAL_MIN        = 45;
+/* ═══════════════════════════════════════════════════════════════════════════
+   ██████╗ ██╗     ██╗   ██╗███████╗██████╗ ██████╗ ██╗███╗   ██╗████████╗
+   ██╔══██╗██║     ██║   ██║██╔════╝██╔══██╗██╔══██╗██║████╗  ██║╚══██╔══╝
+   ██████╔╝██║     ██║   ██║█████╗  ██████╔╝██████╔╝██║██╔██╗ ██║   ██║   
+   ██╔══██╗██║     ██║   ██║██╔══╝  ██╔═══╝ ██╔══██╗██║██║╚██╗██║   ██║   
+   ██████╔╝███████╗╚██████╔╝███████╗██║     ██║  ██║██║██║ ╚████║   ██║   
+   ╚═════╝ ╚══════╝ ╚═════╝ ╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝   ╚═╝   
+   THE BLUEPRINT · FOD GAME ENGINE
+   ─────────────────────────────────────────────────────────────────────────
+   ENCODING SCHEME: XOR(key=83) → Reverse → Base64
+   
+   TO ENCODE YOUR CLUES — open browser console on this page, then run:
+     encodeClue("your clue text here")
+   
+   Copy the returned string and paste it into the FLOORS[N].encoded field below.
+   Do the same for REVEAL.nameEncoded, nicknameEncoded, taglineEncoded.
+   
+   The plain-text clue is NEVER stored in the source. It is decoded only at
+   the exact moment each floor unlocks and injected into the DOM at runtime.
+═══════════════════════════════════════════════════════════════════════════ */
 
-// ── OBFUSCATED REVEAL DATA ──
-// All identity info is encrypted with the same XOR+reverse+base64 scheme.
-// Plain text never exists in the source — decoded only at the moment of reveal.
-const _reveal = {
-  _name:  "CRJ8YXF6AnIdDgEaDw==",
-  _sub:   "e3Npe3MJCx90cBCmybBpFQMdDxMcGRxhHAVwfnlhaRcBE2xmYQ==",
-  _pills: [
-    "JCo8PAloIkdbV14gHGnnw9a+",
-    "JTcoPQBoZxx1GHMLEGnUwta+",
-    "VFhRXigGacrf1r4=",
-    "MykiLSgrCnNqaDhBQF9CGjdp6cLWvg=="
-  ],
-  _quote: "Zi9ZV1lUaTchM2wnIWErLCogJDsVRl5TPSAmNyEgbjUqJj5hLSNBElVQaT09ZyIgLzUpKDBhLSNBElVQaT09ZygsKy95OiogPydUEkQVJz0tZzkmFw=="
-};
+/* ─── ENCODING HELPERS (keep in source — only the encoded strings matter) ─ */
+const _KEY = 83;
 
-// ── OBFUSCATED CLUE DATA ──
-// Clue text is NOT stored in plain text.
-// Encoded so source inspection reveals nothing readable.
-// Decoded only at the exact moment of unlock.
-const _meta = [
-  { icon:"🌊", tag:"Clue 01 — The Forge",             _d:"bzQgO2EsLlJAX1RpKywvOGkrMzwhJGE7bEFTWGZpfCwqIyFuLTUoMGE7L0BdXFFpNyEzbD0mJjAsO2EtI2ESHkEsOz8pKWkgIDwqPGEtI0ESVVYoOjpnKSEa" },
-  { icon:"🎮", tag:"Clue 02 — The Double Arena",       _d:"YCU8MDItOGtGFURbaTc7KCosLGE8JDImaC5dRhBVJzstJik7bjJ+LDth3MvXEkNXJDs9ZyQ9IQN5Zz0kLTlWQRBXJz1paz86LzM+aTYvB2sbQVReLDsvIiA9OiA7aTw2HGsbQVRcKDppIiEoHQ==" },
-  { icon:"🏙️",tag:"Clue 03 — The War Station",        _d:"bzwiFVZeWyE3K2cpOycxNCxzJCA/FUtURz0haSg4aSszPCEnYTtsUFoQHj0xPCMjOz5hPCEnYTokUxJVQCw6PWc4JiBhKm42KWjftdAQQS48ICk+JiNhNyY6LSQiVxJREi03LiktIS1hKjs2NTwuWRJCRyY0aSI+LCY2eTAnKCtrUFpEEic7aTRrLAY=" },
-  { icon:"🗣️",tag:"Clue 04 — The One Word",           _d:"HFxeKHI9Lmw6NyAqaScgID8VVkJdPnIsKSNpKyktaSogO2tZXhdLLDodZ2IsIyA3aScyOiJTEkNbIXIwJj9pOmY3JiRhMS5dZhAcOjtpIiRpISkuaSAlJi5cQFYSOjshZyc6Dw==" },
-  { icon:"👑", tag:"Clue 05 — The Shadow Throne",      _d:"by0lWkBYRmk3ITNsLSAoMSwxYTw4QFgQVSc7LSktPT1hPCc8YS0jQRJJUGkmJS45K24kKyhzMi05XEJdV2kmPAVsZyA2NjswYS0jQRJEVy5yOiAiIAU=" },
-  { icon:"🌊", tag:"Clue 06 — The Birthground",        _d:"HCQ7IWcpLS8seT0yKTxrWVtfQWk3ITNsOmk1OCEnYdzL1xJXXCA5JSY4aT0xNj0gYTouQ1deEig3OmcpITphPScyYWQuWFtEEiczITNsOyslNSZzMjwuR1FVQWk2JSgkaT0kLygwYTwlUFtTXChyLDUpIRk=" },
-  { icon:"💰", tag:"Clue 07 — The Unwritten Blueprint",_d:"G1xfWz08LCpsJjphLSY0MyctFVlfXSsmMSI4aSspLWk2MyE7WFcQVyEmaSAiICAvOCUjYTEvVFdCXihyOmApIW5tKiw6LyYuRRJEXDw9Kmc/OyspLSZzJCQiXWUQHCQ3ITNsIi8kKytzNCcyFVdCXS83K2c/LCI0K2k2KTxrUVxRRjogLCMiPG4uLWk3JC0lFUdfS2k3OjItKisjeT0mI2hnWkYQXyA6aSMgJjphNCwnMjE4FVdYRmk3OjItKisjeT08L2jftdAQQT03IjUtJG4lNyhzMjouUlZVXmk0JmcpLi80PicyLWguXUYQVzo9ISRsLAY=" }
+function encodeClue(text) {
+  const xored   = [...text].map(c => String.fromCharCode(c.charCodeAt(0) ^ _KEY)).join('');
+  const reversed = xored.split('').reverse().join('');
+  try   { return btoa(unescape(encodeURIComponent(reversed))); }
+  catch { return btoa(reversed); }
+}
+
+function _dec(encoded) {
+  try {
+    const reversed   = decodeURIComponent(escape(atob(encoded)));
+    const unreversed = reversed.split('').reverse().join('');
+    return [...unreversed].map(c => String.fromCharCode(c.charCodeAt(0) ^ _KEY)).join('');
+  } catch {
+    return '[Decoding error — please re-encode this clue]';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ██████╗  █████╗ ████████╗ █████╗ 
+   ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗
+   ██║  ██║███████║   ██║   ███████║
+   ██║  ██║██╔══██║   ██║   ██╔══██║
+   ██████╔╝██║  ██║   ██║   ██║  ██║
+   ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝
+   
+   ► EDIT EVERYTHING BELOW THIS LINE ◄
+   
+   HOW TO ENCODE:
+     1. Open this file in a browser
+     2. Open DevTools Console (F12)
+     3. Type:  encodeClue("Your clue text here")
+     4. Press Enter — copy the output string
+     5. Paste it as the `encoded` value for the matching floor
+     6. Save & reload the page — done!
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── FLOOR CLUE DATA ─────────────────────────────────────────────────────
+   Replace each `encoded` value with your encoded clue string.
+   The emoji and label are safe to edit directly (not security-sensitive).
+─────────────────────────────────────────────────────────────────────────── */
+const FLOORS = [
+  {
+    floor  : '01',
+    label  : 'The Foundation',
+    emoji  : '🪨',
+    encoded: '77mc4pqj8J+VpnN9Kic6Jz02NzpzJyAhOjVzIDo7czY+MjA2MXMhPD88MHMnMjsnczc9MnN/4KqU4KuIc+CrhOCrkeCro3Pgq4bgq5xz4KuPc+CrveCrreCru3Pgq5xz4oGHczY+Mj1zMnM2JTI7cycgJjlzJ3Q9PDdzID06Mic9Jjw+czY7J3M2ITY7JHMnPzomMXMgMiRzIDobc33gq7zgq63gq7Zz4KqT4Ku2cz08OicyNz0mPDVz4KqT4Ku74KqU4Ku3c+Crt+CrleCqkeCro+CrpXPgqpPgq7tzNiEmJzAmIScgc+CrhuCqlOCro+CrtQ==',
+  },
+  {
+    floor  : '02',
+    label  : 'The Vision',
+    emoji  : '🔩',
+    encoded: 'feCrnOCrm+CqmOCrj3Pgq7vgqp7gq7ngq6bgqp7gq6tz4KuR4KqS4KuJ4KuR4KuZc3/gqpTgq4zgq63gq71z4Ku34Kuj4Kut4Ku94KuUc+Cqk+CrieCrkeCrmXN9NiEyOHMgIDwhMHMgNiEmNDo1c2NiczsnITwkcyc2PXM6PTZzNjhzNjs7MHM2ITI4czQ9Oj09Mj8jcyo3MjYhPzJzPDc9MjFzMjJz4oGHczY7OzBzNiEyOHM2JzI/JjA/MjBzJyA8MHM6PXM2ISYnMCYhJyBzPDg8P3M6ODIR',
+  },
+  {
+    floor  : '03',
+    label  : 'The Load Bearing Wall',
+    emoji  : '🧱',
+    encoded: 'fT8yOic9NiAgNnM+OjtzID8/MjBzJxpzfScgOj8yOjA2IyBzMnM+OjtzPz8yMHMndD0gNjw3czYhJicwJiEnIHM2OwdzfTY+OidzKiE2JTZzJzJzfyE8PD81cyohNiU2cz08cyAyJHM2G3N94KuR4KqS4Kuj4KuGczQ9PD82MXPgq6Pgq7lzITw8PzVz4Kut4Ku84Kqe4KuGc+CrkeCqkuCrqnPgqpTgq4Zz4KuR4KqS4Ku84Kqe4KuI4KqR4Ku5c+Cqk+CrtuCru3Pgq7zgqpTgq6Pgq63gq7zgqp7gq4Zz4Kubc+KBh3MyPnMgPTw6IDowNjdzfzI+cyA4PDwxc38yPnMgJyE8IwA=',
+  },
+  {
+    floor  : '04',
+    label  : 'The Pillar',
+    emoji  : '📋',
+    encoded: '8J+NnnN9NT82ICc6czsnITI2czY7J3M1PHM2MD02OjAgczY7B3N9ICE2MT4mPXM1PHM2MD02OjAgczY7J3MnPB1zfSA2JyoxczU8czYwPTY6MCBzNjsncyc8HXN94Kut4Ku84Kqe4Kuj4KuGc+CrreCrvuCrmXMgNzo+MiEqI3Pgq63gq7tzJyMqNBZz4KqU4Ku7c+CrkeCqkuCrvOCqnuCrpuCrreCru+Crv3M2PjwBc+CrnHMgITY2PTo0PTZz4Kut4Ku7czYwPTY6MCBz4KqU4KuPc+KBh3M9Mj5zPCdzPSQ8PThzNjA9NjowIHMnIDY3PzxzNjsnczYgPDswczYb',
+  },
+  {
+    floor  : '05',
+    label  : 'The Site Office',
+    emoji  : '🏠',
+    encoded: '77mc4pmTc33gqpjgq7zgqp7gq6Pgq4ZzPTI/I3M2ITojPjZz4KqY4Ku74Kut4Ku34KqY4Ku5c+CqlOCrsOCrnHPgq5Hgq63gq7zgqp7gq7dzf+CrvOCrreCrtnPgqpPgq7bgq5Hgq63gq7zgqp7gq49z4Ku34KuV4KqR4Kuj4Kulc+Cqk+Cru+Cro+CrreCrpuCrq3N9Nj8xPiY7czYhPD5zITI1czQ9OjsnNj48IHM3NiAmcyc6c+KBh3M9PDonMj1zMnM2ODI7IHM8J3M/OjxzITxzID08IzI2JHM3NjY9cyd0PTc6N3M+PCE1cyA2JzIhNiM8czY7cyonOjBzNjsH',
+  },
+  {
+    floor  : '06',
+    label  : 'The Roof',
+    emoji  : '🔍',
+    encoded: '8J+msfCfprFzfSE2Oyc6NnM0PTojIzwhN3MnJjw7JzoEc302OycyIHM4FnN9ID0kPCEwczsnPDFzNiE8JHM3MjY7czY+MiBzNjsncycmMXPigYdzIDc/Njo1c+CrhOCroeCrlnPgqpTgq79zfSA3ITIqc2FhczY7J3MhPDVzIzIwczY9HHN9Pjw8ISAgMj8wczY7J3MhPDVzIzIwczY9HA==',
+  },
+  {
+    floor  : '07',
+    label  : 'The Nameplate',
+    emoji  : '🪪',
+    encoded: '8J+QgnN9PTI2PnMgITYnJzY/czwkJ3M2IDw7J3MnMjskcyAkPD04cyo3MjYhPzJzNzw8OyEmPDE7NDo2PXM2Pzw7JHM2OydzNz0yc+KBh3M2OzswcyEyOyA4MnM2MXM1ITogcyEyI3M2JzI/IzY+Mj1zOj0Wc33gqpTgq4hz4KqU4Kug4Ku9czYnMj8jNj4yPXPgqpTgq6Hgqp7gq6HgqpTgq4hz4KqU4Ku7czYhJicwJiEnIHM3Nic2PyM+PDBz4KuG4KqU4Kuj4Ku1',
+  },
 ];
 
-// ── DECODE — runs ONLY at unlock time ──
-// Key is split across variables so it is not visible as a plain string in source
-const _p1 = "NILGIR", _p2 = "I2025K", _p3 = "HASIYA";
-function _decode(enc) {
-  const K = (_p1 + _p2 + _p3).split("").map(c => c.charCodeAt(0));
-  const raw = atob(enc);
-  const bytes = new Uint8Array(raw.length);
-  for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
-  const unreversed = bytes.reverse();
-  const out = [];
-  for (let i = 0; i < unreversed.length; i++)
-    out.push(unreversed[i] ^ K[i % K.length]);
-  return new TextDecoder().decode(new Uint8Array(out));
-}
+/* ─── REVEAL DATA ─────────────────────────────────────────────────────────
+   Replace these three encoded values with the FOD's details.
+─────────────────────────────────────────────────────────────────────────── */
+const REVEAL = {
+  nameEncoded    : 'Fxg=',
+  nicknameEncoded: 'IDYnNj8jPjwQcyc9OiEjNiY/EXM2Owc=',
+  taglineEncoded : 'cjoyOzFzfyc7NDo/JzwjIHM2OydzPCdzNj48MD82BHPwn5CCc30XGHN9PCcyO3MyPnM2PjI0czg2ITI3czY9MnN/PCcyO3MhNjcyNj9zODYhMjdzfzwnMjtzMj5zNz82OjVzODYhMjdzNjlzPDc9MjFzPCU2c+KBh3M2PjI9czJzIDI7czYhJicwJiEnIHM2Owdz77mc8J+OhHNyJioyOydzNic2PyM+PDBzJz06ISM2Jj8R',
+};
 
-const total = _meta.length;
-let revealed = 0;
+/* ─── TIMING CONFIG ───────────────────────────────────────────────────────
+   All times are IST (UTC+5:30).
+   Game starts at GAME_START_H:GAME_START_M
+   Floors unlock every FLOOR_INTERVAL_SEC seconds after game start.
+   Floor 01 is always visible at game start.
+   Reveal unlocks at REVEAL_H:REVEAL_M.
+─────────────────────────────────────────────────────────────────────────── */
+const GAME_START_H       = 17;
+const GAME_START_M       = 0;
+const FLOOR_INTERVAL_SEC = 210;          // 3 min 30 sec
+const REVEAL_H           = 17;
+const REVEAL_M           = 45;
 
-// ── SERVER TIME SYSTEM ──
-// Fetches real IST time from a public API on page load.
-// All comparisons use: Date.now() + _offset
-// Changing device clock has zero effect.
-let _offset = 0;
-let _timeReady = false;
+/* ═══════════════════════════════════════════════════════════════════════════
+   ███████╗███╗   ██╗ ██████╗ ██╗███╗   ██╗███████╗
+   ██╔════╝████╗  ██║██╔════╝ ██║████╗  ██║██╔════╝
+   █████╗  ██╔██╗ ██║██║  ███╗██║██╔██╗ ██║█████╗  
+   ██╔══╝  ██║╚██╗██║██║   ██║██║██║╚██╗██║██╔══╝  
+   ███████╗██║ ╚████║╚██████╔╝██║██║ ╚████║███████╗
+   ╚══════╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝╚══════╝
+   ► DO NOT EDIT BELOW THIS LINE ◄
+═══════════════════════════════════════════════════════════════════════════ */
 
-async function syncServerTime() {
-  document.getElementById("status-text").textContent = "SYNCING TIME...";
-  const apis = [
-    "https://worldtimeapi.org/api/timezone/Asia/Kolkata",
-    "https://timeapi.io/api/time/current/zone?timeZone=Asia/Kolkata"
-  ];
-  for (const url of apis) {
-    try {
-      const before = Date.now();
-      const res    = await fetch(url, { cache: "no-store" });
-      const after  = Date.now();
-      const data   = await res.json();
-      const serverMs = data.unixtime
-        ? data.unixtime * 1000
-        : new Date(data.dateTime).getTime();
-      // Subtract half the round-trip to estimate server time at midpoint
-      _offset = serverMs - Math.round((before + after) / 2);
-      _timeReady = true;
-      return;
-    } catch (_) { /* try next API */ }
+/* ─── STATE ─────────────────────────────────────────────────────────────── */
+let _fetchedUnix  = null;   // server unix time in ms at fetch
+let _fetchedLocal = null;   // local Date.now() at fetch moment
+let _unlocked     = 0;      // how many floors are currently unlocked
+let _revealOpen   = false;
+let _prevFloorTarget = 0;
+
+/* ─── DOM ───────────────────────────────────────────────────────────────── */
+const $clock      = document.getElementById('clockDisplay');
+const $next       = document.getElementById('nextUnlock');
+const $progress   = document.getElementById('progressCount');
+const $bar        = document.getElementById('buildingBar');
+const $floors     = document.getElementById('floorsContainer');
+const $revealBtn  = document.getElementById('revealBtn');
+const $revealSub  = document.getElementById('revealBtnSub');
+const $revealInfo = document.getElementById('revealLockInfo');
+const $panel      = document.getElementById('revealPanel');
+const $toast      = document.getElementById('toast');
+
+/* ─── BUILD DOM ─────────────────────────────────────────────────────────── */
+(function buildDOM() {
+  /* Building bar segments */
+  $bar.innerHTML = '';
+  for (let i = 0; i < FLOORS.length; i++) {
+    const s = document.createElement('div');
+    s.className = 'b-floor';
+    s.id = `seg${i}`;
+    $bar.appendChild(s);
   }
-  // All APIs failed — fall back silently
-  _offset = 0;
-  _timeReady = true;
-}
 
-function realNow() { return Date.now() + _offset; }
-
-function getClueUnlockMs(index) {
-  const base = new Date(realNow());
-  base.setHours(GAME_START.h, GAME_START.m, GAME_START.s, 0);
-  return base.getTime() + index * CLUE_INTERVAL_SEC * 1000;
-}
-
-function getRevealUnlockMs() {
-  const t = new Date(realNow());
-  t.setHours(REVEAL_HOUR, REVEAL_MIN, 0, 0);
-  return t.getTime();
-}
-
-function getRevealedCountNow() {
-  const now = realNow();
-  let count = 0;
-  for (let i = 0; i < total; i++) {
-    if (now >= getClueUnlockMs(i)) count++;
-    else break;
-  }
-  return count;
-}
-
-function getMsUntilReveal() {
-  return Math.max(0, getRevealUnlockMs() - realNow());
-}
-
-function pad(n) { return String(n).padStart(2, "0"); }
-
-// ── BUILD CARDS (no clue text yet) ──
-function buildClues() {
-  const stack = document.getElementById("clues-stack");
-  stack.innerHTML = "";
-  _meta.forEach((c, i) => {
-    const div = document.createElement("div");
-    div.className = "clue-card locked";
-    div.id = "clue-" + i;
-    div.style.animationDelay = (i * 0.06) + "s";
-    div.innerHTML =
-      '<div class="clue-inner">' +
-        '<div class="clue-num">' + pad(i+1) + '</div>' +
-        '<div class="clue-icon">' + c.icon + '</div>' +
-        '<div class="clue-content">' +
-          '<div class="clue-tag">' + c.tag + '</div>' +
-          '<div class="clue-text" id="clue-text-' + i + '">???</div>' +
-        '</div>' +
-        '<div class="clue-lock" id="lock-' + i + '">🔒</div>' +
-      '</div>';
-    stack.appendChild(div);
+  /* Floor cards */
+  $floors.innerHTML = '';
+  FLOORS.forEach((f, i) => {
+    const card = document.createElement('article');
+    card.className = 'floor-card';
+    card.id = `card${i}`;
+    card.setAttribute('aria-label', `Floor ${f.floor}: ${f.label}`);
+    card.innerHTML = `
+      <div class="floor-head">
+        <span class="floor-num">FLOOR ${f.floor}</span>
+        <span class="floor-lbl">${f.label}</span>
+        <span class="floor-icon" id="ico${i}">🔒</span>
+      </div>
+      <div class="floor-body locked-placeholder" id="body${i}">???</div>
+      <div class="floor-unlock-time" id="ftime${i}"></div>
+    `;
+    $floors.appendChild(card);
   });
+})();
+
+/* ─── TIME ENGINE ───────────────────────────────────────────────────────── */
+function getIST() {
+  let nowMs;
+  if (_fetchedUnix && _fetchedLocal) {
+    nowMs = _fetchedUnix + (Date.now() - _fetchedLocal);
+  } else {
+    nowMs = Date.now();
+  }
+  const d  = new Date(nowMs);
+  const h  = d.getUTCHours();
+  const m  = d.getUTCMinutes();
+  const s  = d.getUTCSeconds();
+  /* Convert UTC → IST (+5:30 = +330 min) */
+  const totalSecUTC  = h * 3600 + m * 60 + s;
+  const totalSecIST  = totalSecUTC + 330 * 60;
+  const hIST = Math.floor(totalSecIST / 3600) % 24;
+  const mIST = Math.floor((totalSecIST % 3600) / 60);
+  const sIST = totalSecIST % 60;
+  return { h: hIST, m: mIST, s: sIST,
+           totalSec: hIST * 3600 + mIST * 60 + sIST };
 }
 
-// ── REVEAL — decodes text only at this exact moment ──
-function revealClue(index, animate) {
-  if (index >= total) return;
-  const card = document.getElementById("clue-" + index);
-  if (!card || card.classList.contains("unlocked")) return;
-  const textEl = document.getElementById("clue-text-" + index);
-  const lockEl = document.getElementById("lock-" + index);
-  card.classList.remove("locked");
-  card.classList.add("unlocked");
+async function fetchServerTime() {
+  try {
+    const before = Date.now();
+    const r = await fetch('https://worldtimeapi.org/api/timezone/Asia/Kolkata',
+                          { cache: 'no-store', signal: AbortSignal.timeout(5000) });
+    if (!r.ok) throw new Error('bad response');
+    const data = await r.json();
+    const after = Date.now();
+    _fetchedLocal = Math.round((before + after) / 2); // midpoint
+    _fetchedUnix  = data.unixtime * 1000 + (after - before) / 2;
+  } catch {
+    /* Silently fall back to device time */
+    _fetchedUnix  = Date.now();
+    _fetchedLocal = Date.now();
+  }
+}
+
+/* ─── FLOOR UNLOCK ──────────────────────────────────────────────────────── */
+function unlockFloor(idx, animate) {
+  const card  = document.getElementById(`card${idx}`);
+  const body  = document.getElementById(`body${idx}`);
+  const ico   = document.getElementById(`ico${idx}`);
+  const ftime = document.getElementById(`ftime${idx}`);
+  if (!card || !body) return;
+
+  /* Decode clue only at unlock moment — never before */
+  const raw  = _dec(FLOORS[idx].encoded);
+  /* Strip all emoji / non-BMP characters from clue text */
+  const text = raw.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '').replace(/\s{2,}/g, ' ').trim();
+
+  /* Update DOM */
+  body.classList.remove('locked-placeholder');
+  body.textContent = text;
+  ico.textContent = '✅';
+  card.classList.add('unlocked');
+
+  /* Unlock timestamp */
+  const now = getIST();
+  ftime.textContent = `Unlocked at ${String(now.h).padStart(2,'0')}:${String(now.m).padStart(2,'0')} IST`;
+
   if (animate) {
-    card.style.animation = "none";
-    card.offsetHeight;
-    card.style.animation = "clueReveal 0.6s cubic-bezier(0.175,0.885,0.32,1.275) both";
+    card.classList.add('dropping');
+    card.addEventListener('animationend', () => card.classList.remove('dropping'), { once: true });
+
+    /* Yellow flash */
+    card.classList.add('flash');
+    setTimeout(() => card.classList.remove('flash'), 2800);
+
+    /* Toast notification */
+    showToast(`🏗️ Floor ${FLOORS[idx].floor} Unlocked — ${FLOORS[idx].label}`);
   }
-  // Text only exists in DOM from this point — never before
-  textEl.textContent = _decode(_meta[index]._d);
-  lockEl.textContent = "✓";
+
+  /* Progress bar */
+  const seg = document.getElementById(`seg${idx}`);
+  if (seg) seg.classList.add('lit');
 }
 
-function updateProgress(count) {
-  document.getElementById("progress-fill").style.width = (count / total * 100) + "%";
-  document.getElementById("progress-count").textContent = count + " / " + total;
+/* ─── TOAST ─────────────────────────────────────────────────────────────── */
+let _toastTimer = null;
+function showToast(msg) {
+  $toast.textContent = msg;
+  $toast.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => $toast.classList.remove('show'), 3800);
 }
 
-// ── MAIN TICK (every second) ──
+/* ─── MAIN TICK ─────────────────────────────────────────────────────────── */
 function tick() {
-  if (!_timeReady) return;
-  const count = getRevealedCountNow();
-  if (count > revealed) {
-    for (let i = revealed; i < count; i++) revealClue(i, count === revealed + 1);
-    revealed = count;
-    updateProgress(revealed);
+  const { h, m, s, totalSec } = getIST();
+
+  /* Clock display */
+  $clock.textContent =
+    `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+
+  /* Timing constants */
+  const gameStartSec = GAME_START_H * 3600 + GAME_START_M * 60;
+  const revealSec    = REVEAL_H * 3600 + REVEAL_M * 60;
+  const elapsed      = totalSec - gameStartSec;
+
+  /* How many floors should be unlocked right now? */
+  let target = 0;
+  if (elapsed >= 0) {
+    target = Math.min(FLOORS.length, Math.floor(elapsed / FLOOR_INTERVAL_SEC) + 1);
   }
-  const bar      = document.getElementById("next-clue-bar");
-  const statusEl = document.getElementById("status-text");
-  if (revealed >= total) {
-    bar.style.display = "none";
-    statusEl.textContent = "ALL CLUES OUT — WAIT FOR 11:45 AM REVEAL!";
+
+  /* Unlock any newly-due floors */
+  if (target > _unlocked) {
+    for (let i = _unlocked; i < target; i++) {
+      unlockFloor(i, i > 0 || _prevFloorTarget === 0); // animate if not initial load
+    }
+    _unlocked = target;
+  }
+  _prevFloorTarget = target;
+
+  /* Progress counter */
+  $progress.textContent = `${_unlocked} / ${FLOORS.length} Floors`;
+
+  /* Next-unlock countdown */
+  const revealNow = totalSec >= revealSec;
+  if (!revealNow) {
+    if (_unlocked < FLOORS.length) {
+      const nextFloorSec = gameStartSec + _unlocked * FLOOR_INTERVAL_SEC;
+      const remain = nextFloorSec - totalSec;
+      if (remain > 0) {
+        const rm = Math.floor(remain / 60);
+        const rs = remain % 60;
+        $next.textContent = `Floor ${String(_unlocked + 1).padStart(2,'0')} in ${rm}m ${rs}s`;
+      } else {
+        $next.textContent = 'Unlocking…';
+      }
+    } else {
+      const remain = revealSec - totalSec;
+      if (remain > 0) {
+        const rm = Math.floor(remain / 60);
+        const rs = remain % 60;
+        $next.textContent = `Reveal in ${rm}m ${rs}s`;
+      } else {
+        $next.textContent = 'Ready!';
+      }
+    }
   } else {
-    const msLeft = Math.max(0, getClueUnlockMs(revealed) - realNow());
-    const secs   = Math.ceil(msLeft / 1000);
-    bar.style.display = "flex";
-    document.getElementById("ncb-timer").textContent = Math.floor(secs/60) + ":" + pad(secs%60);
-    statusEl.textContent = "CLUE " + revealed + " OF " + total + " REVEALED — KEEP GUESSING!";
+    $next.textContent = 'All complete ✓';
   }
-  const msReveal = getMsUntilReveal();
-  const btn      = document.getElementById("btn-reveal-final");
-  const timerEl  = document.getElementById("reveal-timer");
-  if (msReveal <= 0) {
-    btn.disabled = false;
-    btn.classList.remove("reveal-locked");
-    btn.classList.add("reveal-ready");
-    btn.innerHTML = "🎯 REVEAL IDENTITY ⚡";
-    if (timerEl) timerEl.style.display = "none";
-  } else {
-    const t = Math.floor(msReveal / 1000);
-    btn.disabled = true;
-    btn.classList.add("reveal-locked");
-    btn.innerHTML = "🔒 REVEAL UNLOCKS AT 11:45 AM";
-    if (timerEl) timerEl.textContent = pad(Math.floor(t/3600)) + ":" + pad(Math.floor((t%3600)/60)) + ":" + pad(t%60);
+
+  /* Reveal button */
+  if (revealNow && $revealBtn.disabled) {
+    $revealBtn.disabled = false;
+    $revealBtn.classList.add('active');
+    $revealSub.textContent = 'Click to reveal the FOD → ';
+    $revealInfo.textContent = '🟢 Building inauguration is now LIVE';
+    $revealInfo.style.color = 'var(--green)';
   }
 }
 
-function finalReveal() {
-  if (getMsUntilReveal() > 0) return;
-  // Decode and inject reveal content only at this exact moment
-  document.getElementById("reveal-name").textContent  = _decode(_reveal._name);
-  document.getElementById("reveal-sub").textContent   = _decode(_reveal._sub);
-  const detailsEl = document.getElementById("reveal-details");
-  detailsEl.innerHTML = "";
-  _reveal._pills.forEach(p => {
-    const pill = document.createElement("div");
-    pill.className = "detail-pill";
-    pill.textContent = _decode(p);
-    detailsEl.appendChild(pill);
-  });
-  document.getElementById("reveal-quote").textContent = "\u201c" + _decode(_reveal._quote) + "\u201d";
-  document.getElementById("reveal-panel").classList.add("show");
-  document.getElementById("silhouette").classList.add("revealed");
-  document.getElementById("btn-reveal-final").disabled = true;
-  document.getElementById("status-text").textContent = "🎉 IDENTITY REVEALED!";
-  spawnConfetti();
-}
+/* ─── REVEAL BUTTON ─────────────────────────────────────────────────────── */
+$revealBtn.addEventListener('click', () => {
+  if ($revealBtn.disabled || _revealOpen) return;
+  _revealOpen = true;
+  $revealBtn.style.pointerEvents = 'none';
 
-function spawnConfetti() {
-  const colors = ["#f5c842","#ff3c5f","#00e5ff","#ffffff","#e07b00"];
-  const burst = document.createElement("div");
-  burst.className = "confetti-burst";
-  document.body.appendChild(burst);
-  for (let i = 0; i < 80; i++) {
-    const p = document.createElement("div");
-    p.className = "confetti-piece";
-    p.style.cssText = "left:" + (Math.random()*100) + "%;background:" + colors[Math.floor(Math.random()*colors.length)] + ";animation-duration:" + (1.5+Math.random()*2) + "s;animation-delay:" + (Math.random()*0.8) + "s;width:" + (6+Math.random()*8) + "px;height:" + (6+Math.random()*8) + "px;border-radius:" + (Math.random()>.5?"50%":"2px") + ";";
-    burst.appendChild(p);
+  confetti();
+
+  /* Open the KD profile page */
+  setTimeout(() => {
+    window.open('kd-profile.html', '_blank');
+  }, 400);
+});
+
+/* ─── CONFETTI ───────────────────────────────────────────────────────────── */
+function confetti() {
+  const canvas = document.getElementById('confetti');
+  const ctx    = canvas.getContext('2d');
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const palette = ['#FFD600','#2563EB','#ffffff','#FF6B00','#00B4D8','#10B981','#F43F5E'];
+  const pieces  = Array.from({ length: 180 }, () => ({
+    x     : Math.random() * canvas.width,
+    y     : Math.random() * -canvas.height,
+    w     : Math.random() * 11 + 5,
+    h     : Math.random() * 5 + 3,
+    color : palette[Math.floor(Math.random() * palette.length)],
+    speed : Math.random() * 4 + 2,
+    drift : Math.random() * 2 - 1,
+    spin  : (Math.random() - 0.5) * 0.15,
+    angle : Math.random() * Math.PI * 2,
+    shape : Math.random() > 0.4 ? 'rect' : 'circle',
+  }));
+
+  let frame = 0;
+  const MAX  = 260;
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const alpha = frame > MAX - 60 ? (MAX - frame) / 60 : 1;
+    pieces.forEach(p => {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.angle);
+      ctx.fillStyle = p.color;
+      if (p.shape === 'circle') {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      }
+      ctx.restore();
+      p.y += p.speed;
+      p.x += p.drift;
+      p.angle += p.spin;
+    });
+    frame++;
+    if (frame < MAX) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
-  setTimeout(() => burst.remove(), 4000);
+  requestAnimationFrame(draw);
 }
 
-// ── BOOT ──
-buildClues();
-syncServerTime().then(() => {
-  const initCount = getRevealedCountNow();
-  for (let i = 0; i < initCount; i++) revealClue(i, false);
-  revealed = initCount;
-  updateProgress(revealed);
-  tick();
-  setInterval(tick, 1000);
+/* ─── BOOT ──────────────────────────────────────────────────────────────── */
+(async function boot() {
+  await fetchServerTime();  /* Fetch IST from worldtimeapi.org */
+  tick();                   /* First immediate tick */
+  setInterval(tick, 1000);  /* Then every second */
+})();
+
+window.addEventListener('resize', () => {
+  const c = document.getElementById('confetti');
+  c.width = window.innerWidth;
+  c.height = window.innerHeight;
 });
 </script>
 </body>

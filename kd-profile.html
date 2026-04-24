@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KD — FOD NEWS: The All-Rounder Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Teko:wght@400;500;600;700&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Share+Tech+Mono&family=Noto+Sans+Gujarati:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:      #0b0d0a;
+  --paper:    #f2ede4;
+  --cream:    #e8e0d0;
+  --green:    #1a6b2f;
+  --green-l:  #2d9e4a;
+  --green-xs: #d6f0dc;
+  --gold:     #c8960a;
+  --gold-l:   #f0c030;
+  --red:      #c0260a;
+  --grey:     #5a5a4a;
+  --grey-l:   #9a9880;
+  --white:    #ffffff;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  font-family: 'Barlow Condensed', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── BREAKING NEWS TICKER ── */
+.ticker-wrap {
+  background: var(--red);
+  color: var(--white);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 2px;
+  padding: 7px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid #8a1800;
+}
+
+.ticker-inner {
+  display: inline-block;
+  animation: ticker 28s linear infinite;
+}
+
+@keyframes ticker {
+  from { transform: translateX(100vw); }
+  to   { transform: translateX(-100%); }
+}
+
+/* ── MASTHEAD ── */
+.masthead {
+  background: var(--paper);
+  border-bottom: 4px double var(--ink);
+  padding: 20px 24px 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.masthead::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 28px,
+    rgba(0,0,0,0.04) 28px, rgba(0,0,0,0.04) 29px
+  );
+  pointer-events: none;
+}
+
+.masthead-eyebrow {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: var(--grey);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.masthead-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(44px, 12vw, 88px);
+  letter-spacing: 8px;
+  color: var(--ink);
+  line-height: 0.9;
+}
+
+.masthead-title .accent { color: var(--green); }
+.masthead-title .gold   { color: var(--gold); }
+
+.masthead-rule {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 8px;
+}
+.masthead-rule::before,
+.masthead-rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--ink);
+}
+.masthead-rule span {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--grey);
+}
+
+.masthead-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: var(--green);
+  text-transform: uppercase;
+}
+
+/* ── LAYOUT ── */
+.newspaper {
+  background: var(--paper);
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 0 48px;
+  border-left: 1px solid rgba(0,0,0,0.15);
+  border-right: 1px solid rgba(0,0,0,0.15);
+}
+
+/* ── HERO SECTION ── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  gap: 0;
+  border-bottom: 3px double var(--ink);
+  padding: 28px 28px 24px;
+}
+
+@media (max-width: 560px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-avatar { display: none; }
+}
+
+.hero-left { padding-right: 24px; border-right: 1px solid var(--ink); }
+
+.breaking-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--red);
+  color: var(--white);
+  font-family: 'Teko', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  padding: 3px 10px;
+  margin-bottom: 12px;
+}
+
+.breaking-dot {
+  width: 7px; height: 7px;
+  background: var(--white);
+  border-radius: 50%;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.hero-headline {
+  font-family: 'Teko', sans-serif;
+  font-size: clamp(34px, 8vw, 56px);
+  font-weight: 700;
+  line-height: 0.95;
+  color: var(--ink);
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+.hero-headline em {
+  font-style: normal;
+  color: var(--green);
+  -webkit-text-stroke: 0px;
+}
+
+.hero-byline {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--grey-l);
+  border-top: 1px solid var(--grey-l);
+  padding-top: 8px;
+  margin-bottom: 14px;
+}
+
+.hero-lead {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* Avatar */
+.hero-avatar {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.avatar-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, var(--green-xs), var(--cream));
+  border: 3px solid var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  position: relative;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.avatar-badge {
+  background: var(--green);
+  color: var(--white);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 3px;
+  padding: 4px 16px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.avatar-edition {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--grey);
+  text-align: center;
+}
+
+/* ── COLUMNS BODY ── */
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-bottom: 2px solid var(--ink);
+}
+
+@media (max-width: 600px) {
+  .columns { grid-template-columns: 1fr; }
+}
+
+.col {
+  padding: 22px 24px;
+}
+
+.col + .col {
+  border-left: 1px solid var(--ink);
+}
+
+.col-head {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 3px;
+  color: var(--ink);
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 6px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.col-head .ch-icon { font-size: 18px; }
+
+/* ── STAT CARD (bio) ── */
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 7px 0;
+  border-bottom: 1px dashed rgba(0,0,0,0.15);
+  gap: 8px;
+}
+
+.stat-row:last-child { border-bottom: none; }
+
+.stat-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--grey);
+  flex-shrink: 0;
+}
+
+.stat-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: right;
+}
+
+.stat-value.green { color: var(--green); }
+.stat-value.gold  { color: var(--gold); }
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box {
+  background: var(--green);
+  color: var(--white);
+  padding: 14px 18px;
+  margin: 16px 0;
+  position: relative;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.highlight-box::before {
+  content: '"';
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 80px;
+  color: rgba(255,255,255,0.15);
+  position: absolute;
+  top: -10px;
+  left: 8px;
+  line-height: 1;
+}
+
+.highlight-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  font-style: italic;
+  position: relative;
+  z-index: 1;
+}
+
+.highlight-guj {
+  font-family: 'Noto Sans Gujarati', sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  opacity: 0.88;
+  margin-top: 6px;
+  display: block;
+}
+
+/* ── ACHIEVEMENT PILLS ── */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.pill {
+  font-family: 'Teko', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 4px 12px;
+  border: 1.5px solid var(--ink);
+  background: var(--white);
+  color: var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: all 0.15s;
+}
+
+.pill:hover {
+  background: var(--ink);
+  color: var(--white);
+  transform: translate(-1px,-1px);
+  box-shadow: 3px 3px 0 var(--green);
+}
+
+.pill.green-pill {
+  background: var(--green);
+  color: var(--white);
+  border-color: var(--green);
+}
+
+.pill.gold-pill {
+  background: var(--gold);
+  color: var(--white);
+  border-color: var(--gold);
+}
+
+/* ── FULL WIDTH STRIP ── */
+.full-strip {
+  padding: 20px 28px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.strip-head {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 3px;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 6px;
+  margin-bottom: 14px;
+}
+
+/* ── SQUAD GRID ── */
+.squad-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.squad-card {
+  background: var(--cream);
+  border: 1.5px solid var(--ink);
+  padding: 10px 8px;
+  text-align: center;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.squad-card:hover {
+  transform: translate(-2px,-2px);
+  box-shadow: 4px 4px 0 var(--green);
+}
+
+.squad-emoji { font-size: 24px; margin-bottom: 4px; }
+
+.squad-name {
+  font-family: 'Teko', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--ink);
+}
+
+.squad-role {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: var(--grey);
+  margin-top: 2px;
+}
+
+/* ── STATS TICKER (animated numbers) ── */
+.stats-strip {
+  background: var(--ink);
+  padding: 16px 28px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  border-bottom: 2px solid var(--ink);
+}
+
+@media (max-width: 500px) {
+  .stats-strip { grid-template-columns: repeat(2, 1fr); }
+}
+
+.stat-box {
+  background: var(--ink);
+  padding: 14px 12px;
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.stat-box:last-child { border-right: none; }
+
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  color: var(--green-l);
+  line-height: 1;
+  letter-spacing: 2px;
+}
+
+.stat-unit {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--grey-l);
+  margin-top: 4px;
+}
+
+/* ── FINAL WORD ── */
+.final-word {
+  padding: 24px 28px;
+  background: var(--cream);
+  border-bottom: 3px double var(--ink);
+}
+
+.final-word-text {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--ink);
+  border-left: 4px solid var(--green);
+  padding-left: 16px;
+  font-style: italic;
+}
+
+.final-word-sig {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--grey);
+  margin-top: 12px;
+  text-align: right;
+}
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--ink);
+  color: var(--grey-l);
+  text-align: center;
+  padding: 16px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.footer span { color: var(--green-l); }
+
+/* ── ANIMATIONS ── */
+.animate-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideUp 0.5s ease both;
+}
+
+@keyframes slideUp {
+  to { opacity:1; transform:translateY(0); }
+}
+
+.animate-in:nth-child(1)  { animation-delay: 0.05s; }
+.animate-in:nth-child(2)  { animation-delay: 0.12s; }
+.animate-in:nth-child(3)  { animation-delay: 0.19s; }
+.animate-in:nth-child(4)  { animation-delay: 0.26s; }
+.animate-in:nth-child(5)  { animation-delay: 0.33s; }
+.animate-in:nth-child(6)  { animation-delay: 0.40s; }
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    &nbsp;&nbsp;&nbsp;🔴 BREAKING &nbsp;●&nbsp; KD ENTERS THE FOD SPOTLIGHT &nbsp;●&nbsp; REGIONAL CRICKET PLAYER + CLASS CAPTAIN + CIVIL ENGINEER IN ONE &nbsp;●&nbsp; BILLIONAIRE PLANS ALREADY IN MOTION 💸 &nbsp;●&nbsp; SQUAD CONFIRMED: ASMIT, PRIYRAJ, JAYDIP, BHAVDIP, MEHUL &nbsp;●&nbsp; NILGIRI HOUSE PROUD &nbsp;●&nbsp; BHAVNAGAR TO ANAND: THE KD JOURNEY CONTINUES &nbsp;●&nbsp; 🔴 BREAKING
+  </div>
+</div>
+
+<div class="newspaper">
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div class="masthead-eyebrow">FOD DAILY PRESS — SPECIAL EDITION</div>
+    <div class="masthead-title"><span class="accent">FOD</span> <span class="gold">NEWS</span></div>
+    <div class="masthead-rule"><span>THE ALL-ROUNDER EDITION</span></div>
+    <div class="masthead-sub">🏏 Covering the field, the classroom & beyond 🌟</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero animate-in">
+    <div class="hero-left">
+      <div class="breaking-label">
+        <div class="breaking-dot"></div>
+        LIVE — SPECIAL REPORT
+      </div>
+      <div class="hero-headline">
+        A New <em>Powerhouse</em><br>Has Entered<br>The Arena
+      </div>
+      <div class="hero-byline">BY FOD CORRESPONDENT &nbsp;|&nbsp; JNV BVN CORE DESK &nbsp;|&nbsp; BATCH 2025</div>
+      <div class="hero-lead">
+        Known on the field and in the classroom as <strong>KD</strong>, this 2025 batch standout is now engineering his way to the top — from the dusty pitches of JNV to the blueprints of Civil Engineering. Some men play the game. KD <em>runs</em> it.
+      </div>
+    </div>
+    <div class="hero-avatar">
+      <div class="avatar-circle">🏏</div>
+      <div class="avatar-badge">KD</div>
+      <div class="avatar-edition">THE SIGNATURE IDENTITY</div>
+    </div>
+  </div>
+
+  <!-- DARK STATS STRIP -->
+  <div class="stats-strip animate-in">
+    <div class="stat-box">
+      <div class="stat-num">2025</div>
+      <div class="stat-unit">BATCH YEAR</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">🏆</div>
+      <div class="stat-unit">REGIONAL CRICKET</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">2×</div>
+      <div class="stat-unit">CAPTAIN (CLASS + CRICKET)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">∞</div>
+      <div class="stat-unit">BILLIONAIRE VISION</div>
+    </div>
+  </div>
+
+  <!-- COLUMNS -->
+  <div class="columns animate-in">
+
+    <!-- LEFT COL: BIO CARD -->
+    <div class="col">
+      <div class="col-head"><span class="ch-icon">📊</span> Player Bio Card</div>
+
+      <div class="stat-row">
+        <span class="stat-label">FULL NAME</span>
+        <span class="stat-value">Kuldip Kantariya</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">MONIKER</span>
+        <span class="stat-value green">KD</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">BATCH</span>
+        <span class="stat-value">2025</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">HOUSE</span>
+        <span class="stat-value green">Nilgiri 🏔️</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">NATIVE BASE</span>
+        <span class="stat-value">Bhavnagar 💎</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">CURRENT CITY</span>
+        <span class="stat-value">Anand 📍</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">MISSION</span>
+        <span class="stat-value" style="font-size:13px;">B.Tech Civil Engg.</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">LONG TERM</span>
+        <span class="stat-value gold">Billionaire Club 💸</span>
+      </div>
+
+      <div class="pills" style="margin-top:16px;">
+        <span class="pill green-pill">🏏 Regional Player</span>
+        <span class="pill gold-pill">🧢 Team Captain</span>
+        <span class="pill">📚 Class Captain</span>
+        <span class="pill">⚡ All-Rounder</span>
+      </div>
+    </div>
+
+    <!-- RIGHT COL: HIGHLIGHTS -->
+    <div class="col">
+      <div class="col-head"><span class="ch-icon">🏆</span> Career Highlights</div>
+
+      <div class="highlight-box">
+        <div class="highlight-text">
+          "KD — jya passion Cricket che ane ambition Billionaire banvani."
+          <span class="highlight-guj">ક્ષેત્ર કોઈ પણ હોય — KD હંમેશા present.</span>
+        </div>
+      </div>
+
+      <p style="font-size:16px;line-height:1.55;color:var(--ink);margin-top:14px;">
+        Most don't see it coming — but KD is a <strong>pure All-Rounder</strong>. Whether it's scoring in Academics, leading as Class Captain, or managing "Big Kaands" with teachers 😜, he is always in the Playing XI.
+      </p>
+
+      <p style="font-size:16px;line-height:1.55;color:var(--ink);margin-top:12px;">
+        A <strong>Regional Cricket Player</strong> and the <strong>Cricket Team Captain</strong> — when he's at the crease, the boundary is the only target. 🏏🔥
+      </p>
+
+      <p style="font-size:16px;line-height:1.55;color:var(--ink);margin-top:12px;">
+        While studying Civil Engineering, his long-term eyes are firmly on the <strong style="color:var(--gold);">Billionaire's Club</strong>. The blueprint is already drawn. 💸🚀
+      </p>
+    </div>
+
+  </div>
+
+  <!-- SQUAD SECTION -->
+  <div class="full-strip animate-in">
+    <div class="strip-head">🛡️ The Squad — Support Staff</div>
+    <div class="squad-grid">
+      <div class="squad-card">
+        <div class="squad-emoji">👑</div>
+        <div class="squad-name">Priyraj</div>
+        <div class="squad-role">VICE CAPTAIN</div>
+      </div>
+      <div class="squad-card">
+        <div class="squad-emoji">🧠</div>
+        <div class="squad-name">Asmit</div>
+        <div class="squad-role">STRATEGIST</div>
+      </div>
+      <div class="squad-card">
+        <div class="squad-emoji">⚡</div>
+        <div class="squad-name">Jaydip</div>
+        <div class="squad-role">VICE CAPTAIN</div>
+      </div>
+      <div class="squad-card">
+        <div class="squad-emoji">🔥</div>
+        <div class="squad-name">Bhavdip</div>
+        <div class="squad-role">CORE TEAM</div>
+      </div>
+      <div class="squad-card">
+        <div class="squad-emoji">💪</div>
+        <div class="squad-name">Mehul</div>
+        <div class="squad-role">CORE TEAM</div>
+      </div>
+      <div class="squad-card" style="background:var(--green);border-color:var(--green);">
+        <div class="squad-emoji">🎓</div>
+        <div class="squad-name" style="color:var(--white);">Batch 2025</div>
+        <div class="squad-role" style="color:rgba(255,255,255,0.7);">HYPE SQUAD</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL WORD -->
+  <div class="final-word animate-in">
+    <div class="col-head" style="margin-bottom:14px;"><span class="ch-icon">💡</span> Final Word from the Pavilion</div>
+    <div class="final-word-text">
+      From the dusty pitches of JNV to the blueprints of Engineering — Kuldip knows how to build a legacy. Two caps, one head. Two arenas, one champion. Keep hitting those sixes, KD. The Billionaire's Club has a seat with your name on it. 🥂✨
+    </div>
+    <div class="final-word-sig">— FOD CORRESPONDENT &nbsp;|&nbsp; JNV BVN CORE PRESS DESK</div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>FOD NEWS</span> &nbsp;●&nbsp; THE ALL-ROUNDER EDITION &nbsp;●&nbsp; BATCH 2025 &nbsp;●&nbsp; <span>KD 👑</span>
+  </div>
+
+</div>
+
+</body>
+</html>
