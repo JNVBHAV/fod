@@ -765,5 +765,96 @@ body {
 
 </div>
 
+
+<script>
+// IPL Theme Tune — synthesized via Web Audio API (no external file needed)
+function playIPLTune() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+    // IPL jingle note sequence: [frequency Hz, startTime s, duration s, volume]
+    const notes = [
+      [523.25, 0.00, 0.18, 0.7],
+      [659.25, 0.18, 0.18, 0.7],
+      [783.99, 0.36, 0.18, 0.7],
+      [1046.5, 0.54, 0.28, 0.9],
+      [987.77, 0.82, 0.14, 0.6],
+      [880.00, 0.96, 0.14, 0.6],
+      [783.99, 1.10, 0.22, 0.75],
+      [659.25, 1.32, 0.14, 0.6],
+      [783.99, 1.46, 0.14, 0.6],
+      [880.00, 1.60, 0.30, 0.85],
+      [783.99, 1.90, 0.14, 0.55],
+      [659.25, 2.04, 0.14, 0.55],
+      [523.25, 2.18, 0.20, 0.65],
+      [659.25, 2.38, 0.18, 0.65],
+      [783.99, 2.56, 0.44, 0.9],
+    ];
+
+    notes.forEach(([freq, start, dur, vol]) => {
+      const osc  = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const dist = ctx.createWaveShaper();
+
+      const curve = new Float32Array(256);
+      for (let i = 0; i < 256; i++) {
+        const x = (i * 2) / 256 - 1;
+        curve[i] = (Math.PI + 200) * x / (Math.PI + 200 * Math.abs(x));
+      }
+      dist.curve = curve;
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
+
+      gain.gain.setValueAtTime(0, ctx.currentTime + start);
+      gain.gain.linearRampToValueAtTime(vol * 0.35, ctx.currentTime + start + 0.03);
+      gain.gain.setValueAtTime(vol * 0.35, ctx.currentTime + start + dur - 0.05);
+      gain.gain.linearRampToValueAtTime(0, ctx.currentTime + start + dur);
+
+      osc.connect(dist);
+      dist.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime + start);
+      osc.stop(ctx.currentTime + start + dur);
+    });
+
+    setTimeout(() => ctx.close(), 3500);
+  } catch(e) {
+    console.log('Audio not supported:', e);
+  }
+}
+
+window.addEventListener('load', () => {
+  try {
+    const testCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (testCtx.state === 'running') {
+      testCtx.close();
+      playIPLTune();
+    } else {
+      testCtx.close();
+      const banner = document.createElement('div');
+      banner.id = 'iplBanner';
+      banner.innerHTML = '&#127955; &nbsp;Tap anywhere to play the IPL tune!';
+      banner.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#c0260a;color:#fff;font-family:Teko,sans-serif;font-size:18px;letter-spacing:2px;padding:10px 24px;box-shadow:3px 3px 0 #000;z-index:9999;cursor:pointer;animation:iplPulse 1s ease-in-out infinite alternate;';
+      document.body.appendChild(banner);
+      const style = document.createElement('style');
+      style.textContent = '@keyframes iplPulse{from{opacity:1}to{opacity:0.6}}';
+      document.head.appendChild(style);
+
+      const unlock = () => {
+        playIPLTune();
+        document.removeEventListener('click', unlock);
+        document.removeEventListener('touchstart', unlock);
+        const b = document.getElementById('iplBanner');
+        if (b) b.remove();
+      };
+      document.addEventListener('click', unlock);
+      document.addEventListener('touchstart', unlock);
+    }
+  } catch(e) {}
+});
+</script>
 </body>
 </html>
+
