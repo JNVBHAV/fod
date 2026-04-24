@@ -230,6 +230,20 @@ body {
   font-size: 64px;
   position: relative;
   box-shadow: 4px 4px 0 var(--ink);
+  overflow: hidden;
+}
+
+.avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 50%;
+  display: block;
+}
+
+.avatar-circle .avatar-fallback {
+  font-size: 64px;
 }
 
 .avatar-badge {
@@ -426,12 +440,19 @@ body {
   padding: 10px 8px;
   text-align: center;
   box-shadow: 2px 2px 0 var(--ink);
-  transition: transform 0.15s, box-shadow 0.15s;
+  transform: translateY(0) scale(1);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.25s ease,
+              background 0.2s ease,
+              filter 0.2s ease;
+  cursor: pointer;
 }
 
 .squad-card:hover {
-  transform: translate(-2px,-2px);
-  box-shadow: 4px 4px 0 var(--green);
+  transform: translateY(-6px) scale(1.06);
+  box-shadow: 6px 10px 0 var(--green), 2px 2px 0 var(--ink);
+  background: var(--green-xs);
+  filter: brightness(1.04);
 }
 
 .squad-emoji { font-size: 24px; margin-bottom: 4px; }
@@ -583,7 +604,15 @@ body {
       </div>
     </div>
     <div class="hero-avatar">
-      <div class="avatar-circle">🏏</div>
+      <div class="avatar-circle" id="avatarCircle">
+        <img
+          id="kdPhoto"
+          src="kd.png"
+          alt="KD"
+          onerror="this.onerror=null; this.src='kd.jpg'; this.onerror=function(){ this.style.display='none'; document.getElementById('avatarFallback').style.display='flex'; };"
+        />
+        <span class="avatar-fallback" id="avatarFallback" style="display:none;">🏏</span>
+      </div>
       <div class="avatar-badge">KD</div>
       <div class="avatar-edition">THE SIGNATURE IDENTITY</div>
     </div>
